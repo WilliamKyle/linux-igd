@@ -70,8 +70,8 @@ char *getProtoName(int prt)
 }
 
 int chkIPADDRstring(char * addr) {
-        struct in_addr *dmy=NULL;
-        return inet_aton(addr, dmy);
+        struct in_addr dmy;
+        return inet_aton(addr, &dmy);
 }
 
 Gate::Gate()
@@ -127,7 +127,7 @@ int Gate::GateDeviceStateTableInit (char* DescDocURL)
 	}
 
 	gate_udn = SampleUtil_GetFirstDocumentItem(DescDoc, "UDN");
-
+	ixmlDocument_free(DescDoc);
 	return (ret);
 }
 
@@ -152,7 +152,6 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 		{
 			UpnpAddToPropertySet(&PropSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&PropSet, "ConnectionStatus","Connected");
-			UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
 			UpnpAddToPropertySet(&PropSet, "ExternalIPAddress",address);
 			UpnpAddToPropertySet(&PropSet, "PortMappingNumberOfEntries","0");
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,	sr_event->ServiceId, PropSet, sr_event->Sid);
