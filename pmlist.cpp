@@ -159,7 +159,7 @@ int PortMapList::addPacketFilter(char *Proto, char *SrcIP, char *DestIP,
 {
 	char command[255];
 
-        sprintf(command,"%s -I FORWARD 1 -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
+        sprintf(command,"%s -I upnp 1 -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
         system(command);
 	return (1);
 
@@ -182,7 +182,7 @@ int PortMapList::delPacketFilter(char *Proto, char *SrcIP, char *DestIP,
 {
 	char command[255];
 
-        sprintf(command,"%s -D FORWARD -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
+        sprintf(command,"%s -D upnp -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
 	system(command);
 
         return (1);

@@ -148,7 +148,7 @@ int IPCon::IPCon_IsIfUp(void)
 char * IPCon::IPCon_GetIfStatStr(void)
 {
 	if (IPCon_IsIfUp())
-		return ("UP");
+		return ("Up");
 	else
 		return NULL;
 }
