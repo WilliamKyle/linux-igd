@@ -32,6 +32,8 @@
 #include "gate.h"
 #include <unistd.h>
 
+#include "config.h"
+
 pthread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
 
 char *GateDeviceType[] = {"urn:schemas-upnp-org:device:InternetGatewayDevice:1"
@@ -147,7 +149,10 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 			UpnpAddToPropertySet(&PropSet, "OSMajorVersion","5");
 			UpnpAddToPropertySet(&PropSet, "OSMinorVersion","1");
 			UpnpAddToPropertySet(&PropSet, "OSBuildNumber","2600");
-			UpnpAddToPropertySet(&PropSet, "OSMachineName","Linux IGD");
+			if(!config_have("OSMachineName"))
+			  UpnpAddToPropertySet(&PropSet, "OSMachineName","Linux IGD");
+			else
+			  UpnpAddToPropertySet(&PropSet, "OSMachineName",config_info("OSMachineName"));
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,
 					sr_event->ServiceId, PropSet, sr_event->Sid);
 			UpnpDocument_free(PropSet);
@@ -164,7 +169,10 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 		{
 			UpnpAddToPropertySet(&PropSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&PropSet, "ConnectionStatus","Connected");
-			UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
+			if(!config_have("X_Name"))
+			  UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
+			else
+			  UpnpAddToPropertySet(&PropSet, "X_Name",config_info("X_Name"));
 			UpnpAddToPropertySet(&PropSet, "ExternalIPAddress",address);
 			UpnpAddToPropertySet(&PropSet, "PortMappingNumberOfEntries","0");
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,	sr_event->ServiceId, PropSet, sr_event->Sid);
@@ -278,11 +286,23 @@ int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
 int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
+	char *upspeed,*downspeed;
+	char up_text[]="131072",down_text[]="614400";
+
+	if(config_have("uprate"))
+	  upspeed=config_info("uprate");
+	else
+	  upspeed=up_text;
+
+	if(config_have("downrate"))
+	  downspeed=config_info("downrate");
+	else
+	  downspeed=down_text;
 
         ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s%s%s%s%s\n</u:%sResponse>", ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
+                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>",up_text,"</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>",downspeed,"</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
                 ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
@@ -690,9 +710,9 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	address = m_ipcon->IPCon_GetIpAddrStr();
 	
 	if (((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
-		&& (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
+	        && (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
 		&& (int_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort"))
-		&& (int_ip   = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient"))
+	        && (int_ip   = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient"))
 		&& (desc     = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription"))))
 	{
 		prt = getProtoNum(proto);

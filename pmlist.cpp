@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
+#include "config.h"
 
 PortMapList::PortMapList()
 {
@@ -185,6 +186,10 @@ int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort,
 	sprintf(command,"/usr/sbin/iptables -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
 
+	if(flag_forward==1)
+	  sprintf(command, "/usr/sbin/iptables -I FORWARD -p %s -d %s --dport %d -j ACCEPT", Proto, IntIP, IntPort);
+	system(command);
+
 	return (1);
 }
 
@@ -217,10 +222,14 @@ int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort,
 	char* IntIP, int IntPort)
 {
 	char command[255];
-	
 
 	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
+	system(command);
+
+	if(flag_forward==1)
+	  sprintf(command, "/usr/sbin/iptables -D FORWARD -p %s -d %s --dport %d -j ACCEPT", Proto, IntIP, IntPort);
 	system(command);	
+
 	return (1);
 }
 
