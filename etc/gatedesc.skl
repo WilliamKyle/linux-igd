@@ -25,9 +25,9 @@
                         <service>
                                 <serviceType>urn:schemas-dummy-com:service:Dummy:1</serviceType>
                                 <serviceId>urn:dummy-com:serviceId:dummy1</serviceId>
-	                        <controlURL>/Dummy.html</controlURL>
-                                <eventSubURL>/Dummy.html</eventSubURL>
-       				<SCPDURL>/Dummy.xml</SCPDURL>
+	                        <controlURL>/dummy.html</controlURL>
+                                <eventSubURL>/dummy.html</eventSubURL>
+       				<SCPDURL>/dummy.xml</SCPDURL>
                         </service>
                 </serviceList>
 		<deviceList>
