@@ -29,9 +29,9 @@ int pmlist_Size(void);
 int pmlist_FreeList(void);
 int pmlist_PushBack(struct portMap* item);
 int pmlist_Delete(struct portMap* item);
-int pmlist_AddPortMapping (char *protocol,
+int pmlist_AddPortMapping (int enabled, char *protocol,
 		char *externalPort, char *internalClient, char *internalPort);
-int pmlist_DeletePortMapping(char *protocol, 
+int pmlist_DeletePortMapping(int enabled, char *protocol, 
 		char *externalPort, char *internalClient, char *internalPort);
 
 #endif // _PMLIST_H_

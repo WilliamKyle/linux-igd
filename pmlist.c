@@ -132,13 +132,13 @@ int pmlist_FreeList(void)
 	{
 		while(temp->next) // While there's another node left in the list
 		{
-	      pmlist_DeletePortMapping(temp->m_PortMappingProtocol, temp->m_ExternalPort,
+	      pmlist_DeletePortMapping(temp->m_PortMappingEnabled, temp->m_PortMappingProtocol, temp->m_ExternalPort,
             temp->m_InternalClient, temp->m_InternalPort);
 			temp = temp->next; // Move to the next element.
  			free(temp->prev);
 			temp->prev = NULL; // Probably unecessary, but i do it anyway. May remove.
 		}
-      pmlist_DeletePortMapping(temp->m_PortMappingProtocol, temp->m_ExternalPort,
+      pmlist_DeletePortMapping(temp->m_PortMappingEnabled, temp->m_PortMappingProtocol, temp->m_ExternalPort,
             temp->m_InternalClient, temp->m_InternalPort);
 		free(temp); // We're at the last element now, so delete ourselves.
 		pmlist_Head = pmlist_Tail = NULL;
@@ -167,7 +167,7 @@ int pmlist_PushBack(struct portMap* item)
 	}
 	if (action_succeeded == 1)
 	{
-		 pmlist_AddPortMapping(item->m_PortMappingProtocol,
+		 pmlist_AddPortMapping(item->m_PortMappingEnabled, item->m_PortMappingProtocol,
          item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort);	
 		return 1;
 	}
@@ -184,7 +184,7 @@ int pmlist_Delete(struct portMap* item)
 	temp = pmlist_Find(item->m_ExternalPort, item->m_PortMappingProtocol, item->m_InternalClient);
 	if (temp) // We found the item to delete
 	{
-		pmlist_DeletePortMapping(item->m_PortMappingProtocol, item->m_ExternalPort, 
+		pmlist_DeletePortMapping(item->m_PortMappingEnabled, item->m_PortMappingProtocol, item->m_ExternalPort, 
 				item->m_InternalClient, item->m_InternalPort);
 		if (temp == pmlist_Head) // We are the head of the list
 		{
@@ -229,8 +229,10 @@ int pmlist_Delete(struct portMap* item)
 		return 0;
 }
 
-int pmlist_AddPortMapping (char *protocol, char *externalPort, char *internalClient, char *internalPort)
+int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char *internalClient, char *internalPort)
 {
+    if (enabled)
+    {
 	char command[500];
 	
 	sprintf(command, "%s -t nat -A %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
@@ -243,11 +245,14 @@ int pmlist_AddPortMapping (char *protocol, char *externalPort, char *internalCli
 	    system(command);
 	}
 
-	return 1;
+    }
+    return 1;
 }
 
-int pmlist_DeletePortMapping(char *protocol, char *externalPort, char *internalClient, char *internalPort)
+int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, char *internalClient, char *internalPort)
 {
+    if (enabled)
+    {
 	char command[500];
 
 	sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
@@ -260,6 +265,7 @@ int pmlist_DeletePortMapping(char *protocol, char *externalPort, char *internalC
 	    if (g_debug) syslog(LOG_DEBUG, command);
 	    system(command);
 	}
-	return 1;
+    }
+    return 1;
 }
 

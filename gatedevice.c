@@ -544,6 +544,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	char *proto=NULL;
 	char *int_port=NULL;
 	char *int_ip=NULL;
+	char *bool_enabled=NULL;
 	char *desc=NULL;
   	struct portMap *ret, *new;
 	int result;
@@ -556,6 +557,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 		&& (proto = GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol") )
 		&& (int_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort") )
 		&& (int_ip = GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient") )
+		&& (bool_enabled = GetFirstDocumentItem(ca_event->ActionRequest, "NewEnabled") )
 		&& (desc = GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription") ))
 	{
 		// If port map with the same External Port, Protocol, and Internal Client exists
@@ -568,7 +570,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 				pmlist_Delete(ret);
 		}
 			
-		new = pmlist_NewNode(1, 0, "", ext_port, int_port, proto, int_ip, desc); 
+		new = pmlist_NewNode(atoi(bool_enabled), 0, "", ext_port, int_port, proto, int_ip, desc); 
 		result = pmlist_PushBack(new);
 		if (result==1)
 		{
