@@ -1,11 +1,11 @@
 #ifndef _GLOBALS_H_
-	#define _CONFIG_H_
+#define _GLOBALS_H_
 
 // Global vars
 char g_extInterfaceName[10]; // The name of the external interface, picked up from the
                              // command line
 char g_intInterfaceName[10]; // The name of the internal interface, picked from command line
-char g_intIpAddress[16];     // Server internal ip address
+
 // All vars below are read from /etc/upnpd.conf in main.c
 int g_debug;  // 1 - print debug messages to syslog
               // 0 - no debug messages

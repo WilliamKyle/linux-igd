@@ -18,7 +18,7 @@ int main (int argc, char** argv)
 	char descDocUrl[50];
 	char descDocName[20];
 	char xmlPath[50];
-
+	char intIpAddress[16];     // Server internal ip address
 	sigset_t sigsToCatch;
 
 	pid_t pid,sid;
@@ -40,7 +40,7 @@ int main (int argc, char** argv)
 	strcpy(g_intInterfaceName, argv[2]);
 
 	// Get the internal ip address to start the daemon on
-	GetIpAddressStr(g_intIpAddress, g_intInterfaceName);	
+	GetIpAddressStr(intIpAddress, g_intInterfaceName);	
 
 	// Put igd in the background as a daemon process.
 	pid = fork();
@@ -68,9 +68,9 @@ int main (int argc, char** argv)
 
 	// Initialize UPnP SDK on the internal Interface
 	if (g_debug) syslog(LOG_DEBUG, "Initializing UPnP SDK ... ");
-	if ( (ret = UpnpInit(g_intIpAddress,0) ) != UPNP_E_SUCCESS)
+	if ( (ret = UpnpInit(intIpAddress,0) ) != UPNP_E_SUCCESS)
 	{
-		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",g_intIpAddress);
+		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",intIpAddress);
 		syslog (LOG_ERR, "  UpnpInit returned %d", ret);
 		UpnpFinish();
 		exit(1);
