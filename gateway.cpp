@@ -33,6 +33,7 @@
 #include <syslog.h>
 #include <signal.h>
 #include <upnp/upnp.h>
+#include <upnp/ixml.h>
 #include "gateway.h"
 #include "ipcon.h"
 #include "sample_util.h"
@@ -72,7 +73,7 @@ int main (int argc, char** argv)
 	int ret;
 	char *address;
 	pid_t pid,sid;
-	FILE *conf_file;
+	//	FILE *conf_file;
 
 	// Log startup of daemon
 	syslog(LOG_INFO, "The Linux UPnP Internet Gateway Device Ver 0.92 by Dime (dime@gulfsales.com)");
@@ -80,88 +81,44 @@ int main (int argc, char** argv)
 	
 	if (argc != 3)
 	{
-	  // This program must be run by root
-	  if(getuid()!=0)
-	    {
-	      cout << "This program must be run by root" << endl;
-	      //exit(0);
-	    }
-
-#ifdef USE_CURSES
-	  // If we don't have a configuration launch interactive
-	  if((conf_file=fopen(CONF_FILE,"r"))==NULL) {
-	    interactive_mode();
-	    exit(0);
-	  }
-	  else
-	    {
-	      char line[MAX_CONFIG_LINE];
-	      while(fgets(line,MAX_CONFIG_LINE,conf_file)!=null)
-		{
-		  int comp;
-		  
-		  comp=strlen(line);
-		  if(line[comp-1]=='\n')
-		    line[comp-1]='\0';
-		  
-		  config_process(line);
-		}
-	      fclose(conf_file);
-
-	      if(argc == 2)
-	      if (!strcmp(argv[1],"-i")) {
-		  interactive_mode();
-		  exit(0);
-	      }
-	    }
-#endif
-	  
 		cout << "Usage: upnpd <external ifname> <internal ifname>" <<endl;
 		cout << "Example: upnpd ppp0 eth0 " << endl;
 		cout << "Example: upnpd eth1 eth0 " << endl;
 		exit(0);
 	}
 
-	// let's read the config
-	if((conf_file=fopen(CONF_FILE,"r"))!=NULL) {
-	  char line[MAX_CONFIG_LINE];
-	  while(fgets(line,MAX_CONFIG_LINE,conf_file)!=null)
-	    {
-	      int comp;
-
-	      comp=strlen(line);
-	      if(line[comp-1]=='\n')
-		line[comp-1]='\0';
-
-	      config_process(line);
-	    }
-	  fclose(conf_file);
+	if (geteuid()) {
+		cerr << "upnpd must be run as root" << endl;
+		exit(EXIT_FAILURE);
 	}
 
-	pid = fork();
-        if (pid < 0)
-        {
-                perror("Error forking a new process.");
-                exit(EXIT_FAILURE);
-        }
-        if (pid > 0)
-                exit(EXIT_SUCCESS);
+	if (conf_debug_mode != 1)
+	  // Only fork if not in debug mode
+	{
+	  pid = fork();
+	  if (pid < 0)
+	  {
+	    perror("Error forking a new process.");
+	    exit(EXIT_FAILURE);
+	  }
+	  if (pid > 0)
+	    exit(EXIT_SUCCESS);
 
-        if ((sid = setsid()) < 0)
-        {
-                perror("Error running setsid");
-                exit(EXIT_FAILURE);
-        }
-        if ((chdir("/")) < 0)
-        {
-                perror("Error setting root directory");
-                exit(EXIT_FAILURE);
-        }
+	  if ((sid = setsid()) < 0)
+	  {
+	    perror("Error running setsid");
+	    exit(EXIT_FAILURE);
+	  }
+	  if ((chdir("/")) < 0)
+	  {
+	    perror("Error setting root directory");
+	    exit(EXIT_FAILURE);
+	  }
 
+	}
         umask(0);
-
         //close (STDOUT_FILENO);
-        close (STDERR_FILENO);
+	//close (STDERR_FILENO);
 	
 	gate.m_ipcon = new IPCon(argv[2]);
 	address = gate.m_ipcon->IPCon_GetIpAddrStr();
