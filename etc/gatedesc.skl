@@ -4,7 +4,7 @@
 		<major>1</major>
 		<minor>0</minor>
 	</specVersion>
-	<URLBase>http://!ADDR!:2869</URLBase>
+	<URLBase>http://!ADDR!:52869</URLBase>
 	<device>
 		<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType>
 		<friendlyName>Linux Internet Gateway Device</friendlyName>
