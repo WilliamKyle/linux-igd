@@ -84,7 +84,7 @@ int IPCon::IPCon_SetIfName(char * ifname)
 
 char * IPCon::IPCon_GetIfName(void)
 {
-	return NULL;
+	return m_ifname;
 }
 
 char * IPCon::IPCon_GetIpAddrStr(void)

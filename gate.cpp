@@ -274,6 +274,7 @@ int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
 	ca_event->ActionResult = NULL;
 	return (ca_event->ErrCode);
 }
+
 int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
@@ -289,15 +290,41 @@ int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event
 
 
 }
+
 int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
+	char dev[15];
+	char *iface;
+	FILE *stream;
+	unsigned long bytes=0, total=0;
+
+	/* Read sent from /proc */
+	stream = fopen ( "/proc/net/dev", "r" );
+	if ( stream != NULL )
+	{
+		iface=m_ipcon->IPCon_GetIfName();
+		while ( getc ( stream ) != '\n' );
+		while ( getc ( stream ) != '\n' );
+
+		while ( !feof( stream ) )
+		{
+			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
+			if ( strcmp ( dev, iface )==0 )
+				total += bytes;
+		}
+		fclose ( stream );
+	}
+	else
+	{
+		total=1;
+	}
 
         ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalBytesSent>%lu</NewTotalBytesSent>\n</u:%sResponse>",
+		ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewTotalBytesSent>1</NewTotalBytesSent>",
-                ca_event->ActionName);
+                total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
         return(ca_event->ErrCode);
@@ -306,12 +333,38 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
+	char dev[15];
+        char *iface;
+        FILE *stream;
+        unsigned long bytes=0,total=0;
+
+	/* Read received from /proc */
+        stream = fopen ( "/proc/net/dev", "r" );
+        if ( stream != NULL )
+        {
+                iface=m_ipcon->IPCon_GetIfName();
+
+                while ( getc ( stream ) != '\n' );
+                while ( getc ( stream ) != '\n' );
+
+                while ( !feof( stream ) )
+                {
+                        fscanf ( stream, "%[^:]:%lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
+                        if ( strcmp ( dev, iface )==0 )
+                                total += bytes;
+                }
+		fclose ( stream );
+        }
+	else
+	{
+                total=1;
+        }
 
         ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalBytesReceived>%lu</NewTotalBytesReceived>\n</u:%sResponse>",
+		ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewTotalBytesReceived>1</NewTotalBytesReceived>",
-                ca_event->ActionName);
+                total, ca_event->ActionName );
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
         return(ca_event->ErrCode);
@@ -320,12 +373,36 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
+	char dev[15];
+        char *iface;
+        FILE *stream;
+        unsigned long pkt=0, total=0;
+
+        /* Read sent from /proc */
+        stream = fopen ( "/proc/net/dev", "r" );
+        if ( stream != NULL )
+        {
+                iface=m_ipcon->IPCon_GetIfName();
+                while ( getc ( stream ) != '\n' );
+                while ( getc ( stream ) != '\n' );
+
+                while ( !feof( stream ) )
+                {
+                        fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
+                        if ( strcmp ( dev, iface )==0 )
+                                total += pkt;
+		}
+                fclose ( stream );
+        }
+        else
+        {
+                total=1;
+        }
 
         ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalPacketsSent>%lu</NewTotalPacketsSent>\n</u:%sResponse>", ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-		"<NewTotalPacketsSent>1</NewTotalPacketsSent>",
-                ca_event->ActionName);
+                total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
         return(ca_event->ErrCode);
@@ -334,12 +411,36 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
+	char dev[15];
+        char *iface;
+        FILE *stream;
+        unsigned long pkt=0, total=0;
+
+        /* Read sent from /proc */
+        stream = fopen ( "/proc/net/dev", "r" );
+        if ( stream != NULL )
+        {
+                iface=m_ipcon->IPCon_GetIfName();
+                while ( getc ( stream ) != '\n' );
+                while ( getc ( stream ) != '\n' );
+
+                while ( !feof( stream ) )
+                {
+                        fscanf ( stream, "%[^:]:%*u %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
+                        if ( strcmp ( dev, iface )==0 )
+                                total += pkt;
+                }
+                fclose ( stream );
+        }
+        else
+	{
+                total=1;
+        }
 
         ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalPacketsReceived>%lu</NewTotalPacketsReceived>\n</u:%sResponse>", ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewTotalPacketsReceived>1</NewTotalPacketsReceived>",
-                ca_event->ActionName);
+                total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
         return(ca_event->ErrCode);

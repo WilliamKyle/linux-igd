@@ -105,7 +105,7 @@ int main (int argc, char** argv)
 
         umask(0);
 
-        close (STDOUT_FILENO);
+        //close (STDOUT_FILENO);
         close (STDERR_FILENO);
 
 	gate.m_ipcon = new IPCon(argv[2]);
