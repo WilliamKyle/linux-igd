@@ -61,7 +61,7 @@ int parseConfigFile(int *insert_forward_rules, int *debug_mode, char iptables_lo
 
     // Regexp to match a comment line
     regcomp(&re_comment,"^[[:blank:]]*#",0);
-    regcomp(&re_empty_row,"^[[:blank:]]*\r\n$",REG_EXTENDED);
+    regcomp(&re_empty_row,"^[[:blank:]]*\r?\n$",REG_EXTENDED);
     regcomp(&re_iptables_location,"iptables_location[[:blank:]]*=[[:blank:]]*([[:alpha:]/_]+)",REG_EXTENDED);
     // Regexps to match debug_mode, insert_forward_rules, forward_chain_name
     regcomp(&re_debug_mode,"debug_mode[[:blank:]]*=[[:blank:]]*([[:digit:]])",REG_EXTENDED);
