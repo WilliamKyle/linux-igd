@@ -64,7 +64,11 @@ int main (int argc, char** argv)
 	
 	umask(0);
 	close(STDERR_FILENO);
-	// End Daemon initialization
+	close (STDIN_FILENO);
+	close (STDOUT_FILENO);	
+
+
+// End Daemon initialization
 
 	// Initialize UPnP SDK on the internal Interface
 	if (g_debug) syslog(LOG_DEBUG, "Initializing UPnP SDK ... ");

@@ -34,6 +34,7 @@ int parseConfigFile(int *insert_forward_rules, int *debug_mode, char iptables_lo
 		    char desc_doc[], char xml_path[])
 {
     FILE *conf_file;
+    regmatch_t submatch[2]; // Stores the regex submatch start end end index
     
     regex_t re_comment;
     regex_t re_empty_row;
@@ -72,8 +73,6 @@ int parseConfigFile(int *insert_forward_rules, int *debug_mode, char iptables_lo
     
     regcomp(&re_desc_doc,"description_document_name[[:blank:]]*=[[:blank:]]*([[:alpha:].]{1,20})",REG_EXTENDED);
     regcomp(&re_xml_path,"xml_document_path[[:blank:]]*=[[:blank:]]*([[:alpha:]_/.]{1,50})",REG_EXTENDED);
-
-    regmatch_t submatch[2]; // Stores the regex submatch start end end index
 
     if ((conf_file=fopen(CONF_FILE,"r")) != NULL)
     {
