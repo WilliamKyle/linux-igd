@@ -9,6 +9,7 @@
 #include "sample_util.h"
 #include "pmlist.h"
 #include "util.h"
+#include "globals.h"
 
 // MUTEX for locking shared state variables whenver they are changed
 ithread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
@@ -82,7 +83,7 @@ int HandleSubscriptionRequest(struct Upnp_Subscription_Request *sr_event)
 		// WAN IP Connection Device Notifications
 		else if (strcmp(sr_event->ServiceId, "urn:upnp-org:serviceId:WANIPConn1") == 0)
 		{
-			GetIpAddressStr(ExternalIPAddress, extInterfaceName);
+			GetIpAddressStr(ExternalIPAddress, g_extInterfaceName);
 			syslog(LOG_DEBUG, "Received request to subscribe to WANIPConn1");
 			UpnpAddToPropertySet(&propSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&propSet, "ConnectionStatus","Connected");
@@ -295,10 +296,10 @@ int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 	ca_event->ErrCode = UPNP_E_SUCCESS;
 	sprintf(resultStr, "<u:GetCommonLinkPropertiesResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
                 				"<NewWANAccessType>Cable</NewWANAccessType>\n"
-									"<NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate>\n"
-									"<NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate>\n"
+									"<NewLayer1UpstreamMaxBitRate>%s</NewLayer1UpstreamMaxBitRate>\n"
+									"<NewLayer1DownstreamMaxBitRate>%s</NewLayer1DownstreamMaxBitRate>\n"
 									"<NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>\n"
-								"</u:GetCommonLinkPropertiesResponse>");
+								"</u:GetCommonLinkPropertiesResponse>",g_upstreamBitrate,g_downstreamBitrate);
 
    // Create a IXML_Document from resultStr and return with ca_event
    if ((result = ixmlParseBuffer(resultStr)) != NULL)
@@ -334,7 +335,7 @@ int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strcmp ( dev, extInterfaceName )==0 )
+			if ( strcmp ( dev, g_extInterfaceName )==0 )
 				total += bytes;
 		}
 		fclose ( stream );
@@ -381,7 +382,7 @@ int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strcmp ( dev, extInterfaceName )==0 )
+			if ( strcmp ( dev, g_extInterfaceName )==0 )
 				total += bytes;
 		}
 		fclose ( stream );
@@ -430,7 +431,7 @@ int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strcmp ( dev, extInterfaceName )==0 )
+			if ( strcmp ( dev, g_extInterfaceName )==0 )
 				total += pkt;
 		}
 		fclose ( stream );
@@ -477,7 +478,7 @@ int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strcmp ( dev, extInterfaceName )==0 )
+			if ( strcmp ( dev, g_extInterfaceName )==0 )
 				total += pkt;
 		}
 		fclose ( stream );
@@ -727,7 +728,7 @@ int GetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 	IXML_Document *result = NULL;
 
    ca_event->ErrCode = UPNP_E_SUCCESS;
-   GetIpAddressStr(ExternalIPAddress, extInterfaceName);
+   GetIpAddressStr(ExternalIPAddress, g_extInterfaceName);
    sprintf(resultStr, "<u:GetExternalIPAddressResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
 										"<NewExternalIPAddress>%s</NewExternalIPAddress>\n"
 								"</u:GetExternalIPAddressResponse>", ExternalIPAddress);
