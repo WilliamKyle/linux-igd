@@ -311,8 +311,7 @@ int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event
   ca_event->ErrCode = UPNP_E_SUCCESS;
   sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
 	  "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><N\
-ewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
+	  "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
 	  ca_event->ActionName);
   ca_event->ActionResult = ixmlParseBuffer(result_str);
 
