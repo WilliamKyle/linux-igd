@@ -207,8 +207,10 @@ SampleUtil_GetFirstDocumentItem( IN IXML_Document * doc,
     if( nodeList ) {
         if( ( tmpNode = ixmlNodeList_item( nodeList, 0 ) ) ) {
             textNode = ixmlNode_getFirstChild( tmpNode );
-
-            ret = strdup( ixmlNode_getNodeValue( textNode ) );
+	    if (textNode != NULL)
+	    {
+		ret = strdup( ixmlNode_getNodeValue( textNode ) );
+	    }
         }
     }
 
