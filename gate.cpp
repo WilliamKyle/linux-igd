@@ -132,10 +132,10 @@ int Gate::GateDeviceStateTableInit (char* DescDocURL)
 	{
 		syslog(LOG_ERR, "DeviceStateTableInit -- Error Parsing %s\n", DescDocURL);
 		ret =UPNP_E_INVALID_DESC;
+	} else {
+	  gate_udn = SampleUtil_GetFirstDocumentItem(DescDoc, "UDN");
 	}
-
-	gate_udn = SampleUtil_GetFirstDocumentItem(DescDoc, "UDN");
-
+	if (DescDoc) ixmlDocument_free(DescDoc);
 	return (ret);
 }
 
