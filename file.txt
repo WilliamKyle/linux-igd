@@ -1,0 +1,3865 @@
+Frame 1 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.743330000
+    Time delta from previous packet: 0.000000000 seconds
+    Time relative to first packet: 0.000000000 seconds
+    Frame Number: 1
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 2 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.743518000
+    Time delta from previous packet: 0.000188000 seconds
+    Time relative to first packet: 0.000188000 seconds
+    Frame Number: 2
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 3 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.743665000
+    Time delta from previous packet: 0.000147000 seconds
+    Time relative to first packet: 0.000335000 seconds
+    Frame Number: 3
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 4 (1003 on wire, 1003 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.743945000
+    Time delta from previous packet: 0.000280000 seconds
+    Time relative to first packet: 0.000615000 seconds
+    Frame Number: 4
+    Packet Length: 1003 bytes
+    Capture Length: 1003 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 5 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.744072000
+    Time delta from previous packet: 0.000127000 seconds
+    Time relative to first packet: 0.000742000 seconds
+    Frame Number: 5
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 6 (632 on wire, 632 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.754015000
+    Time delta from previous packet: 0.009943000 seconds
+    Time relative to first packet: 0.010685000 seconds
+    Frame Number: 6
+    Packet Length: 632 bytes
+    Capture Length: 632 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 7 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.754332000
+    Time delta from previous packet: 0.000317000 seconds
+    Time relative to first packet: 0.011002000 seconds
+    Frame Number: 7
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 8 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.754461000
+    Time delta from previous packet: 0.000129000 seconds
+    Time relative to first packet: 0.011131000 seconds
+    Frame Number: 8
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 9 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.758606000
+    Time delta from previous packet: 0.004145000 seconds
+    Time relative to first packet: 0.015276000 seconds
+    Frame Number: 9
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 10 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.758715000
+    Time delta from previous packet: 0.000109000 seconds
+    Time relative to first packet: 0.015385000 seconds
+    Frame Number: 10
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 11 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.759634000
+    Time delta from previous packet: 0.000919000 seconds
+    Time relative to first packet: 0.016304000 seconds
+    Frame Number: 11
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 12 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.759803000
+    Time delta from previous packet: 0.000169000 seconds
+    Time relative to first packet: 0.016473000 seconds
+    Frame Number: 12
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 13 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.759943000
+    Time delta from previous packet: 0.000140000 seconds
+    Time relative to first packet: 0.016613000 seconds
+    Frame Number: 13
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 14 (364 on wire, 364 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760118000
+    Time delta from previous packet: 0.000175000 seconds
+    Time relative to first packet: 0.016788000 seconds
+    Frame Number: 14
+    Packet Length: 364 bytes
+    Capture Length: 364 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 15 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760218000
+    Time delta from previous packet: 0.000100000 seconds
+    Time relative to first packet: 0.016888000 seconds
+    Frame Number: 15
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 16 (1176 on wire, 1176 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760311000
+    Time delta from previous packet: 0.000093000 seconds
+    Time relative to first packet: 0.016981000 seconds
+    Frame Number: 16
+    Packet Length: 1176 bytes
+    Capture Length: 1176 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 17 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760403000
+    Time delta from previous packet: 0.000092000 seconds
+    Time relative to first packet: 0.017073000 seconds
+    Frame Number: 17
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 18 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760317000
+    Time delta from previous packet: -0.000086000 seconds
+    Time relative to first packet: 0.016987000 seconds
+    Frame Number: 18
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 19 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.760486000
+    Time delta from previous packet: 0.000169000 seconds
+    Time relative to first packet: 0.017156000 seconds
+    Frame Number: 19
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 20 (453 on wire, 453 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.976578000
+    Time delta from previous packet: 0.216092000 seconds
+    Time relative to first packet: 0.233248000 seconds
+    Frame Number: 20
+    Packet Length: 453 bytes
+    Capture Length: 453 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 21 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.977191000
+    Time delta from previous packet: 0.000613000 seconds
+    Time relative to first packet: 0.233861000 seconds
+    Frame Number: 21
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 22 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.977353000
+    Time delta from previous packet: 0.000162000 seconds
+    Time relative to first packet: 0.234023000 seconds
+    Frame Number: 22
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 23 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.987500000
+    Time delta from previous packet: 0.010147000 seconds
+    Time relative to first packet: 0.244170000 seconds
+    Frame Number: 23
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 24 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.987563000
+    Time delta from previous packet: 0.000063000 seconds
+    Time relative to first packet: 0.244233000 seconds
+    Frame Number: 24
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 25 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.990703000
+    Time delta from previous packet: 0.003140000 seconds
+    Time relative to first packet: 0.247373000 seconds
+    Frame Number: 25
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 26 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.990867000
+    Time delta from previous packet: 0.000164000 seconds
+    Time relative to first packet: 0.247537000 seconds
+    Frame Number: 26
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 27 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.991016000
+    Time delta from previous packet: 0.000149000 seconds
+    Time relative to first packet: 0.247686000 seconds
+    Frame Number: 27
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 28 (1003 on wire, 1003 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.991314000
+    Time delta from previous packet: 0.000298000 seconds
+    Time relative to first packet: 0.247984000 seconds
+    Frame Number: 28
+    Packet Length: 1003 bytes
+    Capture Length: 1003 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 29 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:26.991417000
+    Time delta from previous packet: 0.000103000 seconds
+    Time relative to first packet: 0.248087000 seconds
+    Frame Number: 29
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 30 (729 on wire, 729 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.003527000
+    Time delta from previous packet: 0.012110000 seconds
+    Time relative to first packet: 0.260197000 seconds
+    Frame Number: 30
+    Packet Length: 729 bytes
+    Capture Length: 729 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 31 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.016807000
+    Time delta from previous packet: 0.013280000 seconds
+    Time relative to first packet: 0.273477000 seconds
+    Frame Number: 31
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 32 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.016938000
+    Time delta from previous packet: 0.000131000 seconds
+    Time relative to first packet: 0.273608000 seconds
+    Frame Number: 32
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 33 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.030155000
+    Time delta from previous packet: 0.013217000 seconds
+    Time relative to first packet: 0.286825000 seconds
+    Frame Number: 33
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 34 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.030249000
+    Time delta from previous packet: 0.000094000 seconds
+    Time relative to first packet: 0.286919000 seconds
+    Frame Number: 34
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 35 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.030736000
+    Time delta from previous packet: 0.000487000 seconds
+    Time relative to first packet: 0.287406000 seconds
+    Frame Number: 35
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 36 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.030929000
+    Time delta from previous packet: 0.000193000 seconds
+    Time relative to first packet: 0.287599000 seconds
+    Frame Number: 36
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 37 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.031063000
+    Time delta from previous packet: 0.000134000 seconds
+    Time relative to first packet: 0.287733000 seconds
+    Frame Number: 37
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 38 (674 on wire, 674 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.031287000
+    Time delta from previous packet: 0.000224000 seconds
+    Time relative to first packet: 0.287957000 seconds
+    Frame Number: 38
+    Packet Length: 674 bytes
+    Capture Length: 674 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 39 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.031390000
+    Time delta from previous packet: 0.000103000 seconds
+    Time relative to first packet: 0.288060000 seconds
+    Frame Number: 39
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 40 (550 on wire, 550 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.038803000
+    Time delta from previous packet: 0.007413000 seconds
+    Time relative to first packet: 0.295473000 seconds
+    Frame Number: 40
+    Packet Length: 550 bytes
+    Capture Length: 550 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 41 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.039067000
+    Time delta from previous packet: 0.000264000 seconds
+    Time relative to first packet: 0.295737000 seconds
+    Frame Number: 41
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 42 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.039202000
+    Time delta from previous packet: 0.000135000 seconds
+    Time relative to first packet: 0.295872000 seconds
+    Frame Number: 42
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 43 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.045912000
+    Time delta from previous packet: 0.006710000 seconds
+    Time relative to first packet: 0.302582000 seconds
+    Frame Number: 43
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 44 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.046039000
+    Time delta from previous packet: 0.000127000 seconds
+    Time relative to first packet: 0.302709000 seconds
+    Frame Number: 44
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 45 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.046505000
+    Time delta from previous packet: 0.000466000 seconds
+    Time relative to first packet: 0.303175000 seconds
+    Frame Number: 45
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 46 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.046687000
+    Time delta from previous packet: 0.000182000 seconds
+    Time relative to first packet: 0.303357000 seconds
+    Frame Number: 46
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 47 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.046826000
+    Time delta from previous packet: 0.000139000 seconds
+    Time relative to first packet: 0.303496000 seconds
+    Frame Number: 47
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 48 (1003 on wire, 1003 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.047115000
+    Time delta from previous packet: 0.000289000 seconds
+    Time relative to first packet: 0.303785000 seconds
+    Frame Number: 48
+    Packet Length: 1003 bytes
+    Capture Length: 1003 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 49 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.047233000
+    Time delta from previous packet: 0.000118000 seconds
+    Time relative to first packet: 0.303903000 seconds
+    Frame Number: 49
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 50 (729 on wire, 729 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.059401000
+    Time delta from previous packet: 0.012168000 seconds
+    Time relative to first packet: 0.316071000 seconds
+    Frame Number: 50
+    Packet Length: 729 bytes
+    Capture Length: 729 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 51 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.059970000
+    Time delta from previous packet: 0.000569000 seconds
+    Time relative to first packet: 0.316640000 seconds
+    Frame Number: 51
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 52 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.060125000
+    Time delta from previous packet: 0.000155000 seconds
+    Time relative to first packet: 0.316795000 seconds
+    Frame Number: 52
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 53 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.067047000
+    Time delta from previous packet: 0.006922000 seconds
+    Time relative to first packet: 0.323717000 seconds
+    Frame Number: 53
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 54 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.067131000
+    Time delta from previous packet: 0.000084000 seconds
+    Time relative to first packet: 0.323801000 seconds
+    Frame Number: 54
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 55 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.067628000
+    Time delta from previous packet: 0.000497000 seconds
+    Time relative to first packet: 0.324298000 seconds
+    Frame Number: 55
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 56 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.067789000
+    Time delta from previous packet: 0.000161000 seconds
+    Time relative to first packet: 0.324459000 seconds
+    Frame Number: 56
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 57 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.067926000
+    Time delta from previous packet: 0.000137000 seconds
+    Time relative to first packet: 0.324596000 seconds
+    Frame Number: 57
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 58 (364 on wire, 364 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068099000
+    Time delta from previous packet: 0.000173000 seconds
+    Time relative to first packet: 0.324769000 seconds
+    Frame Number: 58
+    Packet Length: 364 bytes
+    Capture Length: 364 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 59 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068190000
+    Time delta from previous packet: 0.000091000 seconds
+    Time relative to first packet: 0.324860000 seconds
+    Frame Number: 59
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 60 (1176 on wire, 1176 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068294000
+    Time delta from previous packet: 0.000104000 seconds
+    Time relative to first packet: 0.324964000 seconds
+    Frame Number: 60
+    Packet Length: 1176 bytes
+    Capture Length: 1176 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 61 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068385000
+    Time delta from previous packet: 0.000091000 seconds
+    Time relative to first packet: 0.325055000 seconds
+    Frame Number: 61
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 62 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068301000
+    Time delta from previous packet: -0.000084000 seconds
+    Time relative to first packet: 0.324971000 seconds
+    Frame Number: 62
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 63 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.068464000
+    Time delta from previous packet: 0.000163000 seconds
+    Time relative to first packet: 0.325134000 seconds
+    Frame Number: 63
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 64 (636 on wire, 636 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.090001000
+    Time delta from previous packet: 0.021537000 seconds
+    Time relative to first packet: 0.346671000 seconds
+    Frame Number: 64
+    Packet Length: 636 bytes
+    Capture Length: 636 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 65 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.090817000
+    Time delta from previous packet: 0.000816000 seconds
+    Time relative to first packet: 0.347487000 seconds
+    Frame Number: 65
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 66 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.090984000
+    Time delta from previous packet: 0.000167000 seconds
+    Time relative to first packet: 0.347654000 seconds
+    Frame Number: 66
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 67 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.093431000
+    Time delta from previous packet: 0.002447000 seconds
+    Time relative to first packet: 0.350101000 seconds
+    Frame Number: 67
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 68 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.093537000
+    Time delta from previous packet: 0.000106000 seconds
+    Time relative to first packet: 0.350207000 seconds
+    Frame Number: 68
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 69 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.094005000
+    Time delta from previous packet: 0.000468000 seconds
+    Time relative to first packet: 0.350675000 seconds
+    Frame Number: 69
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 70 (62 on wire, 62 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.094187000
+    Time delta from previous packet: 0.000182000 seconds
+    Time relative to first packet: 0.350857000 seconds
+    Frame Number: 70
+    Packet Length: 62 bytes
+    Capture Length: 62 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 71 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.094319000
+    Time delta from previous packet: 0.000132000 seconds
+    Time relative to first packet: 0.350989000 seconds
+    Frame Number: 71
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]
+
+Frame 72 (973 on wire, 973 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.094591000
+    Time delta from previous packet: 0.000272000 seconds
+    Time relative to first packet: 0.351261000 seconds
+    Frame Number: 72
+    Packet Length: 973 bytes
+    Capture Length: 973 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 73 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.094711000
+    Time delta from previous packet: 0.000120000 seconds
+    Time relative to first packet: 0.351381000 seconds
+    Frame Number: 73
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 74 (456 on wire, 456 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.135456000
+    Time delta from previous packet: 0.040745000 seconds
+    Time relative to first packet: 0.392126000 seconds
+    Frame Number: 74
+    Packet Length: 456 bytes
+    Capture Length: 456 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+    Trailer: 20323030204F4B0D0A434F4E54454E54...
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (correct)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+        SACK permitted
+
+Frame 75 (54 on wire, 54 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.135853000
+    Time delta from previous packet: 0.000397000 seconds
+    Time relative to first packet: 0.392523000 seconds
+    Frame Number: 75
+    Packet Length: 54 bytes
+    Capture Length: 54 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614963
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd959)
+    Options: (8 bytes)
+[Malformed Packet: TCP]
+
+Frame 76 (60 on wire, 60 captured)
+    Arrival Time: Nov  7, 2002 23:58:27.136009000
+    Time delta from previous packet: 0.000156000 seconds
+    Time relative to first packet: 0.392679000 seconds
+    Frame Number: 76
+    Packet Length: 60 bytes
+    Capture Length: 60 bytes
+Ethernet II
+    Destination: 00:04:5a:69:e1:38 (The_69:e1:38)
+    Source: 00:06:5b:bc:7e:18 (Dell_bc:7e:18)
+    Type: IP (0x0800)
+Internet Protocol, Src Addr: 192.168.1.10 (192.168.1.10), Dst Addr: 192.168.1.254 (192.168.1.254)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..0. = ECN-Capable Transport (ECT): 0
+        .... ...0 = ECN-CE: 0
+    Total Length: 48
+    Identification: 0x64c2
+    Flags: 0x04
+        .1.. = Don't fragment: Set
+        ..0. = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 128
+    Protocol: TCP (0x06)
+    Header checksum: 0x11ad (correct)
+    Source: 192.168.1.10 (192.168.1.10)
+    Destination: 192.168.1.254 (192.168.1.254)
+Transmission Control Protocol, Src Port: 3738 (3738), Dst Port: 2869 (2869), Seq: 2381614971, Ack: 0
+    Source port: 3738 (3738)
+    Destination port: 2869 (2869)
+    Sequence number: 2381614971
+    Next sequence number: 2381614969
+    Header length: 28 bytes
+    Flags: 0x0002 (SYN)
+        0... .... = Congestion Window Reduced (CWR): Not set
+        .0.. .... = ECN-Echo: Not set
+        ..0. .... = Urgent: Not set
+        ...0 .... = Acknowledgment: Not set
+        .... 0... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window size: 64240
+    Checksum: 0xcc96 (incorrect, should be 0xd09a)
+    Options: (8 bytes)
+        Maximum segment size: 1460 bytes
+        NOP
+        NOP
+[Malformed Packet: TCP]

@@ -1,0 +1,23 @@
+Version 0.75 -- 05/15/2002
+   GG -- Changed the program to run as a true daemon now, forking into the
+         backround properly
+   GG -- Added some signal hooks to allow the program to be shut down with a
+         killall upnpd.
+   GG -- Removed some of the excessive debugging found in previous version in
+         /var/log/debug.
+   GG -- Made some relevant changes to the INSTALL, README, and SECURITY files.
+   GG -- Placed the code into CVS on source forge.
+   GG -- Usage now prints to STDOUT where it should have in the first place.
+   GG -- When the daemon is running, in Windows a connection description now 
+         shows up in Network Connections representing the gateway connection.
+         Windows has always recognized it this way, but until now you didn't
+         have a way to view the connection details.
+
+Version 0.71 -- 05/03/2002
+   GG -- Ok I goofed, and still had it statically grabbing one of the ip
+         addresses.  This is the real officil first real official release,
+         so let us know what you think.  
+
+Version 0.70 -- 05/03/2002
+   GG -- First public release of the software.  We figure it's time to share
+         the glory and the shame.
