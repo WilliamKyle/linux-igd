@@ -70,7 +70,22 @@ class Gate
 		UpnpDevice_Handle device_handle;
 		char *gate_udn;
 		IPCon *m_ipcon;
+		
+		// State Variables
+		char m_ConnectionType[50];
+		char m_PossibleConnectionTypes[50];
+		char m_ConnectionStatus[20];
 		long int startup_time;
+		char LastConnectionError[35];
+		long int m_AutoDisconnectTime;
+		long int m_IdleDisconnectTime;
+		long int m_WarnDisconnectDelay;
+		bool RSIPAvailable;
+		bool NATEnabled;
+		char m_ExternalIPAddress[20];
+		int m_PortMappingNumberOfEntries;
+		bool m_PortMappingEnabled;
+			
 };
 
 #endif

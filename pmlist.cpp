@@ -29,7 +29,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <iostream.h>
+#include <iostream>
+
 PortMapList::PortMapList()
 {
 
@@ -40,25 +41,18 @@ PortMapList::~PortMapList()
 
 	for (list<PortMap *>::iterator itr = m_pmap.begin(); itr != m_pmap.end(); itr++)
         {
-		delPacketFilter((*itr)->protocol, (*itr)->remote_host,
-				(*itr)->external_ip, (*itr)->external_port);
-                delPortForward((*itr)->protocol, (*itr)->external_ip,
-                                (*itr)->external_port, (*itr)->internal_ip,
-                                (*itr)->internal_port);
+		delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
+				(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
+                delPortForward((*itr)->m_PortMappingProtocol, (*itr)->m_ExternalIP,
+                                (*itr)->m_ExternalPort, (*itr)->m_InternalClient,
+                                (*itr)->m_InternalPort);
 
 		delete (*itr);
         }
 	m_pmap.clear();
 }
 
-int PortMapList::flushPacketFilter()
-{
-
-return (1);
-
-}
-
-int PortMapList::PortMapAdd(char *RemoteHost, int Proto, char *ExtIP, int ExtPort,
+int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtPort,
 		char *IntIP, int IntPort, int Enabled, char *Desc, int LeaseDuration)
 {
 
@@ -66,10 +60,11 @@ int PortMapList::PortMapAdd(char *RemoteHost, int Proto, char *ExtIP, int ExtPor
 	struct sockaddr_in addr;
 	PortMap *temp;
 	
-	if (Proto==6)
+	if ((strcmp(Proto,"TCP")) || (strcmp(Proto,"tcp")))
 		fd_proto = SOCK_STREAM;
 	else
 		fd_proto = SOCK_DGRAM;
+	
 	if ((fd_socket = socket(AF_INET,fd_proto, 0)) == -1)
 		perror("socket");
 
@@ -83,44 +78,19 @@ int PortMapList::PortMapAdd(char *RemoteHost, int Proto, char *ExtIP, int ExtPor
 	}
 
 	temp = new PortMap;
-
-	temp->fd_socket = fd_socket;
-
 	if (RemoteHost != NULL)
-	{
-		temp->remote_host = new char[strlen(RemoteHost)+1];
-		strcpy(temp->remote_host, RemoteHost);
-	}
-       	else temp->remote_host = NULL;
-
-	temp->protocol = Proto;
-
+		strcpy(temp->m_RemoteHost, RemoteHost);
+	if (Proto != NULL)
+		strcpy(temp->m_PortMappingProtocol, Proto);
 	if (ExtIP != NULL)
-	{
-		temp->external_ip = new char[strlen(ExtIP)+1];
-		strcpy(temp->external_ip, ExtIP);
-	}
-	else temp->external_ip = NULL;
-
-	temp->external_port = ExtPort;
-	
+		strcpy(temp->m_ExternalIP, ExtIP);
+	temp->m_ExternalPort = ExtPort;
 	if (IntIP != NULL)
-	{
-		temp->internal_ip = new char[strlen(IntIP)+1];
-		strcpy(temp->internal_ip, IntIP);
-	}
-	else temp->internal_ip = NULL;
-
-	temp->internal_port = IntPort;
-
+		strcpy(temp->m_InternalClient, IntIP);
+	temp->m_InternalPort = IntPort;
 	if (Desc != NULL)
-	{
-		temp->port_mapping_desc = new char[strlen(Desc)+1];
-		strcpy(temp->port_mapping_desc, Desc);
-	}
-	else temp->port_mapping_desc = NULL;
-	
-	temp->lease_duration = LeaseDuration;
+		strcpy(temp->m_PortMappingDescription, Desc);
+	temp->m_PortMappingLeaseDuration = LeaseDuration;
 
 	m_pmap.push_back(temp);
 	
@@ -131,18 +101,18 @@ int PortMapList::PortMapAdd(char *RemoteHost, int Proto, char *ExtIP, int ExtPor
 }
 
 
-int PortMapList::PortMapDelete(int Proto, int ExtPort)
+int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 {
 	
 	for (list<PortMap *>::iterator itr = m_pmap.begin(); itr != m_pmap.end(); itr++)
 	{
-		if (((*itr)->protocol == Proto) && ((*itr)->external_port == ExtPort))
+		if (((*itr)->m_PortMappingProtocol == Proto) && ((*itr)->m_ExternalPort == ExtPort))
 		{
-			delPacketFilter((*itr)->protocol, (*itr)->remote_host,
-					(*itr)->external_ip, (*itr)->external_port);
-			delPortForward((*itr)->protocol, (*itr)->external_ip,
-					(*itr)->external_port, (*itr)->internal_ip,
-					(*itr)->internal_port);
+			delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
+					(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
+			delPortForward((*itr)->m_PortMappingProtocol, (*itr)->m_ExternalIP,
+					(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
+					(*itr)->m_InternalPort);
 			
 			delete (*itr);
 			m_pmap.erase(itr);
@@ -154,10 +124,11 @@ int PortMapList::PortMapDelete(int Proto, int ExtPort)
 
 
 
-int PortMapList::addPacketFilter(int Proto, char *SrcIP, char *DestIP, 
+int PortMapList::addPacketFilter(char *Proto, char *SrcIP, char *DestIP, 
 	int DestPort,int Enabled, char *Desc)
 {
 
+	/*
 	static char *IpAny = "0/0";
 	char prt[4];
 	int ret=0;
@@ -173,34 +144,25 @@ int PortMapList::addPacketFilter(int Proto, char *SrcIP, char *DestIP,
 	// prt, SrcIP, DesIP, DestPort);
 	
 	ret = 1;
+	*/
 	return (1);
 }
 
-int PortMapList::addPortForward(int Proto, char *ExtIP, int ExtPort, 
+int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort, 
 	char *IntIP,int IntPort, int Enabled, char *Desc)
 {
-
 	char command[255];
-	char prt[4];
-	int ret=0;
 
-	if (Proto==6)
-		strcpy (prt, "tcp");
-	else
-		strcpy (prt, "udp");
-
-	sprintf(command,"/usr/sbin/iptables -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", prt, ExtIP, ExtPort, IntIP, IntPort);
-	
+	sprintf(command,"/usr/sbin/iptables -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
 
-	ret=1;
-	return (ret);
+	return (1);
 }
 
-int PortMapList::delPacketFilter(int Proto, char *SrcIP, char *DestIP, 
+int PortMapList::delPacketFilter(char *Proto, char *SrcIP, char *DestIP, 
 	int DestPort)
 {
-
+	/*
 	static char *IpAny = "0/0";
 	char prt[4];
 	int ret=0;
@@ -212,32 +174,24 @@ int PortMapList::delPacketFilter(int Proto, char *SrcIP, char *DestIP,
 	else
 		strcpy(prt, "udp");
 
-	/*sprintf(command,"/sbin/ipchains -D upnp -j ACCEPT -p %s -s %s -d %s %d"
+	sprintf(command,"/sbin/ipchains -D upnp -j ACCEPT -p %s -s %s -d %s %d"
 	, prt, SrcIP, DestIP, DestPort);
-	  doCommand(command*/
+	  doCommand(command
 	
 	ret = 1;
-	return(ret);
+	*/
+	return(1);
+	
 }
 
-int PortMapList::delPortForward(int Proto, char *ExtIP, int ExtPort, 
+int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort, 
 	char* IntIP, int IntPort)
 {
-
 	char command[255];
-	char prt[4];
-	int ret=0;
 	
-	if (Proto==6)
-		strcpy (prt, "tcp");
-	else
-		strcpy (prt, "udp");
-
-	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", prt, ExtIP, ExtPort, IntIP, IntPort);
-	
+	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
-	ret = 1;
-
-	return (ret);
+	
+	return (1);
 }
 

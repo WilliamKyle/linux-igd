@@ -461,7 +461,6 @@ int Gate::GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 
 int Gate::GateDeviceGetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
 {
-	
 	int i = 0;
 	int index = 0;
 	char *mapindex = NULL;
@@ -476,28 +475,35 @@ int Gate::GateDeviceGetGenericPortMappingEntry(struct Upnp_Action_Request *ca_ev
 		{
 			if (i == index)
 			{
-				sprintf(result_parm,"<NewRemoteHost>%s</NewRemoteHost><NewExternalPort>%d</NewExternalPort><NewProtocol>%s</NewProtocol><NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%d</NewLeaseDuration>",
-					"", (*itr)->external_port, getProtoName((*itr)->protocol), (*itr)->internal_port,
-				       	(*itr)->internal_ip, 1, (*itr)->port_mapping_desc, (*itr)->lease_duration);		
+				sprintf(result_parm,"<NewRemoteHost>%s</NewRemoteHost><NewExternalPort>%d</NewExternalPort><NewProtocol>%s</NewProtocol><NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>",
+					"",(*itr)->m_ExternalPort, (*itr)->m_PortMappingProtocol, (*itr)->m_InternalPort,
+				       	(*itr)->m_InternalClient, 1, (*itr)->m_PortMappingDescription, (*itr)->m_PortMappingLeaseDuration);		
 				action_succeeded = 1;
 			}
 	
 		}
+		if (action_succeeded)
+		{
+			ca_event->ErrCode = UPNP_E_SUCCESS;
+	                sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+	                        "urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
+	                ca_event->ActionResult = UpnpParse_Buffer(result_str);
+		}
+		else
+		{
+			syslog(LOG_DEBUG, "Failure in GateDeviceGetGenericPortMappingEntry: PortMapping Doesn't Exist...");
+                        ca_event->ErrCode = 714;
+                        strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
+                        ca_event->ActionResult = NULL;
+		}
+
 	}
 	else
 	{
-		// Invalid Args	
-	}
-	if (action_succeeded == 1)
-	{
-		ca_event->ErrCode = UPNP_E_SUCCESS;
-		sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
-			"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
-		ca_event->ActionResult = UpnpParse_Buffer(result_str);
-	}
-	else
-	{
-		// Not in list
+	         syslog(LOG_DEBUG, "Failure in GateDeviceGetGenericortMappingEntry: Invalid Args");
+	         ca_event->ErrCode = 402;
+                 strcpy(ca_event->ErrStr, "Invalid Args");
+                 ca_event->ActionResult = NULL;
 	}
 
 	if (mapindex) delete [] mapindex;
@@ -517,19 +523,33 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 		&& (proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol")))
 	{
 		prt = getProtoNum(proto);
-		if (prt != 0)
+		if ((prt == 17) || (prt == 6))
 		{
 			for (list<PortMap *>::iterator itr = m_list.m_pmap.begin(); itr != m_list.m_pmap.end(); itr++)
 			{
-				if ((((*itr)->external_port == atoi(ext_port)) && ((*itr)->protocol == prt)))
+				if ((((*itr)->m_ExternalPort == atoi(ext_port)) && (strcmp((*itr)->m_PortMappingProtocol,proto) == 0)))
 				{
-					sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>1</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%d</NewLeaseDuration>",
-							(*itr)->internal_port, 
-							(*itr)->internal_ip,
-							(*itr)->port_mapping_desc,
-							(*itr)->lease_duration);
+					sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>1</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>",
+							(*itr)->m_InternalPort, 
+							(*itr)->m_InternalClient,
+							(*itr)->m_PortMappingDescription,
+							(*itr)->m_PortMappingLeaseDuration);
 					action_succeeded = 1;
 				}
+			}
+			if (action_succeeded)
+			{
+				ca_event->ErrCode = UPNP_E_SUCCESS;
+		                sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+		                        "urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
+		                ca_event->ActionResult = UpnpParse_Buffer(result_str);
+			}
+			else
+			{
+				syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
+		                ca_event->ErrCode = 714;
+		                strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
+		                ca_event->ActionResult = NULL;
 			}
 		}
 		else
@@ -538,9 +558,6 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
                         ca_event->ErrCode = 402;
                         strcpy(ca_event->ErrStr, "Invalid Args");
                         ca_event->ActionResult = NULL;
-                        if (ext_port) delete [] ext_port;
-                        if (proto) delete [] proto;
-                        return (ca_event->ErrCode);
 		}
 	}
 	else
@@ -549,28 +566,6 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 		ca_event->ErrCode = 402;
 		strcpy(ca_event->ErrStr, "Invalid Args");
 		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-		if (proto) delete [] proto;
-	}
-	
-	if (action_succeeded == 0)
-	{
-		syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
-                ca_event->ErrCode = 714;
-                strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
-                ca_event->ActionResult = NULL;
-                if (ext_port) delete [] ext_port;
-                if (proto) delete [] proto;
-	}
-	else
-	{
-		ca_event->ErrCode = UPNP_E_SUCCESS;
-                syslog(LOG_DEBUG, "GetSpecificPortMappingEntry result_parm = %s", result_parm);
-                sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
-	                "urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
-	        ca_event->ActionResult = UpnpParse_Buffer(result_str);
-                if (ext_port) delete [] ext_port;
-                if (proto) delete [] proto;
 	}
 	
 	return (ca_event->ErrCode);
@@ -585,108 +580,87 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	char *int_ip=NULL;
 	char *desc=NULL;
 	int prt,result=0;
-	char *address=NULL;
 	char num[5];
 	char result_str[500];
+	char *address = NULL;
 	Upnp_Document  PropSet= NULL;	
-
+	int action_succeeded = 0;
+	
 	address = m_ipcon->IPCon_GetIpAddrStr();
-	if (!((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
+	
+	if (((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
 		&& (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
 		&& (int_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort"))
 		&& (int_ip   = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient"))
 		&& (desc     = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription"))))
 	{
-		syslog(LOG_DEBUG, "Failiure in GateDeviceAddPortMapping: Invalid Arguments!");
-		ca_event->ErrCode = 402;
-		strcpy(ca_event->ErrStr, "Invalid Args");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-	        if (int_port) delete [] int_port;
-	        if (proto) delete [] proto;
-	        if (int_ip) delete [] int_ip;
-	        if (desc) delete [] desc;
-	        if (address) delete [] address;
-		if (remote_host) delete [] remote_host;
-		return (ca_event->ErrCode);
-	}
-	prt = getProtoNum(proto);
-	if (prt==0)
-	{
-		syslog(LOG_DEBUG, "Failure in GateDeviceAddPortMapping: Invalid NewProtocol=%s\n",proto);
-		ca_event->ErrCode = 402;
-		strcpy(ca_event->ErrStr, "Invalid Args");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-	        if (int_port) delete [] int_port;
-	        if (proto) delete [] proto;
-	        if (int_ip) delete [] int_ip;
-	        if (desc) delete [] desc;
-	        if (address) delete [] address;
-		if (remote_host) delete [] remote_host;
-		return (ca_event->ErrCode);
-
-	}
-	if (chkIPADDRstring(int_ip)==0)
-	{
-		syslog(LOG_DEBUG, "Failure in GateDeviceAddPortMapping: Invalid NewInternalClient=%s\n",int_ip);
-		ca_event->ErrCode = 402;
-		strcpy(ca_event->ErrStr, "Invalid Args");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-	        if (int_port) delete [] int_port;
-		if (proto) delete [] proto;
-		if (int_ip) delete [] int_ip;
-		if (desc) delete [] desc;
-		if (address) delete [] address;
-		if (remote_host) delete [] remote_host;
-		return (ca_event->ErrCode);
-	}
-
-	result=m_list.PortMapAdd(NULL, prt, address, atoi(ext_port), int_ip, atoi(int_port), 1, desc, 0);
-
-	if (result==1)
-	{
-		sprintf(num,"%d",m_list.m_pmap.size());
-		PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
-		UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
-		UpnpDocument_free(PropSet);
-		syslog(LOG_DEBUG, "AddPortMap: RemoteHost: %s Prot: %d Ext: %s.%d Int: %s.%d\n",
-			remote_host,prt, address, atoi(ext_port), int_ip, atoi(int_port));
+		prt = getProtoNum(proto);
+		if ((prt == 6) || (prt ==17) )
+		{
+			if (chkIPADDRstring(int_ip)!=0)
+			{
+				result=m_list.PortMapAdd(NULL, proto, address, atoi(ext_port), int_ip, atoi(int_port), 1, desc, 0);
+				if (result==1)
+				{
+					sprintf(num,"%d",m_list.m_pmap.size());
+					PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
+					UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
+					UpnpDocument_free(PropSet);
+					syslog(LOG_DEBUG, "AddPortMap: RemoteHost: %s Prot: %d ExtPort: %d Int: %s.%d\n",
+						remote_host, prt, atoi(ext_port), int_ip, atoi(int_port));
+					action_succeeded = 1;
+				}
+				else
+				{
+					if (result==718)
+					{
+						syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: RemoteHost: %s Prot:%d ExtPort: %d Int: %s.%d\n",
+							remote_host,prt, atoi(ext_port),int_ip, atoi(int_port));
+						ca_event->ErrCode = 718;
+						strcpy(ca_event->ErrStr, "ConflictInMappingEntry");
+						ca_event->ActionResult = NULL;
+					}
+				}
+			}
+			else
+			{
+		                 syslog(LOG_DEBUG, "Failure in GateDeviceAddPortMapping: Invalid NewInternalClient=%s\n",int_ip);
+                                 ca_event->ErrCode = 402;
+                                 strcpy(ca_event->ErrStr, "Invalid Args");
+                                 ca_event->ActionResult = NULL;
+			}
+		}
+		else
+		{
+		      syslog(LOG_DEBUG, "Failure in GateDeviceAddPortMapping: Invalid NewProtocol=%s\n",proto);
+                      ca_event->ErrCode = 402;
+                      strcpy(ca_event->ErrStr, "Invalid Args");
+                      ca_event->ActionResult = NULL;
+		}
 	}
 	else
 	{
-		if (result==718)
-		{
-			syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: RemoteHost: %s Prot:%d Ext: %s.%d Int: %s.%d\n",
-				remote_host,prt, address, atoi(ext_port),int_ip, atoi(int_port));
-			ca_event->ErrCode = 718;
-			strcpy(ca_event->ErrStr, "ConflictInMappingEntry");
-			ca_event->ActionResult = NULL;
-			if (ext_port) delete [] ext_port;
-	                if (int_port) delete [] int_port;
-	                if (proto) delete [] proto;
-	                if (int_ip) delete [] int_ip;
-	                if (desc) delete [] desc;
-	                if (address) delete [] address;
-			if (remote_host) delete [] remote_host;
-			return (ca_event->ErrCode);
-		}
+		syslog(LOG_DEBUG, "Failiure in GateDeviceAddPortMapping: Invalid Arguments!");
+                ca_event->ErrCode = 402;
+                strcpy(ca_event->ErrStr, "Invalid Args");
+                ca_event->ActionResult = NULL;
 	}
-
-	ca_event->ErrCode = UPNP_E_SUCCESS;
-	sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
-		ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
-	ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	
+	if (action_succeeded)
+	{
+		ca_event->ErrCode = UPNP_E_SUCCESS;
+		sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
+			ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
+		ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	}
 
 	if (ext_port) delete [] ext_port;
 	if (int_port) delete [] int_port;
 	if (proto) delete [] proto;
 	if (int_ip) delete [] int_ip;
 	if (desc) delete [] desc;
-	if (address) delete [] address;
 	if (remote_host) delete [] remote_host;	
-	
+	if (address) delete [] address;
 	return(ca_event->ErrCode);
 }
 
@@ -698,61 +672,59 @@ int Gate::GateDeviceDeletePortMapping(struct Upnp_Action_Request *ca_event)
 	char num[5];
 	char result_str[500];
 	Upnp_Document  PropSet= NULL;
+	int action_succeeded = 0;
 
-	if (!((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort")) &&
+	if (((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort")) &&
 		(proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol"))))
 	{
-		syslog(LOG_DEBUG, "Failiure in GateDeviceDeletePortMapping: Invalid Arguments!");
-		ca_event->ErrCode = 402;
-		strcpy(ca_event->ErrStr, "Invalid Args");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-	        if (proto) delete [] proto;
-		return (ca_event->ErrCode);
-	}
 
-	prt = getProtoNum(proto);
-	if (prt==0)
-	{
-		syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: Invalid NewProtocol=%s\n",proto);
-		ca_event->ErrCode = 402;
-		strcpy(ca_event->ErrStr, "Invalid Args");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-        	if (proto) delete [] proto;
-		
-		return (ca_event->ErrCode);
-	}
-
-	result=m_list.PortMapDelete(prt, atoi(ext_port));
-	if (result==1)
-	{
-		sprintf(num,"%d",m_list.m_pmap.size());
-		PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
-		UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
-		UpnpDocument_free(PropSet);
-		syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
+		prt = getProtoNum(proto);
+		if ((prt == 6) || (prt == 17))
+		{
+			result=m_list.PortMapDelete(proto, atoi(ext_port));
+			if (result==1)
+			{
+				sprintf(num,"%d",m_list.m_pmap.size());
+				PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
+				UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
+				UpnpDocument_free(PropSet);
+				syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
+				action_succeeded = 1;
+			}
+			else
+			{
+				syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
+				ca_event->ErrCode = 714;
+				strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
+				ca_event->ActionResult = NULL;
+			}
+		}
+		else
+		{
+			syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: Invalid NewProtocol=%s\n",proto);
+			ca_event->ErrCode = 402;
+                        strcpy(ca_event->ErrStr, "Invalid Args");
+                        ca_event->ActionResult = NULL;
+		}
 	}
 	else
 	{
-		syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
-		ca_event->ErrCode = 714;
-		strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
-		ca_event->ActionResult = NULL;
-		if (ext_port) delete [] ext_port;
-	        if (proto) delete [] proto;
-	
-		return (ca_event->ErrCode);
+	        syslog(LOG_DEBUG, "Failiure in GateDeviceDeletePortMapping: Invalid Arguments!");
+       	        ca_event->ErrCode = 402;
+       	        strcpy(ca_event->ErrStr, "Invalid Args");
+	        ca_event->ActionResult = NULL;
 	}
 
-	ca_event->ErrCode = UPNP_E_SUCCESS;
-	sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
-		ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
-	ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	if (action_succeeded)
+	{
+		ca_event->ErrCode = UPNP_E_SUCCESS;
+		sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
+			ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
+		ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	}
 
 	if (ext_port) delete [] ext_port;
 	if (proto) delete [] proto;
-
 	return(ca_event->ErrCode);
 }
 

@@ -31,35 +31,19 @@ PortMap::PortMap ()
 
 PortMap::~PortMap ()
 {
-	if (remote_host)
-		delete [] remote_host;
-	if (external_ip)
-		delete [] external_ip;
-	if (internal_ip)
-		delete [] internal_ip;
-	if (port_mapping_desc)
-		delete [] port_mapping_desc;
 }
 
-PortMap::PortMap(char *RemoteHost, int Proto, char *ExtIP, int ExtPort, char *IntIP, int IntPort, int Enabled, char *Desc, int LeaseDuration)
+PortMap::PortMap(char *RemoteHost, char *Proto, char *ExtIP, int ExtPort, char *IntIP, int IntPort, int Enabled, char *Desc, int LeaseDuration)
 {
-	remote_host = new char[10];
-	if (strlen(RemoteHost) < sizeof (remote_host))
-		strcpy (remote_host, RemoteHost);
-	protocol = Proto;
-	external_ip = new char[12];
-	if (strlen(ExtIP) < sizeof(external_ip))
-		strcpy (external_ip, ExtIP);
-	external_port = ExtPort;
-	internal_ip = new char[12];
-	if (strlen(IntIP) < sizeof (internal_ip))
-		strcpy (internal_ip, IntIP);
-	internal_port = IntPort;
-	enabled = Enabled;
-	port_mapping_desc = new char[255];
-	if (strlen(Desc) < sizeof(port_mapping_desc))
-		strcpy (port_mapping_desc, Desc);
-	lease_duration = LeaseDuration;
+	
+	strcpy (m_RemoteHost, RemoteHost);
+	strcpy (m_PortMappingProtocol,Proto);
+	m_ExternalPort = ExtPort;
+	strcpy (m_InternalClient, IntIP);
+	m_InternalPort = IntPort;
+	m_PortMappingEnabled = Enabled;
+	strcpy (m_PortMappingDescription, Desc);
+	m_PortMappingLeaseDuration = LeaseDuration;
 }
 
 

@@ -29,18 +29,18 @@ class PortMap
 	public:
 		PortMap();
 		~PortMap();
-		PortMap(char *RemoteHost, int Proto, char *ExtIP, int ExtPort, char *IntIP,
+		PortMap(char *RemoteHost, char *Proto, char *ExtIP, int ExtPort, char *IntIP,
 			int IntPort, int Enabled, char *Desc, int LeaseDuration);		
-		int fd_socket;
-		int protocol;
-		char *remote_host;
-		char *external_ip;
-		int  external_port;
-		char *internal_ip;
-		int  internal_port;
-		int enabled;
-		char *port_mapping_desc;
-		int lease_duration;
+		
+		bool m_PortMappingEnabled;
+		long int m_PortMappingLeaseDuration;
+		char m_RemoteHost[15];
+		char m_ExternalIP[15];
+		int m_ExternalPort;
+		int m_InternalPort;
+		char m_PortMappingProtocol[4];
+		char m_InternalClient[15];
+		char m_PortMappingDescription[100];
 };
 
 #endif

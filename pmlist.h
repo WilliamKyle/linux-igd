@@ -36,16 +36,15 @@ class PortMapList
 		PortMapList();
 		~PortMapList();
 
-		int PortMapAdd(char *RemoteHost, int Proto, char *ExtIP, int ExtPort,
+		int PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtPort,
 				char *IntIP, int IntPort, int Enabled, char *Desc, int LeaseDuration);
-		int PortMapDelete(int Proto, int ExtPort);
-		int flushPacketFilter();
-		int addPacketFilter(int Proto, char *SrcIP, char *DestIP, int DestPort, 
+		int PortMapDelete(char  *Proto, int ExtPort);
+		int addPacketFilter(char *Proto, char *SrcIP, char *DestIP, int DestPort, 
 			int Enabled, char *Desc);
-		int addPortForward(int Proto, char *ExtIP, int ExtPort, char *IntIP,
+		int addPortForward(char *Proto, char *ExtIP, int ExtPort, char *IntIP,
 			 int IntPort, int Enabled, char *Desc);
-		int delPacketFilter(int Proto, char *SrcIP, char *DestIP, int DestPort);
-		int delPortForward(int Proto, char *ExtIP, int ExtPort, char* IntIP, int IntPort);
+		int delPacketFilter(char *Proto, char *SrcIP, char *DestIP, int DestPort);
+		int delPortForward(char *Proto, char *ExtIP, int ExtPort, char* IntIP, int IntPort);
 
 	list <PortMap *> m_pmap;
 };
