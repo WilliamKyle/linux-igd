@@ -2,6 +2,20 @@
    what i did.  And I know they are not professional changelogs, I mean come on, I'm 23,
    I'm still a kid :-) 
 
+Version 0.92 -- 01/13/2003
+   GG -- Fixed issues with Direct Play games not deleting broadcast port mappings
+         So most if not all Direct Play games will now work correctly.
+      -- Added Byte and Packet counter code contributed by ....
+      -- Changed all the xml and skl files to include our UUID and some other updated
+         information that needed to be changed.
+      -- Added a CREDITS file to make sure I give thanks to the person who inspired
+         me to write this program, along with everyone else who's contributing.
+      -- Fixed the startup message in messages to report the correct version now.
+      -- Once again, other small changes i can't remember  
+
+Version 0.91 -- 12/29/2002
+   GG -- Fixed the port mapping delete's, which was an entire botch in version 0.90
+   GG -- Some more general cleanups to the code
 
 Version 0.90 -- 12/24/2002
    GG -- Too Many changes to remember, it's been a while but here's what works now

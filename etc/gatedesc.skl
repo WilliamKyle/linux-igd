@@ -10,7 +10,7 @@
 		<friendlyName>Linux Internet Gateway Device</friendlyName>
 		<manufacturer>Linux UPnP IGD Project</manufacturer>
 		<manufacturerURL>http://linux-igd.sourceforge.net</manufacturerURL>
-		<modelName>IGD Version 1.0</modelName>
+		<modelName>IGD Version 0.92</modelName>
 		<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN>
 		<iconList>
 			<icon>
@@ -38,9 +38,9 @@
 				<manufacturerURL>http://linux-igd.sourceforge.net</manufacturerURL>
 				<modelDescription>WAN Device on Linux IGD</modelDescription>
 				<modelName>Linux IGD</modelName>
-				<modelNumber>1.0</modelNumber>
+				<modelNumber>0.92</modelNumber>
 				<modelURL>http://linux-igd.sourceforge.net</modelURL>
-				<serialNumber>1.0</serialNumber>
+				<serialNumber>0.92</serialNumber>
 				<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN>
 				<UPC>Linux IGD</UPC>
 				<serviceList>
@@ -60,9 +60,9 @@
 						<manufacturerURL>http://linux-igd.sourceforge.net</manufacturerURL>
 						<modelDescription>WanConnectionDevice on Linux IGD</modelDescription>
 						<modelName>Linux IGD</modelName>
-						<modelNumber>1.0</modelNumber>
+						<modelNumber>0.92</modelNumber>
 						<modelURL>http://linux-igd.sourceforge.net</modelURL>
-						<serialNumber>1.0</serialNumber>
+						<serialNumber>0.92</serialNumber>
 						<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN>
 						<UPC>Linux IGD</UPC>
 						<serviceList>

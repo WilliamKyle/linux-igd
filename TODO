@@ -1,14 +1,13 @@
 Things on the table to do:
 
--- Add command line options to the program to run as a daemon, change directory info, etc. 
-   and basically make it run like a real program. Haha.
+-- Add autoconf and automake to the project to configure for different archs.
 
--- Modularize some of the low level stuff like the firewall code interface, etc., to allow
-   people to have different firewall software packages, etc.  This is one of my main goals, 
-   allowing people to use this sotware with different types of programs.
+-- Add a config file to be able to place the commands for the underlying firewall
+   system in, so that they can be user configurable without recompiling.
 
--- Add some DHCP hooks to the program to give clients an IP address, etc.
+-- Add iptables rules to allow port forwards, not just enable DNAT entries
 
--- Add more stuff to the to do list!!!
+-- Redo the install file
 
+-- Lots of other memory and procedural cleanups
 

@@ -72,7 +72,7 @@ int main (int argc, char** argv)
 	pid_t pid,sid;
 
 	// Log startup of daemon
-	syslog(LOG_INFO, "The Linux UPnP Internet Gateway Device Ver 0.95 by Dime (dime@gulfsales.com)");
+	syslog(LOG_INFO, "The Linux UPnP Internet Gateway Device Ver 0.92 by Dime (dime@gulfsales.com)");
 	syslog(LOG_INFO, "Special Thanks for Intel's Open Source SDK and original author Genmei Mori's work.");
 	
 	if (argc != 3)
