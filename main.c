@@ -19,8 +19,7 @@ int main (int argc, char** argv)
 	char descDocName[20];
 	char xmlPath[50];
 
-	sigset_t sigsToCatch, oldSet;
-	sigset_t sigsToCatch, oldSet;
+	sigset_t sigsToCatch;
 
 	pid_t pid,sid;
 
