@@ -123,7 +123,7 @@ int main (int argc, char** argv)
         syslog(LOG_DEBUG, "ipaddress=%s port=%d\n", lan_ip_address, port);
 	syslog(LOG_DEBUG, "conf_dir_path=%s\n", conf_dir_path);
 
-	if ((ret = UpnpInit(lan_ip_address, INIT_PORT)) != UPNP_E_SUCCESS)
+	if ((ret = UpnpInit(lan_ip_address, 0)) != UPNP_E_SUCCESS)
 	{
 		syslog(LOG_ERR, "Error with UpnpInit -- %d\n", ret);
 		UpnpFinish();

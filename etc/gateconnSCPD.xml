@@ -291,6 +291,10 @@
       <dataType>boolean</dataType>
       <defaultValue>1</defaultValue>
     </stateVariable>  
+    <stateVariable sendEvents="yes">
+      <name>X_Name</name>
+      <dataType>string</dataType>
+    </stateVariable>
     <stateVariable sendEvents="no">
       <name>LastConnectionError</name>
       <dataType>string</dataType>
