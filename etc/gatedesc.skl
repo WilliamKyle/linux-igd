@@ -22,6 +22,13 @@
 			</icon>
 		</iconList>
 		<serviceList>
+			<service>
+				<serviceType>urn:schemas-microsoft-com:service:OSInfo:1</serviceType>
+				<serviceId>urn:microsoft-com:serviceId:OSInfo1</serviceId>
+				<controlURL>/upnp/control/OSInfo1</controlURL>
+				<eventSubURL>/upnp/event/OSInfo1</eventSubURL>
+				<SCPDURL>/gateinfoSCPD.xml</SCPDURL>
+			</service>
 		</serviceList>
 		<deviceList>
 			<device>
