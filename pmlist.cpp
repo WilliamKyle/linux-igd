@@ -59,24 +59,26 @@ int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtP
 	int fd_socket, fd_proto;
 	struct sockaddr_in addr;
 	PortMap *temp;
-	
-	if ((strcmp(Proto,"TCP")) || (strcmp(Proto,"tcp")))
+
+	if ((strcmp(Proto,"TCP") == 0) || (strcmp(Proto,"tcp") == 0))
 		fd_proto = SOCK_STREAM;
 	else
 		fd_proto = SOCK_DGRAM;
 	
 	if ((fd_socket = socket(AF_INET,fd_proto, 0)) == -1)
-		perror("socket");
-
+		syslog(LOG_DEBUG, "Socket Error");
+	
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_port = htons(ExtPort);
 	if (bind(fd_socket, (struct sockaddr *) &addr, sizeof(addr)) == -1)
 	{
 		close(fd_socket);
+		syslog(LOG_DEBUG,"Error binding socket");
 		return (718);
 	}
-
+	close (fd_socket);
+	
 	temp = new PortMap;
 	if (RemoteHost != NULL)
 		strcpy(temp->m_RemoteHost, RemoteHost);
@@ -106,7 +108,7 @@ int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 	
 	for (list<PortMap *>::iterator itr = m_pmap.begin(); itr != m_pmap.end(); itr++)
 	{
-		if (((*itr)->m_PortMappingProtocol == Proto) && ((*itr)->m_ExternalPort == ExtPort))
+		if (( strcmp((*itr)->m_PortMappingProtocol,Proto) == 0 ) && ((*itr)->m_ExternalPort == ExtPort))
 		{
 			delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
 					(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
@@ -189,6 +191,7 @@ int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort,
 {
 	char command[255];
 	
+
 	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
 	

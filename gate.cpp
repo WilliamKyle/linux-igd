@@ -30,6 +30,7 @@
 #include "portmap.h"
 #include <arpa/inet.h>
 #include "gate.h"
+#include <unistd.h>
 
 pthread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -491,9 +492,8 @@ int Gate::GateDeviceGetGenericPortMappingEntry(struct Upnp_Action_Request *ca_ev
 		}
 		else
 		{
-			syslog(LOG_DEBUG, "Failure in GateDeviceGetGenericPortMappingEntry: PortMapping Doesn't Exist...");
-                        ca_event->ErrCode = 714;
-                        strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
+                        ca_event->ErrCode = 713;
+                        strcpy(ca_event->ErrStr, "SpecifiedArrayIndexInvalid");
                         ca_event->ActionResult = NULL;
 		}
 
@@ -599,6 +599,19 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 		{
 			if (chkIPADDRstring(int_ip)!=0)
 			{
+				for (list<PortMap *>::iterator itr=m_list.m_pmap.begin(); itr != m_list.m_pmap.end(); itr++)
+				{
+					if (((*itr)->m_ExternalPort == atoi(ext_port)) 
+						&& (strcmp((*itr)->m_PortMappingProtocol,proto) == 0) 
+						&& (strcmp((*itr)->m_InternalClient,int_ip) == 0))
+					{
+						m_list.delPortForward((*itr)->m_PortMappingProtocol, 
+								(*itr)->m_ExternalIP,
+								(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
+								(*itr)->m_InternalPort);
+					}
+				}
+			
 				result=m_list.PortMapAdd(NULL, proto, address, atoi(ext_port), int_ip, atoi(int_port), 1, desc, 0);
 				if (result==1)
 				{
@@ -684,11 +697,11 @@ int Gate::GateDeviceDeletePortMapping(struct Upnp_Action_Request *ca_event)
 			result=m_list.PortMapDelete(proto, atoi(ext_port));
 			if (result==1)
 			{
+				syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
 				sprintf(num,"%d",m_list.m_pmap.size());
 				PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
 				UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
 				UpnpDocument_free(PropSet);
-				syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
 				action_succeeded = 1;
 			}
 			else
