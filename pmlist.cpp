@@ -159,9 +159,9 @@ int PortMapList::addPacketFilter(char *Proto, char *SrcIP, char *DestIP,
 {
 	char command[255];
 
-        sprintf(command,"%s -I FORWARD 0 -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
-	syslog(LOG_DEBUG,command);
-        return (1);
+        sprintf(command,"%s -I FORWARD 1 -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
+        system(command);
+	return (1);
 
 
 }
