@@ -70,6 +70,41 @@
         </argument>
       </argumentList>
     </action>
+    <action>
+    <name>X_GetICSStatistics</name>
+      <argumentList>
+        <argument>
+          <name>TotalBytesSent</name>
+          <direction>out</direction>
+          <relatedStateVariable>TotalBytesSent</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>TotalBytesReceived</name>
+          <direction>out</direction>
+          <relatedStateVariable>TotalBytesReceived</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>TotalPacketsSent</name>
+          <direction>out</direction>
+          <relatedStateVariable>TotalPacketsSent</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>TotalPacketsReceived</name>
+          <direction>out</direction>
+          <relatedStateVariable>TotalPacketsReceived</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>Layer1DownstreamMaxBitRate</name>
+          <direction>out</direction>
+          <relatedStateVariable>Layer1DownstreamMaxBitRate</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>Uptime</name>
+          <direction>out</direction>
+          <relatedStateVariable>X_Uptime</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>
 	</actionList>
 	<serviceStateTable>
 		<stateVariable sendEvents="no">
@@ -128,6 +163,14 @@
     </stateVariable>
     <stateVariable sendEvents="no">
       <name>TotalPacketsReceived</name>
+      <dataType>ui4</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>X_PersonalFirewallEnabled</name>
+      <dataType>boolean</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>X_Uptime</name>
       <dataType>ui4</dataType>
     </stateVariable>
 	</serviceStateTable>
