@@ -31,7 +31,7 @@ int EventHandler(Upnp_EventType EventType, void *Event, void *Cookie)
 			HandleActionRequest((struct Upnp_Action_Request *) Event);
 			break;
 		default:
-			syslog(LOG_DEBUG, "Error in EventHandler: Unknown event type %d",
+			if (g_debug) syslog(LOG_DEBUG, "Error in EventHandler: Unknown event type %d",
 						EventType);
 	}
 	return (0);
@@ -74,7 +74,7 @@ int HandleSubscriptionRequest(struct Upnp_Subscription_Request *sr_event)
 		// WAN Common Interface Config Device Notifications
 		if (strcmp(sr_event->ServiceId, "urn:upnp-org:serviceId:WANCommonIFC1") == 0)
 		{
-			syslog(LOG_DEBUG, "Recieved request to subscribe to WANCommonIFC1");
+			if (g_debug) syslog(LOG_DEBUG, "Recieved request to subscribe to WANCommonIFC1");
 			UpnpAddToPropertySet(&propSet, "PhysicalLinkStatus", "Up");
 			UpnpAcceptSubscriptionExt(deviceHandle, sr_event->UDN, sr_event->ServiceId,
 												propSet, sr_event->Sid);
@@ -84,7 +84,7 @@ int HandleSubscriptionRequest(struct Upnp_Subscription_Request *sr_event)
 		else if (strcmp(sr_event->ServiceId, "urn:upnp-org:serviceId:WANIPConn1") == 0)
 		{
 			GetIpAddressStr(ExternalIPAddress, g_extInterfaceName);
-			syslog(LOG_DEBUG, "Received request to subscribe to WANIPConn1");
+			if (g_debug) syslog(LOG_DEBUG, "Received request to subscribe to WANIPConn1");
 			UpnpAddToPropertySet(&propSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&propSet, "ConnectionStatus","Connected");
 			UpnpAddToPropertySet(&propSet, "ExternalIPAddress", ExternalIPAddress);
@@ -103,7 +103,7 @@ int HandleGetVarRequest(struct Upnp_State_Var_Request *gv_request)
 	// GET VAR REQUEST DEPRECATED FROM UPnP SPECIFICATIONS 
 	// Report this in debug and ignore requests.  If anyone experiences problems
 	// please let us know.
-	syslog(LOG_DEBUG, "Deprecated Get Variable Request received. Ignoring.");
+	if (g_debug) syslog(LOG_DEBUG, "Deprecated Get Variable Request received. Ignoring.");
 	return 1;
 }
 
@@ -116,7 +116,7 @@ int HandleActionRequest(struct Upnp_Action_Request *ca_event)
 	if (strcmp(ca_event->DevUDN, gateUDN) == 0)
 	{
 		// Common debugging info, hopefully gets removed soon.
-		syslog(LOG_DEBUG, "ActionName = %s", ca_event->ActionName);
+		if (g_debug) syslog(LOG_DEBUG, "ActionName = %s", ca_event->ActionName);
 		
 		if (strcmp(ca_event->ServiceID, "urn:upnp-org:serviceId:WANIPConn1") == 0)
 		{
@@ -174,7 +174,7 @@ int HandleActionRequest(struct Upnp_Action_Request *ca_event)
 				result = GetCommonLinkProperties(ca_event);
 			else 
 			{
-				syslog(LOG_DEBUG, "Invalid Action Request : %s",ca_event->ActionName);
+				if (g_debug) syslog(LOG_DEBUG, "Invalid Action Request : %s",ca_event->ActionName);
 				result = InvalidAction(ca_event);
 			}
 		} 
@@ -214,7 +214,7 @@ int GetConnectionTypeInfo (struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetConnectionTypeinfo: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetConnectionTypeinfo: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -242,7 +242,7 @@ int GetNATRSIPStatus(struct Upnp_Action_Request *ca_event)
 	}
    else
 	{
-		syslog(LOG_DEBUG, "Error parsing Response to GetNATRSIPStatus: %s", resultStr);
+		if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetNATRSIPStatus: %s", resultStr);
 		ca_event->ActionResult = NULL;
 		ca_event->ErrCode = 402;
 	}
@@ -275,7 +275,7 @@ int RequestConnection(struct Upnp_Action_Request *ca_event)
 	//Immediatley Set connectionstatus to connected, and lastconnectionerror to none.
 	strcpy(ConnectionStatus,"Connected");
 	strcpy(LastConnectionError, "ERROR_NONE");
-	syslog(LOG_DEBUG, "RequestConnection recieved ... Setting Status to %s.", ConnectionStatus);
+	if (g_debug) syslog(LOG_DEBUG, "RequestConnection recieved ... Setting Status to %s.", ConnectionStatus);
 
 	// Build DOM Document with state variable connectionstatus and event it
 	UpnpAddToPropertySet(&propSet, "ConnectionStatus", ConnectionStatus);
@@ -309,7 +309,7 @@ int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetCommonLinkProperties: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetCommonLinkProperties: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -355,7 +355,7 @@ int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetTotalBytesSent: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetTotalBytesSent: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -404,7 +404,7 @@ int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetTotalBytesReceived: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetTotalBytesReceived: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -451,7 +451,7 @@ int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetPacketsSent: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetPacketsSent: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -498,7 +498,7 @@ int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetPacketsReceived: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetPacketsReceived: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -529,7 +529,7 @@ int GetStatusInfo(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to GetStatusInfo: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to GetStatusInfo: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -565,7 +565,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 		// to be in the same place.
 		if ((ret = pmlist_Find(ext_port, proto, int_ip)) != NULL)
 		{
-				syslog(LOG_DEBUG, "Found port map meeting criteria.  Replacing");
+				if (g_debug) syslog(LOG_DEBUG, "Found port map meeting criteria.  Replacing");
 				pmlist_Delete(ret);
 		}
 			
@@ -574,11 +574,11 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 		if (result)
 		{
 			sprintf(num, "%d", pmlist_Size());
-			syslog(LOG_DEBUG, "PortMappingNumberOfEntries: %d", pmlist_Size());
+			if (g_debug) syslog(LOG_DEBUG, "PortMappingNumberOfEntries: %d", pmlist_Size());
 			UpnpAddToPropertySet(&propSet, "PortMappingNumberOfEntries", num);				
 			UpnpNotifyExt(deviceHandle, ca_event->DevUDN, ca_event->ServiceID, propSet);
 			ixmlDocument_free(propSet);
-			syslog(LOG_DEBUG, "AddPortMap: RemoteHost: %s Prot: %s ExtPort: %s Int: %s.%s\n",
+			if (g_debug) syslog(LOG_DEBUG, "AddPortMap: RemoteHost: %s Prot: %s ExtPort: %s Int: %s.%s\n",
                  remote_host, proto, ext_port, int_ip, int_port);
 			action_succeeded = 1;
 		}
@@ -586,7 +586,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 		{
 			if (result==718)
 			{
-				syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: RemoteHost: %s Prot:%s ExtPort: %s Int: %s.%s\n",
+				if (g_debug) syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: RemoteHost: %s Prot:%s ExtPort: %s Int: %s.%s\n",
 					remote_host, proto, ext_port, int_ip, int_port);
 				ca_event->ErrCode = 718;
 				strcpy(ca_event->ErrStr, "ConflictInMappingEntry");
@@ -596,7 +596,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	}
 	else
 	{
-		syslog(LOG_DEBUG, "Failiure in GateDeviceAddPortMapping: Invalid Arguments!");
+		if (g_debug) syslog(LOG_DEBUG, "Failiure in GateDeviceAddPortMapping: Invalid Arguments!");
 		ca_event->ErrCode = 402;
 		strcpy(ca_event->ErrStr, "Invalid Args");
 		ca_event->ActionResult = NULL;
@@ -653,7 +653,7 @@ int GetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-            syslog(LOG_DEBUG, "Failure in GateDeviceGetGenericortMappingEntry: Invalid Args");
+            if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceGetGenericortMappingEntry: Invalid Args");
             ca_event->ErrCode = 402;
                  strcpy(ca_event->ErrStr, "Invalid Args");
                  ca_event->ActionResult = NULL;
@@ -696,7 +696,7 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
          }
          else
          {
-            syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
+            if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
                       ca_event->ErrCode = 714;
                       strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
                       ca_event->ActionResult = NULL;
@@ -704,7 +704,7 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
       }
       else
       {
-              syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid NewProtocol=%s\n",proto);
+              if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid NewProtocol=%s\n",proto);
                         ca_event->ErrCode = 402;
                         strcpy(ca_event->ErrStr, "Invalid Args");
                         ca_event->ActionResult = NULL;
@@ -712,7 +712,7 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid Args");
+      if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid Args");
       ca_event->ErrCode = 402;
       strcpy(ca_event->ErrStr, "Invalid Args");
       ca_event->ActionResult = NULL;
@@ -741,7 +741,7 @@ int GetExternalIPAddress(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-      syslog(LOG_DEBUG, "Error parsing Response to ExternalIPAddress: %s", resultStr);
+      if (g_debug) syslog(LOG_DEBUG, "Error parsing Response to ExternalIPAddress: %s", resultStr);
       ca_event->ActionResult = NULL;
       ca_event->ErrCode = 402;
    }
@@ -771,7 +771,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
 
          if (result==1)
          {
-            syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
+            if (g_debug) syslog(LOG_DEBUG, "DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
             sprintf(num,"%d",pmlist_Size());
             UpnpAddToPropertySet(&propSet,"PortMappingNumberOfEntries", num);
             UpnpNotifyExt(deviceHandle, ca_event->DevUDN,ca_event->ServiceID,propSet);
@@ -780,7 +780,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
          }
          else
          {
-            syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
+            if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: DeletePortMap: Proto:%s Port:%s\n",proto, ext_port);
             ca_event->ErrCode = 714;
             strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
             ca_event->ActionResult = NULL;
@@ -788,7 +788,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
       }
       else
       {
-         syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: Invalid NewProtocol=%s\n",proto);
+         if (g_debug) syslog(LOG_DEBUG, "Failure in GateDeviceDeletePortMapping: Invalid NewProtocol=%s\n",proto);
          ca_event->ErrCode = 402;
 			strcpy(ca_event->ErrStr, "Invalid Args");
 			ca_event->ActionResult = NULL;
@@ -796,7 +796,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
    }
    else
    {
-		syslog(LOG_DEBUG, "Failiure in GateDeviceDeletePortMapping: Invalid Arguments!");
+		if (g_debug) syslog(LOG_DEBUG, "Failiure in GateDeviceDeletePortMapping: Invalid Arguments!");
 		ca_event->ErrCode = 402;
 		strcpy(ca_event->ErrStr, "Invalid Args");
 		ca_event->ActionResult = NULL;

@@ -234,12 +234,12 @@ int pmlist_AddPortMapping (char *protocol, char *externalPort, char *internalCli
 	char command[500];
 	
 	sprintf(command, "%s -t nat -A %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	syslog(LOG_DEBUG, command);
+	if (g_debug) syslog(LOG_DEBUG, command);
 	system (command);
 	if (g_forwardRules)
 	{
 	    sprintf(command,"%s -I %s -p %s -d %s --dport %s -j ACCEPT", g_iptables,g_forwardChainName, protocol, internalClient, internalPort);
-	    syslog(LOG_DEBUG, command);
+	    if (g_debug) syslog(LOG_DEBUG, command);
 	    system(command);
 	}
 
@@ -252,12 +252,12 @@ int pmlist_DeletePortMapping(char *protocol, char *externalPort, char *internalC
 
 	sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
 			g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	syslog(LOG_DEBUG, command);
+	if (g_debug) syslog(LOG_DEBUG, command);
 	system(command);
 	if (g_forwardRules)
 	{
 	    sprintf(command,"%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_iptables, g_forwardChainName, protocol, internalClient, internalPort);
-	    syslog(LOG_DEBUG, command);
+	    if (g_debug) syslog(LOG_DEBUG, command);
 	    system(command);
 	}
 	return 1;

@@ -30,17 +30,15 @@ int main (int argc, char** argv)
       printf("Example: upnpd eth1 eth0\n");
       exit(0);
    }
-	int dummy;  // Just a dummy sent to parseConfigFile to
-	            // catch the debug var
 
-	parseConfigFile(&g_forwardRules,&dummy,g_iptables,
+	parseConfigFile(&g_forwardRules,&g_debug,g_iptables,
 		        g_forwardChainName,g_preroutingChainName,
 			g_upstreamBitrate,g_downstreamBitrate,
 			descDocName,xmlPath);
 	// Save the interface names for later uses
 	strcpy(g_extInterfaceName, argv[1]);
 	strcpy(g_intInterfaceName, argv[2]);
-		
+
 	// Get the internal ip address to start the daemon on
 	GetIpAddressStr(g_intIpAddress, g_intInterfaceName);	
 
@@ -69,7 +67,7 @@ int main (int argc, char** argv)
 	// End Daemon initialization
 
 	// Initialize UPnP SDK on the internal Interface
-	syslog(LOG_DEBUG, "Initializing UPnP SDK ... ");
+	if (g_debug) syslog(LOG_DEBUG, "Initializing UPnP SDK ... ");
 	if ( (ret = UpnpInit(g_intIpAddress,0) ) != UPNP_E_SUCCESS)
 	{
 		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",g_intIpAddress);
@@ -77,10 +75,10 @@ int main (int argc, char** argv)
 		UpnpFinish();
 		exit(1);
 	}
-	syslog(LOG_DEBUG, "UPnP SDK Successfully Initialized.");
+	if (g_debug) syslog(LOG_DEBUG, "UPnP SDK Successfully Initialized.");
 
 	// Set the Device Web Server Base Directory
-	syslog(LOG_DEBUG, "Setting the Web Server Root Directory to %s",xmlPath);
+	if (g_debug) syslog(LOG_DEBUG, "Setting the Web Server Root Directory to %s",xmlPath);
 	if ( (ret = UpnpSetWebServerRootDir(xmlPath)) != UPNP_E_SUCCESS )
 	{
 		syslog (LOG_ERR, "Error Setting Web Server Root Directory to: %s", xmlPath);
@@ -88,7 +86,7 @@ int main (int argc, char** argv)
 		UpnpFinish();
 		exit(1);
 	}
-	syslog(LOG_DEBUG, "Succesfully set the Web Server Root Directory.");
+	if (g_debug) syslog(LOG_DEBUG, "Succesfully set the Web Server Root Directory.");
 
 
 	// Form the Description Doc URL to pass to RegisterRootDevice
@@ -96,7 +94,7 @@ int main (int argc, char** argv)
 				UpnpGetServerPort(), descDocName);
 
 	// Register our IGD as a valid UPnP Root device
-	syslog(LOG_DEBUG, "Registering the root device with descDocUrl %s", descDocUrl);
+	if (g_debug) syslog(LOG_DEBUG, "Registering the root device with descDocUrl %s", descDocUrl);
 	if ( (ret = UpnpRegisterRootDevice(descDocUrl, EventHandler, &deviceHandle,
 													&deviceHandle)) != UPNP_E_SUCCESS )
 	{

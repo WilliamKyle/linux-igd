@@ -7,6 +7,8 @@ char g_extInterfaceName[10]; // The name of the external interface, picked up fr
 char g_intInterfaceName[10]; // The name of the internal interface, picked from command line
 char g_intIpAddress[16];     // Server internal ip address
 // All vars below are read from /etc/upnpd.conf in main.c
+int g_debug;  // 1 - print debug messages to syslog
+              // 0 - no debug messages
 char g_iptables[50];  // The full name and path of the iptables executable, used in pmlist.c
 char g_upstreamBitrate[10];  // The upstream bitrate reported by the daemon
 char g_downstreamBitrate[10]; // The downstream bitrate reported by the daemon
