@@ -184,6 +184,8 @@ int pmlist_Delete(struct portMap* item)
 	temp = pmlist_Find(item->m_ExternalPort, item->m_PortMappingProtocol, item->m_InternalClient);
 	if (temp) // We found the item to delete
 	{
+		pmlist_DeletePortMapping(item->m_PortMappingProtocol, item->m_ExternalPort, 
+				item->m_InternalClient, item->m_InternalPort);
 		if (temp == pmlist_Head) // We are the head of the list
 		{
 			if (temp->next == NULL) // We're the only node in the list
@@ -221,8 +223,6 @@ int pmlist_Delete(struct portMap* item)
 
 	if (action_succeeded == 1)
 	{
-		pmlist_DeletePortMapping(item->m_PortMappingProtocol, item->m_ExternalPort, 
-				item->m_InternalClient, item->m_InternalPort);
 		return 1;
 	}
 	else 
