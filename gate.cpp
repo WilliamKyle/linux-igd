@@ -346,8 +346,6 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
-	
-	if (iface) delete [] iface;
 
         return(ca_event->ErrCode);
 
@@ -389,8 +387,6 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
                 total, ca_event->ActionName );
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 	
-	if (iface) delete [] iface;
-
         return(ca_event->ErrCode);
 
 }
@@ -428,8 +424,6 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
-
-	if (iface) delete [] iface;
 
         return(ca_event->ErrCode);
 
@@ -469,8 +463,6 @@ int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
-	if (iface) delete [] iface;
-	
         return(ca_event->ErrCode);
 
 }
