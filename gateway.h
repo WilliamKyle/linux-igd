@@ -26,30 +26,14 @@
 
 extern pthread_mutex_t DevMutex;
 
-#define INIT_PORT          2869
-#define INIT_DESC_DOC      "gatedesc"
+// Location of your XML and SKL files.  Default is /etc/linuxigd
 #define INIT_CONF_DIR      "/etc/linuxigd/"
 
-#define GATE_SERVICE_SERVCOUNT  3
-#define GATE_SERVICE_OSINFO             0
-#define GATE_SERVICE_CONFIG             1
-#define GATE_SERVICE_CONNECT    2
+// Location of your iptables script.  Default is /sbin/iptables
+#define IPTABLES	"/sbin/iptables"
 
+// Internal variables, do not modify.
+#define GATE_SERVICE_CONFIG	1
+#define GATE_SERVICE_CONNECT	2
 
-#define GATE_OSINFO_VARCOUNT    4
-#define GATE_OSINFO_MAJORVER    0
-#define GATE_OSINFO_MINORVER    1
-#define GATE_OSINFO_BUILDNUM    2
-#define GATE_OSINFO_PCNAME              3
-
-#define CONFIG_VARCOUNT    4
-#define CONFIG_COLOR               0
-
-#define MAX_VAL_LEN 32
-
-/* This should be the maximum VARCOUNT from above */
-#define MAXVARS OSINFO_VARCOUNT
-
-#define IPCHAINS        "/sbin/ipchains"
-
-#endif
+#endif // _GATEWAY_H_

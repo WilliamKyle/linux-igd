@@ -142,19 +142,7 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 
 	if (strcmp(sr_event->UDN, gate_udn) == 0)
 	{
-		if (strcmp(sr_event->ServiceId, GateServiceId[GATE_SERVICE_OSINFO]) == 0)
-		{
-			UpnpAddToPropertySet(&PropSet, "OSMajorVersion","5");
-			UpnpAddToPropertySet(&PropSet, "OSMinorVersion","1");
-			UpnpAddToPropertySet(&PropSet, "OSBuildNumber","2600");
-			UpnpAddToPropertySet(&PropSet, "OSMachineName","Linux IGD");
-			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,
-					sr_event->ServiceId, PropSet, sr_event->Sid);
-			ixmlDocument_free(PropSet);
-
-
-		}
-		else if (strcmp(sr_event->ServiceId, GateServiceId[GATE_SERVICE_CONFIG]) == 0)
+		if (strcmp(sr_event->ServiceId, GateServiceId[GATE_SERVICE_CONFIG]) == 0)
 		{
 			UpnpAddToPropertySet(&PropSet, "PhysicalLinkStatus", m_ipcon->IPCon_GetIfStatStr());
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN, sr_event->ServiceId, PropSet, sr_event->Sid);
@@ -250,8 +238,6 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 		{
 			if (strcmp(ca_event->ActionName,"GetCommonLinkProperties") == 0)
 				result = GateDeviceGetCommonLinkProperties(ca_event);
-			else if (strcmp(ca_event->ActionName, "X") == 0)
-				result = GateDeviceX(ca_event);
 			else if (strcmp(ca_event->ActionName,"GetTotalBytesSent") == 0)
 				result = GateDeviceGetTotalBytesSent(ca_event);
 			else if (strcmp(ca_event->ActionName,"GetTotalBytesReceived") == 0)
@@ -269,13 +255,6 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	return(result);
 }
 
-int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
-{
-	ca_event->ErrCode = 401;
-	strcpy(ca_event->ErrStr, "Invalid Action");
-	ca_event->ActionResult = NULL;
-	return (ca_event->ErrCode);
-}
 int Gate::GateDeviceInvalidAction(struct Upnp_Action_Request *ca_event)
 {
         ca_event->ErrCode = 401;

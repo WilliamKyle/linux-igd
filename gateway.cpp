@@ -47,6 +47,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+
 // The global GATE object
 Gate gate;
 
@@ -61,12 +62,11 @@ int substr(char *docpath, char *infile, char *outfile, char *str_from, char *str
 
 int main (int argc, char** argv)
 {
-	char *desc_doc_name=NULL, *conf_dir_path=NULL;
+	char *conf_dir_path=NULL;
 	char lan_ip_address[16];
 	char *desc_doc_url;
 	int sig;
 	sigset_t sigs_to_catch;
-	int port;
 	int ret;
 	char *address;
 	pid_t pid,sid;
@@ -115,26 +115,24 @@ int main (int argc, char** argv)
 	if (address) delete [] address;
 	delete gate.m_ipcon;
 	
-	port = INIT_PORT;
-	desc_doc_name=INIT_DESC_DOC;
 	conf_dir_path=INIT_CONF_DIR;
 
    	syslog(LOG_DEBUG, "Intializing UPnP with desc_doc_url=%s\n",desc_doc_url);
-        syslog(LOG_DEBUG, "ipaddress=%s port=%d\n", lan_ip_address, port);
+        syslog(LOG_DEBUG, "ipaddress=%s", lan_ip_address);
 	syslog(LOG_DEBUG, "conf_dir_path=%s\n", conf_dir_path);
 
-	if ((ret = UpnpInit(lan_ip_address, 0)) != UPNP_E_SUCCESS)
+	if ((ret = UpnpInit(lan_ip_address, 49512)) != UPNP_E_SUCCESS)
 	{
 		syslog(LOG_ERR, "Error with UpnpInit -- %d\n", ret);
 		UpnpFinish();
 		exit(1);
 	}
 	syslog(LOG_DEBUG, "UPnP Initialization Completed");
-	char base_url[200];
-	sprintf(base_url,"http://%s:%d", UpnpGetServerIpAddress(), UpnpGetServerPort());
-	sprintf(desc_doc_url, "%s/%s.xml", base_url, desc_doc_name);
-        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",base_url);
-	
+
+	sprintf(desc_doc_url, "http://%s:%d", UpnpGetServerIpAddress(), 49512);//UpnpGetServerPort());
+        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",desc_doc_url);
+        sprintf(desc_doc_url, "http://%s:%d/gatedesc.xml", UpnpGetServerIpAddress(), UpnpGetServerPort());
+
 	syslog(LOG_DEBUG, "Setting webserver root directory -- %s\n",conf_dir_path);
 	if ((ret = UpnpSetWebServerRootDir(conf_dir_path)) != UPNP_E_SUCCESS)
 	{

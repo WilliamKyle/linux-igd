@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
+#include "gateway.h"
 
 PortMapList::PortMapList()
 {
@@ -156,25 +157,13 @@ int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 int PortMapList::addPacketFilter(char *Proto, char *SrcIP, char *DestIP, 
 	int DestPort,int Enabled, char *Desc)
 {
+	char command[255];
 
-	/*
-	static char *IpAny = "0/0";
-	char prt[4];
-	int ret=0;
-	
-	if (SrcIP == NULL) 
-		SrcIP = IpAny;
-	if (Proto==6)
-		strcpy(prt, "tcp");
-	else
-		strcpy(prt, "udp");
-	
-	// sprintf(command, "/sbin/ipchains -I upnp -j ACCEPT -p %s -s %s -d %s %d",
-	// prt, SrcIP, DesIP, DestPort);
-	
-	ret = 1;
-	*/
-	return (1);
+        sprintf(command,"%s -I FORWARD 0 -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
+	syslog(LOG_DEBUG,command);
+        return (1);
+
+
 }
 
 int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort, 
@@ -182,7 +171,7 @@ int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort,
 {
 	char command[255];
 
-	sprintf(command,"/usr/sbin/iptables -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
+	sprintf(command,"%s -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", IPTABLES, Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
 
 	return (1);
@@ -191,26 +180,13 @@ int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort,
 int PortMapList::delPacketFilter(char *Proto, char *SrcIP, char *DestIP, 
 	int DestPort)
 {
-	/*
-	static char *IpAny = "0/0";
-	char prt[4];
-	int ret=0;
+	char command[255];
 
-	if (SrcIP == NULL) 
-		SrcIP = IpAny;
-	if (Proto==6)
-		strcpy(prt, "tcp");
-	else
-		strcpy(prt, "udp");
+        sprintf(command,"%s -D FORWARD -p %s -d %s --dport %d -j ACCEPT", IPTABLES, Proto, DestIP, DestPort);
+	system(command);
 
-	sprintf(command,"/sbin/ipchains -D upnp -j ACCEPT -p %s -s %s -d %s %d"
-	, prt, SrcIP, DestIP, DestPort);
-	  doCommand(command
-	
-	ret = 1;
-	*/
-	return(1);
-	
+        return (1);
+
 }
 
 int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort, 
@@ -219,7 +195,7 @@ int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort,
 	char command[255];
 	
 
-	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
+	sprintf(command, "%s -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", IPTABLES, Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);	
 	return (1);
 }
