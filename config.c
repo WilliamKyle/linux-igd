@@ -12,7 +12,7 @@
 #define IPTABLES_DEFAULT_UPSTREAM_BITRATE "0"
 #define IPTABLES_DEFAULT_DOWNSTREAM_BITRATE "0"
 #define DESC_DOC_DEFAULT "gatedesc.xml"
-#define XML_PATH_DEFAULT "/etx/linuxigd"
+#define XML_PATH_DEFAULT "/etc/linuxigd"
 
 int getConfigOptionArgument(char string[],char line[], regmatch_t *submatch) 
 {
