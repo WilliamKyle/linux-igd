@@ -615,6 +615,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	if (int_port) free(int_port);
 	if (proto) free(proto);
 	if (int_ip) free(int_ip);
+	if (bool_enabled) free(bool_enabled);
 	if (desc) free(desc);
 	if (remote_host) free(remote_host);
 	
