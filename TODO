@@ -3,9 +3,6 @@ Things on the table to do:
 -- Add command line options to the program to run as a daemon, change directory info, etc. 
    and basically make it run like a real program. Haha.
 
--- Clean up the control branches and the code to make it a little more readable and followable
-   (you can never have too clean of code).
-
 -- Modularize some of the low level stuff like the firewall code interface, etc., to allow
    people to have different firewall software packages, etc.  This is one of my main goals, 
    allowing people to use this sotware with different types of programs.

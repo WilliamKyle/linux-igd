@@ -1,3 +1,20 @@
+-- Note to everyone, these are by no means complete, since I can't remember half the time
+   what i did.  And I know they are not professional changelogs, I mean come on, I'm 23,
+   I'm still a kid :-) 
+
+
+Version 0.90 -- 12/24/2002
+   GG -- Too Many changes to remember, it's been a while but here's what works now
+   GG -- File Transfer Seems to be working (at least for me, i don't swear to it)
+   GG -- You can now view your portmapping listings from windows XP with the connection icon
+   GG    You can only view portmappnigs once some are added, so wait a few minutes
+   GG -- Lots of restructuring of the code to more modularize it, allowing people to work
+   GG    on different parts.
+   GG -- The uptime in the Windows XP Connection Icon works properly now
+   GG -- File transfer works, did i tell you? :-) I haven't been sending files just like you guys.
+   GG -- More things that i'll add in the next version's changelog, it's christmas, i'm taking a break
+   GG    (Most of you think i've been taking a break :-)) 
+
 Version 0.75 -- 05/15/2002
    GG -- Changed the program to run as a true daemon now, forking into the
          backround properly
