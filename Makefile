@@ -6,8 +6,8 @@ CFLAGS += -Wall -g $(OPT)
 
 all: upnpd
 
-upnpd: main.o gatedevice.o sample_util.o pmlist.o util.o
-	$(CC)  $(CFLAGS) main.o gatedevice.o sample_util.o pmlist.o util.o $(LIBS) -o  $@ 
+upnpd: main.o gatedevice.o sample_util.o pmlist.o util.o config.o
+	$(CC)  $(CFLAGS) main.o gatedevice.o sample_util.o pmlist.o util.o config.o $(LIBS) -o  $@ 
 	@echo "make $@ finished on `date`"
 
 %.o:	%.cpp
@@ -18,6 +18,9 @@ clean:
 
 install: upnpd
 	@install -d /etc/linuxigd
-	@install etc/* /etc/linuxigd
+	@install etc/gatedesc.xml /etc/linuxigd
+	@install etc/gateconnSCPD.xml  /etc/linuxigd
+	@install etc/gateicfgSCPD.xml /etc/linuxigd
+	@install etc/dummy.xml /etc/linuxigd
 	@install upnpd /usr/sbin
-
+	@install etc/upnpd.conf /etc
