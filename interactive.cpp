@@ -27,6 +27,8 @@
 #include <signal.h>
 #include <stdlib.h>
 
+using namespace std;
+
 int max_y,max_x;
 int draw_time=1;
 
