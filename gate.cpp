@@ -53,6 +53,20 @@ int getProtoNum(char * proto)
                 return 17;
 	else return 0;
 }
+char *getProtoName(int prt)
+{
+	switch (prt)
+	{
+		case 6:
+			return "TCP";
+			break;
+		case 17:
+			return "UDP";
+			break;
+		default:
+			return "TCP";
+	}
+}
 
 int chkIPADDRstring(char * addr) {
         struct in_addr *dmy=NULL;
@@ -61,8 +75,6 @@ int chkIPADDRstring(char * addr) {
 
 Gate::Gate()
 {
-
-
 }
 
 
@@ -91,37 +103,6 @@ int Gate::GateDeviceCallbackEventHandler(Upnp_EventType EventType,
 
 		case UPNP_CONTROL_ACTION_REQUEST:
 			GateDeviceHandleActionRequest((struct Upnp_Action_Request *) Event);
-			break;
-
-		/* ignore these cases, since this is not a control point */
-		case UPNP_DISCOVERY_ADVERTISEMENT_ALIVE:
-			break;
-
-		case UPNP_DISCOVERY_SEARCH_RESULT:
-			break;
-
-		case UPNP_DISCOVERY_SEARCH_TIMEOUT:
-			break;
-
-		case UPNP_DISCOVERY_ADVERTISEMENT_BYEBYE:
-			break;
-
-		case UPNP_CONTROL_ACTION_COMPLETE:
-			break;
-
-		case UPNP_CONTROL_GET_VAR_COMPLETE:
-			break;
-
-		case UPNP_EVENT_RECEIVED:
-			break;
-
-		case UPNP_EVENT_RENEWAL_COMPLETE:
-			break;
-
-		case UPNP_EVENT_SUBSCRIBE_COMPLETE:
-			break;
-
-		case UPNP_EVENT_UNSUBSCRIBE_COMPLETE:
 			break;
 
 		default:
@@ -220,7 +201,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	int result = 0;
 	
 	pthread_mutex_lock(&DevMutex);
-	
+	syslog(LOG_DEBUG,ca_event->ActionName);	
 	if (strcmp(ca_event->DevUDN, gate_udn) == 0)
 	{
 		if (strcmp(ca_event->ServiceID,"urn:upnp-org:serviceId:WANIPConn1") ==0)
@@ -261,6 +242,23 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 					result = GateDeviceAddPortMapping(ca_event);
 				else if (strcmp(ca_event->ActionName,"DeletePortMapping") == 0)
 					result = GateDeviceDeletePortMapping(ca_event);
+				else result = 0;
+		}
+		else if (strcmp(ca_event->ServiceID,GateServiceId[GATE_SERVICE_CONFIG]) == 0)
+		{
+			if (strcmp(ca_event->ActionName,"GetCommonLinkProperties") == 0)
+				result = GateDeviceGetCommonLinkProperties(ca_event);
+			else if (strcmp(ca_event->ActionName, "X") == 0)
+				result = 1;
+			else if (strcmp(ca_event->ActionName,"GetTotalBytesSent") == 0)
+				result = GateDeviceGetTotalBytesSent(ca_event);
+			else if (strcmp(ca_event->ActionName,"GetTotalBytesReceived") == 0)
+				result = GateDeviceGetTotalBytesReceived(ca_event);
+			else if (strcmp(ca_event->ActionName,"GetTotalPacketsSent") == 0)
+				result = GateDeviceGetTotalPacketsSent(ca_event);
+			else if (strcmp(ca_event->ActionName,"GetTotalPacketsReceived") == 0)
+				result = GateDeviceGetTotalPacketsReceived(ca_event);
+			else result = 0;
 		}
 	}
 	
@@ -269,7 +267,77 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	return(result);
 }
 
+int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
+{
+	char result_str[500];
 
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
+                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+
+        return(ca_event->ErrCode);
+
+
+}
+int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
+{
+	char result_str[500];
+
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewTotalBytesSent>1</NewTotalBytesSent>",
+                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+
+        return(ca_event->ErrCode);
+
+}
+int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
+{
+	char result_str[500];
+
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewTotalBytesReceived>1</NewTotalBytesReceived>",
+                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+
+        return(ca_event->ErrCode);
+
+}
+int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
+{
+	char result_str[500];
+
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+		"<NewTotalPacketsSent>1</NewTotalPacketsSent>",
+                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+
+        return(ca_event->ErrCode);
+
+}
+int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
+{
+	char result_str[500];
+
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewTotalPacketsReceived>1</NewTotalPacketsReceived>",
+                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+
+        return(ca_event->ErrCode);
+
+}
 
 int Gate::GateDeviceSetConnectionType(struct Upnp_Action_Request *ca_event)
 {
@@ -377,6 +445,46 @@ int Gate::GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 
 int Gate::GateDeviceGetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
 {
+	
+	int i = 0;
+	int index = 0;
+	char *mapindex = NULL;
+	int action_succeeded = 0;
+	char result_parm[500];
+	char result_str[500];
+
+	if ((mapindex = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingIndex")))
+	{
+		index = atoi(mapindex);
+		for (list<PortMap *>::iterator itr = m_list.m_pmap.begin(); itr != m_list.m_pmap.end(); itr++,i++)
+		{
+			if (i == index)
+			{
+				sprintf(result_parm,"<NewRemoteHost>%s</NewRemoteHost><NewExternalPort>%d</NewExternalPort><NewProtocol>%s</NewProtocol><NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%d</NewLeaseDuration>",
+					"", (*itr)->external_port, getProtoName((*itr)->protocol), (*itr)->internal_port,
+				       	(*itr)->internal_ip, 1, (*itr)->port_mapping_desc, (*itr)->lease_duration);		
+				action_succeeded = 1;
+			}
+	
+		}
+	}
+	else
+	{
+		// Invalid Args	
+	}
+	if (action_succeeded == 1)
+	{
+		ca_event->ErrCode = UPNP_E_SUCCESS;
+		sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+			"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
+		ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	}
+	else
+	{
+		// Not in list
+	}
+
+	if (mapindex) delete [] mapindex;
 	return(ca_event->ErrCode);
 }
 
@@ -387,49 +495,36 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 	char result_parm[500];
 	char result_str[500];
 	int prt;
+	int action_succeeded = 0;
 
 	if ((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort")) 
 		&& (proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol")))
 	{
 		prt = getProtoNum(proto);
-		if (prt==0)
+		if (prt != 0)
 		{
-			syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid NewProtocol=%s\n",proto);
-			ca_event->ErrCode = 402;
-			strcpy(ca_event->ErrStr, "Invalid Args");
-			ca_event->ActionResult = NULL;
-	                if (ext_port) delete [] ext_port;
-	                if (proto) delete [] proto;
-
-			return (ca_event->ErrCode);
+			for (list<PortMap *>::iterator itr = m_list.m_pmap.begin(); itr != m_list.m_pmap.end(); itr++)
+			{
+				if ((((*itr)->external_port == atoi(ext_port)) && ((*itr)->protocol == prt)))
+				{
+					sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort>\n<NewInternalClient>%s</NewInternalClient>\n<NewEnabled>1</NewEnabled>\n<NewPortMappingDescription>%s</NewPortMappingDescription>\n<NewLeaseDuration>%d</NewLeaseDuration>",
+							(*itr)->internal_port, 
+							(*itr)->internal_ip,
+							(*itr)->port_mapping_desc,
+							(*itr)->lease_duration);
+					action_succeeded = 1;
+				}
+			}
 		}
-		for (list<PortMap *>::iterator itr = m_list.m_pmap.begin(); itr != m_list.m_pmap.end(); itr++)
+		else
 		{
-			if ((((*itr)->external_port == atoi(ext_port)) && ((*itr)->protocol == prt)))
-			{
-				sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort>\n<NewInternalClient>%s</NewInternalClient>\n<NewEnabled>1</NewEnabled>\n<NewPortMappingDescription>%s</NewPortMappingDescription>\n<NewLeaseDuration>%d</NewLeaseDuration>",
-						(*itr)->internal_port, (*itr)->internal_ip,
-						(*itr)->port_mapping_desc,(*itr)->lease_duration);
-				ca_event->ErrCode = UPNP_E_SUCCESS;
-				syslog(LOG_DEBUG, "GetSpecificPortMappingEntry result_parm = %s", result_parm);
-				sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
-					"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
-				ca_event->ActionResult = UpnpParse_Buffer(result_str);
-		                if (ext_port) delete [] ext_port;
-		                if (proto) delete [] proto;
-
-				return (ca_event->ErrCode);
-			}
-			else
-			{
-				syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
-				ca_event->ErrCode = 714;
-				strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
-				ca_event->ActionResult = NULL;
-				if (ext_port) delete [] ext_port;
-				if (proto) delete [] proto;
-				return (ca_event->ErrCode);
-			}
+		        syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: Invalid NewProtocol=%s\n",proto);
+                        ca_event->ErrCode = 402;
+                        strcpy(ca_event->ErrStr, "Invalid Args");
+                        ca_event->ActionResult = NULL;
+                        if (ext_port) delete [] ext_port;
+                        if (proto) delete [] proto;
+                        return (ca_event->ErrCode);
 		}
 	}
 	else
@@ -440,6 +535,26 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 		ca_event->ActionResult = NULL;
 		if (ext_port) delete [] ext_port;
 		if (proto) delete [] proto;
+	}
+	
+	if (action_succeeded == 0)
+	{
+		syslog(LOG_DEBUG, "Failure in GateDeviceGetSpecificPortMappingEntry: PortMapping Doesn't Exist...");
+                ca_event->ErrCode = 714;
+                strcpy(ca_event->ErrStr, "NoSuchEntryInArray");
+                ca_event->ActionResult = NULL;
+                if (ext_port) delete [] ext_port;
+                if (proto) delete [] proto;
+	}
+	else
+	{
+		ca_event->ErrCode = UPNP_E_SUCCESS;
+                syslog(LOG_DEBUG, "GetSpecificPortMappingEntry result_parm = %s", result_parm);
+                sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+	                "urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
+	        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+                if (ext_port) delete [] ext_port;
+                if (proto) delete [] proto;
 	}
 	
 	return (ca_event->ErrCode);
@@ -456,7 +571,6 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	char *address=NULL;
 	char num[5];
 	char result_str[500];
-	
 	Upnp_Document  PropSet= NULL;	
 	
 	address = m_ipcon->IPCon_GetIpAddrStr();
@@ -476,10 +590,8 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	        if (int_ip) delete [] int_ip;
 	        if (desc) delete [] desc;
 	        if (address) delete [] address;
-
 		return (ca_event->ErrCode);
 	}
-
 	prt = getProtoNum(proto);
 	if (prt==0)
 	{

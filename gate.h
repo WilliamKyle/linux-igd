@@ -57,7 +57,13 @@ class Gate
 		int GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event);
 		int GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event);
 		int GateDeviceDeletePortMapping(struct Upnp_Action_Request *ca_event);
-		
+	
+		int GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event);
+                int GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event);
+                int GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event);
+                int GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event);
+                int GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event);
+
 
 		PortMapList m_list;
 		UpnpDevice_Handle device_handle;
