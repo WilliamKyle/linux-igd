@@ -164,7 +164,7 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 		{
 			UpnpAddToPropertySet(&PropSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&PropSet, "ConnectionStatus","Connected");
-			UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
+//			UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
 			UpnpAddToPropertySet(&PropSet, "ExternalIPAddress",address);
 			UpnpAddToPropertySet(&PropSet, "PortMappingNumberOfEntries","0");
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,	sr_event->ServiceId, PropSet, sr_event->Sid);
