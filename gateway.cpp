@@ -24,7 +24,6 @@
 // Special thanks to Genmei Mori and his team for the work he done on the
 // ipchains version of this code. .
 //
-
 #include <time.h>
 #include <iostream>
 #include <stdio.h>
@@ -235,7 +234,7 @@ int main (int argc, char** argv)
 
 	UpnpUnRegisterRootDevice(gate.device_handle);
 	UpnpFinish();
-
+	
 	exit(0);
 
 }	

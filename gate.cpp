@@ -315,7 +315,7 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-	char *iface;
+	char *iface=NULL;
 	FILE *stream;
 	unsigned long bytes=0, total=0;
 
@@ -346,6 +346,8 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	
+	if (iface) delete [] iface;
 
         return(ca_event->ErrCode);
 
@@ -354,7 +356,7 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-        char *iface;
+        char *iface=NULL;
         FILE *stream;
         unsigned long bytes=0,total=0;
 
@@ -386,6 +388,8 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 total, ca_event->ActionName );
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
+	
+	if (iface) delete [] iface;
 
         return(ca_event->ErrCode);
 
@@ -394,7 +398,7 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-        char *iface;
+        char *iface=NULL;
         FILE *stream;
         unsigned long pkt=0, total=0;
 
@@ -425,6 +429,8 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
+	if (iface) delete [] iface;
+
         return(ca_event->ErrCode);
 
 }
@@ -432,7 +438,7 @@ int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event
 {
 	char result_str[500];
 	char dev[15];
-        char *iface;
+        char *iface=NULL;
         FILE *stream;
         unsigned long pkt=0, total=0;
 
@@ -463,6 +469,8 @@ int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event
                 total, ca_event->ActionName);
         ca_event->ActionResult = UpnpParse_Buffer(result_str);
 
+	if (iface) delete [] iface;
+	
         return(ca_event->ErrCode);
 
 }
@@ -574,7 +582,6 @@ int Gate::GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 	sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
 		"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
 	ca_event->ActionResult = UpnpParse_Buffer(result_str);
-	
 	
 	if (ip_address) delete [] ip_address;
 
@@ -688,6 +695,9 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 		strcpy(ca_event->ErrStr, "Invalid Args");
 		ca_event->ActionResult = NULL;
 	}
+
+	if (proto) delete [] proto;
+	if (ext_port) delete [] ext_port;
 	
 	return (ca_event->ErrCode);
 }
