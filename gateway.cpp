@@ -130,10 +130,10 @@ int main (int argc, char** argv)
 		exit(1);
 	}
 	syslog(LOG_DEBUG, "UPnP Initialization Completed");
-
-
-	sprintf(desc_doc_url, "http://%s:%d/%s.xml", UpnpGetServerIpAddress(), UpnpGetServerPort(), desc_doc_name);
-        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",desc_doc_url);
+	char base_url[200];
+	sprintf(base_url,"http://%s:%d", UpnpGetServerIpAddress(), UpnpGetServerPort());
+	sprintf(desc_doc_url, "%s/%s.xml", base_url, desc_doc_name);
+        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",base_url);
 	
 	syslog(LOG_DEBUG, "Setting webserver root directory -- %s\n",conf_dir_path);
 	if ((ret = UpnpSetWebServerRootDir(conf_dir_path)) != UPNP_E_SUCCESS)
