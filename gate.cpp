@@ -492,7 +492,7 @@ int Gate::GateDeviceGetGenericPortMappingEntry(struct Upnp_Action_Request *ca_ev
 		}
 		else
 		{
-                        ca_event->ErrCode = 713;
+			ca_event->ErrCode = 713;
                         strcpy(ca_event->ErrStr, "SpecifiedArrayIndexInvalid");
                         ca_event->ActionResult = NULL;
 		}
@@ -609,6 +609,9 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 								(*itr)->m_ExternalIP,
 								(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
 								(*itr)->m_InternalPort);
+						delete *itr;
+						m_list.m_pmap.erase(itr);
+						itr--;
 					}
 				}
 			
