@@ -4,7 +4,7 @@
 		<major>1</major>
 		<minor>0</minor>
 	</specVersion>
-	<URLBase>http://!ADDR!:52869</URLBase>
+	<URLBase>!ADDR!</URLBase>
 	<device>
 		<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType>
 		<friendlyName>Linux Internet Gateway Device</friendlyName>
@@ -15,8 +15,8 @@
 		<iconList>
 			<icon>
 				<mimetype>image/gif</mimetype>
-				<width>16</width>
-				<height>16</height>
+				<width>118</width>
+				<height>119</height>
 				<depth>8</depth>
 				<url>/ligd.gif</url>
 			</icon>
@@ -78,6 +78,6 @@
 				</deviceList>
 			</device>
 		</deviceList>
-	<presentationURL>http://!ADDR!/</presentationURL>
+	<presentationURL>!ADDR!</presentationURL>
 	</device>
 </root>

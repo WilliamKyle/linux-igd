@@ -38,7 +38,7 @@
 #include "ipcon.h"
 #include "sample_util.h"
 #include "portmap.h"
-#include <pthread.h>
+#include <ithread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -46,8 +46,6 @@
 #include "gate.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-
-#include "interactive.h"
 #include "config.h"
 
 // The global GATE object
@@ -73,7 +71,6 @@ int main (int argc, char** argv)
 	int ret;
 	char *address;
 	pid_t pid,sid;
-	//	FILE *conf_file;
 
 	// Log startup of daemon
 	syslog(LOG_INFO, "The Linux UPnP Internet Gateway Device Ver 0.92 by Dime (dime@gulfsales.com)");
@@ -130,34 +127,38 @@ int main (int argc, char** argv)
 	desc_doc_name=INIT_DESC_DOC;
 	conf_dir_path=INIT_CONF_DIR;
 
-	sprintf(desc_doc_url, "http://%s:%d/%s.xml", lan_ip_address, port,desc_doc_name);
-   	syslog(LOG_DEBUG, "Intializing UPnP with desc_doc_url=%s\n",desc_doc_url);
+	syslog(LOG_DEBUG, "Intializing UPnP with desc_doc_url=%s\n",desc_doc_url);
         syslog(LOG_DEBUG, "ipaddress=%s port=%d\n", lan_ip_address, port);
-	syslog(LOG_DEBUG, "conf_dir_path=%s\n", conf_dir_path);
-        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",lan_ip_address);
+        syslog(LOG_DEBUG, "conf_dir_path=%s\n", conf_dir_path);
 
-	if ((ret = UpnpInit(lan_ip_address, port)) != UPNP_E_SUCCESS)
-	{
-		syslog(LOG_ERR, "Error with UpnpInit -- %d\n", ret);
-		UpnpFinish();
-		exit(1);
-	}
-	syslog(LOG_DEBUG, "UPnP Initialization Completed");
-	
-	syslog(LOG_DEBUG, "Setting webserver root directory -- %s\n",conf_dir_path);
-	if ((ret = UpnpSetWebServerRootDir(conf_dir_path)) != UPNP_E_SUCCESS)
-	{
-		syslog(LOG_ERR, "Error setting webserver root directory -- %s: %d\n",
-			       	conf_dir_path, ret);
-		UpnpFinish();
-		exit(1);
-	}
+        if ((ret = UpnpInit(lan_ip_address, 0)) != UPNP_E_SUCCESS)
+	  {
+	    syslog(LOG_ERR, "Error with UpnpInit -- %d\n", ret);
+	    UpnpFinish();
+	    exit(1);
+	  }
+        syslog(LOG_DEBUG, "UPnP Initialization Completed");
+
+
+        sprintf(desc_doc_url, "http://%s:%d/%s.xml", UpnpGetServerIpAddress(), UpnpGetServerPort(), desc_doc_name);
+        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",desc_doc_url);
+
+        syslog(LOG_DEBUG, "Setting webserver root directory -- %s\n",conf_dir_path);
+        if ((ret = UpnpSetWebServerRootDir(conf_dir_path)) != UPNP_E_SUCCESS)
+	  {
+	    syslog(LOG_ERR, "Error setting webserver root directory -- %s: %d\n",
+		   conf_dir_path, ret);
+	    UpnpFinish();
+	    exit(1);
+	  }
+
 	gate.m_ipcon = new IPCon(argv[1]);
 	syslog(LOG_DEBUG, "Registering the root device\n");
 	if ((ret = UpnpRegisterRootDevice(desc_doc_url, GateDeviceCallbackEventHandler,
 				&gate.device_handle, &gate.device_handle)) != UPNP_E_SUCCESS)
 	{
-		syslog(LOG_ERR, "Error registering the rootdevice : %d\n", ret);
+	  cout << desc_doc_url << endl;
+	  syslog(LOG_ERR, "Error registering the rootdevice : %d\n", ret);
 		UpnpFinish();
 		exit(1);
 	}
@@ -191,7 +192,8 @@ int main (int argc, char** argv)
 
 	UpnpUnRegisterRootDevice(gate.device_handle);
 	UpnpFinish();
-	
+	//	if (desc_doc_url) delete [] desc_doc_url;
+
 	exit(0);
 
 }	

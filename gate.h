@@ -58,6 +58,7 @@ class Gate
 		int GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event);
 		int GateDeviceDeletePortMapping(struct Upnp_Action_Request *ca_event);
 	
+		int GateDeviceInvalidAction(struct Upnp_Action_Request *ca_event);
 		int GateDeviceX(struct Upnp_Action_Request *ca_event);
 		int GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event);
                 int GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event);

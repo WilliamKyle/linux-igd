@@ -23,7 +23,7 @@
 
 #include <string.h>
 #include <syslog.h>
-#include <pthread.h>
+#include <ithread.h>
 #include <upnp/upnp.h>
 #include <upnp/ixml.h>
 #include "gateway.h"
@@ -35,7 +35,7 @@
 
 #include "config.h"
 
-pthread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
+ithread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
 
 char *GateDeviceType[] = {"urn:schemas-upnp-org:device:InternetGatewayDevice:1"
                         ,"urn:schemas-upnp-org:device:WANDevice:1"
@@ -48,9 +48,8 @@ char *GateServiceType[] = {"urn:schemas-microsoft-com:service:OSInfo:1"
 char *GateServiceId[] = {"urn:microsoft-com:serviceId:OSInfo1"
                         ,"urn:upnp-org:serviceId:WANCommonIFC1"
                         ,"urn:upnp-org:serviceId:WANIPConn1"};
-void
 
-my_print( const char *string )
+void my_print( const char *string )
 {
     printf( string );
 }
@@ -100,8 +99,6 @@ int Gate::GateDeviceCallbackEventHandler(Upnp_EventType EventType,
                          void *Event,
                          void *Cookie)
 {
-  //  SampleUtil_Initialize(my_print);
-  //SampleUtil_PrintEvent(EventType,Event);
 	switch ( EventType)
 	{
 
@@ -149,7 +146,7 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 	char *address;
 	address = m_ipcon->IPCon_GetIpAddrStr();
 
-	pthread_mutex_lock(&DevMutex);
+	ithread_mutex_lock(&DevMutex);
 
 	if (strcmp(sr_event->UDN, gate_udn) == 0)
 	{
@@ -158,10 +155,7 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 			UpnpAddToPropertySet(&PropSet, "OSMajorVersion","5");
 			UpnpAddToPropertySet(&PropSet, "OSMinorVersion","1");
 			UpnpAddToPropertySet(&PropSet, "OSBuildNumber","2600");
-			//	if(!config_have("OSMachineName"))
 			UpnpAddToPropertySet(&PropSet, "OSMachineName","Linux IGD");
-			//  else
-			//    UpnpAddToPropertySet(&PropSet, "OSMachineName",config_info("OSMachineName"));
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,
 					sr_event->ServiceId, PropSet, sr_event->Sid);
 			ixmlDocument_free(PropSet);
@@ -178,17 +172,14 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 		{
 			UpnpAddToPropertySet(&PropSet, "PossibleConnectionTypes","IP_Routed");
 			UpnpAddToPropertySet(&PropSet, "ConnectionStatus","Connected");
-			// if(!config_have("X_Name"))
 			UpnpAddToPropertySet(&PropSet, "X_Name","Local Area Connection");
-			// else
-			//  UpnpAddToPropertySet(&PropSet, "X_Name",config_info("X_Name"));
 			UpnpAddToPropertySet(&PropSet, "ExternalIPAddress",address);
 			UpnpAddToPropertySet(&PropSet, "PortMappingNumberOfEntries","0");
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,	sr_event->ServiceId, PropSet, sr_event->Sid);
 			ixmlDocument_free(PropSet);
 		}
 	}
-	pthread_mutex_unlock(&DevMutex);
+	ithread_mutex_unlock(&DevMutex);
 	if (address) delete [] address;
 	return(1);
 }
@@ -197,7 +188,7 @@ int Gate::GateDeviceHandleGetVarRequest(struct Upnp_State_Var_Request *cgv_event
 {
 	int getvar_succeeded = 0;
 	cgv_event->CurrentVal = NULL;
-	pthread_mutex_lock(&DevMutex);
+	ithread_mutex_lock(&DevMutex);
 
         if (getvar_succeeded)
        	{
@@ -210,7 +201,7 @@ int Gate::GateDeviceHandleGetVarRequest(struct Upnp_State_Var_Request *cgv_event
 		cgv_event->ErrCode = 404;
 		strcpy(cgv_event->ErrStr, "Invalid Variable");
         }
-	pthread_mutex_unlock(&DevMutex);
+	ithread_mutex_unlock(&DevMutex);
 	return(cgv_event->ErrCode == UPNP_E_SUCCESS);
 }
 
@@ -218,9 +209,11 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 {
 	int result = 0;
 	
-	pthread_mutex_lock(&DevMutex);
+	ithread_mutex_lock(&DevMutex);
 	if (strcmp(ca_event->DevUDN, gate_udn) == 0)
 	{
+	        syslog(LOG_DEBUG,"ActionName = %s",ca_event->ActionName);
+
 		if (strcmp(ca_event->ServiceID,"urn:upnp-org:serviceId:WANIPConn1") ==0)
 		{
 				if (strcmp(ca_event->ActionName,"SetConnectionType") == 0)
@@ -259,7 +252,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 					result = GateDeviceAddPortMapping(ca_event);
 				else if (strcmp(ca_event->ActionName,"DeletePortMapping") == 0)
 					result = GateDeviceDeletePortMapping(ca_event);
-				else result = 0;
+				else result = GateDeviceInvalidAction(ca_event);
 		}
 		else if (strcmp(ca_event->ServiceID,GateServiceId[GATE_SERVICE_CONFIG]) == 0)
 		{
@@ -275,7 +268,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 				result = GateDeviceGetTotalPacketsSent(ca_event);
 			else if (strcmp(ca_event->ActionName,"GetTotalPacketsReceived") == 0)
 				result = GateDeviceGetTotalPacketsReceived(ca_event);
-			else result = 0;
+			else result = GateDeviceInvalidAction(ca_event);
 		}
 	}
 	if (conf_debug_mode == 1)
@@ -292,7 +285,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	    ixmlFreeDOMString( xmlbuff );
 	  xmlbuff = NULL;
 	}
-	pthread_mutex_unlock(&DevMutex);
+	ithread_mutex_unlock(&DevMutex);
 
 	return(result);
 }
@@ -304,31 +297,26 @@ int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
 	ca_event->ActionResult = NULL;
 	return (ca_event->ErrCode);
 }
-
+int Gate::GateDeviceInvalidAction(struct Upnp_Action_Request *ca_event)
+{
+  ca_event->ErrCode = 401;
+  strcpy(ca_event->ErrStr, "Invalid Action");
+  ca_event->ActionResult = NULL;
+  return (ca_event->ErrCode);
+}
 int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
-	char result_str[500];
-	char *upspeed,*downspeed;
-	char up_text[]="131072",down_text[]="614400";
+  char result_str[500];
 
-	//	if(config_have("uprate"))
-	//  upspeed=config_info("uprate");
-	//else
-	upspeed=up_text;
+  ca_event->ErrCode = UPNP_E_SUCCESS;
+  sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+	  "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><N\
+ewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
+	  ca_event->ActionName);
+  ca_event->ActionResult = ixmlParseBuffer(result_str);
 
-	// if(config_have("downrate"))
-	//  downspeed=config_info("downrate");
-	//else
-	downspeed=down_text;
-
-        ca_event->ErrCode = UPNP_E_SUCCESS;
-        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s%s%s%s%s\n</u:%sResponse>", ca_event->ActionName,
-                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>",up_text,"</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>",downspeed,"</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
-                ca_event->ActionName);
-        ca_event->ActionResult = ixmlParseBuffer(result_str);
-
-        return(ca_event->ErrCode);
+  return(ca_event->ErrCode);
 
 
 }
@@ -337,7 +325,7 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-	char *iface=NULL;
+	char *iface;
 	FILE *stream;
 	unsigned long bytes=0, total=0;
 
@@ -729,7 +717,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	char num[5];
 	char result_str[500];
 	char *address = NULL;
-	IXML_Document  *PropSet= NULL;	
+	IXML_Document  *PropSet = NULL;	
 	int action_succeeded = 0;
 	
 	address = m_ipcon->IPCon_GetIpAddrStr();

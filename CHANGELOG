@@ -5,7 +5,7 @@
 Version 0.92 -- 01/13/2003
    GG -- Fixed issues with Direct Play games not deleting broadcast port mappings
          So most if not all Direct Play games will now work correctly.
-      -- Added Byte and Packet counter code contributed by ....
+      -- Added Byte and Packet counter code contributed by giussani
       -- Changed all the xml and skl files to include our UUID and some other updated
          information that needed to be changed.
       -- Added a CREDITS file to make sure I give thanks to the person who inspired

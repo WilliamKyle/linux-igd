@@ -1,21 +1,14 @@
 CC=g++
 INCLUDES= -I/usr/include/upnp 
-LIBS= -lpthread  /usr/lib/libupnp.so
+LIBS= -lpthread -lupnp -lixml -lthreadutil 
 OBJ=gate.o gateway.o sample_util.o ipcon.o portmap.o pmlist.o config.o
 
 DEBUG=0
-USE_CURSES=1
 
 ifeq ($(DEBUG),1)
 OPT = -g
 else
 OPT = -O2
-endif
-
-ifeq ($(USE_CURSES),1)
-LIBS += -lncurses
-OBJ += interactive.o
-CFLAGS += -DUSE_CURSES
 endif
 
 CFLAGS += -Wall $(OPT)
