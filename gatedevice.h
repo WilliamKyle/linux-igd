@@ -3,11 +3,6 @@
 
 #include <upnp/upnp.h>
 
-// Global Defines
-#define configDir "/etc/linuxigd"
-#define descDoc "gatedesc.xml"
-#define IPTABLES "/sbin/iptables"
-#define CONF_FILE "/etc/linux-igd/upnpd.conf"
 
 // IGD Device Globals
 UpnpDevice_Handle deviceHandle;
