@@ -34,13 +34,13 @@ class PortMap
 		
 		bool m_PortMappingEnabled;
 		long int m_PortMappingLeaseDuration;
-		char m_RemoteHost[15];
-		char m_ExternalIP[15];
+		char *m_RemoteHost;
+		char *m_ExternalIP;
 		int m_ExternalPort;
 		int m_InternalPort;
-		char m_PortMappingProtocol[4];
-		char m_InternalClient[15];
-		char m_PortMappingDescription[100];
+		char *m_PortMappingProtocol;
+		char *m_InternalClient;
+		char *m_PortMappingDescription;
 };
 
 #endif

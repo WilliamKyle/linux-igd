@@ -59,7 +59,7 @@ int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtP
 	int fd_socket, fd_proto;
 	struct sockaddr_in addr;
 	PortMap *temp;
-
+	
 	if ((strcmp(Proto,"TCP") == 0) || (strcmp(Proto,"tcp") == 0))
 		fd_proto = SOCK_STREAM;
 	else
@@ -80,19 +80,47 @@ int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtP
 	close (fd_socket);
 	
 	temp = new PortMap;
-	if (RemoteHost != NULL)
-		strcpy(temp->m_RemoteHost, RemoteHost);
-	if (Proto != NULL)
+	
+	if (RemoteHost)
+        {
+                temp->m_RemoteHost = new char[strlen(RemoteHost)+1];
+                strcpy(temp->m_RemoteHost, RemoteHost);
+        }
+        else temp->m_RemoteHost = NULL;
+
+        if (Proto)
+	{
+		temp->m_PortMappingProtocol = new char[strlen(Proto)+1];
 		strcpy(temp->m_PortMappingProtocol, Proto);
-	if (ExtIP != NULL)
-		strcpy(temp->m_ExternalIP, ExtIP);
-	temp->m_ExternalPort = ExtPort;
-	if (IntIP != NULL)
-		strcpy(temp->m_InternalClient, IntIP);
-	temp->m_InternalPort = IntPort;
-	if (Desc != NULL)
-		strcpy(temp->m_PortMappingDescription, Desc);
-	temp->m_PortMappingLeaseDuration = LeaseDuration;
+	}
+	else temp->m_PortMappingProtocol = NULL;
+
+        if (ExtIP)
+        {
+                temp->m_ExternalIP = new char[strlen(ExtIP)+1];
+                strcpy(temp->m_ExternalIP, ExtIP);
+        }
+        else temp->m_ExternalIP = NULL;
+
+        temp->m_ExternalPort = ExtPort;
+
+        if (IntIP)
+        {
+                temp->m_InternalClient = new char[strlen(IntIP)+1];
+                strcpy(temp->m_InternalClient, IntIP);
+        }
+        else temp->m_InternalClient = NULL;
+
+        temp->m_InternalPort = IntPort;
+
+        if (Desc)
+        {
+                temp->m_PortMappingDescription = new char[strlen(Desc)+1];
+                strcpy(temp->m_PortMappingDescription, Desc);
+        }
+        else temp->m_PortMappingDescription = NULL;
+
+        temp->m_PortMappingLeaseDuration = LeaseDuration;
 
 	m_pmap.push_back(temp);
 	
@@ -115,7 +143,6 @@ int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 			delPortForward((*itr)->m_PortMappingProtocol, (*itr)->m_ExternalIP,
 					(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
 					(*itr)->m_InternalPort);
-			
 			delete (*itr);
 			m_pmap.erase(itr);
 			return (1);
@@ -193,8 +220,7 @@ int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort,
 	
 
 	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
-	system(command);
-	
+	system(command);	
 	return (1);
 }
 

@@ -31,19 +31,58 @@ PortMap::PortMap ()
 
 PortMap::~PortMap ()
 {
+        if (m_RemoteHost)
+                delete [] m_RemoteHost;
+        if (m_ExternalIP)
+                delete [] m_ExternalIP;
+        if (m_InternalClient)
+                delete [] m_InternalClient;
+        if (m_PortMappingDescription)
+                delete [] m_PortMappingDescription;
+	if (m_PortMappingProtocol)
+		delete [] m_PortMappingProtocol;
 }
 
 PortMap::PortMap(char *RemoteHost, char *Proto, char *ExtIP, int ExtPort, char *IntIP, int IntPort, int Enabled, char *Desc, int LeaseDuration)
 {
-	
-	strcpy (m_RemoteHost, RemoteHost);
-	strcpy (m_PortMappingProtocol,Proto);
-	m_ExternalPort = ExtPort;
-	strcpy (m_InternalClient, IntIP);
-	m_InternalPort = IntPort;
-	m_PortMappingEnabled = Enabled;
-	strcpy (m_PortMappingDescription, Desc);
-	m_PortMappingLeaseDuration = LeaseDuration;
+	if (RemoteHost)
+        {
+                m_RemoteHost = new char[strlen(RemoteHost)+1];
+                strcpy(m_RemoteHost, RemoteHost);
+        }
+        else m_RemoteHost = NULL;
+
+        if (Proto)
+        {
+                m_PortMappingProtocol = new char[strlen(Proto)+1];
+                strcpy(m_PortMappingProtocol, Proto);
+        }
+        else m_PortMappingProtocol = NULL;
+
+        if (ExtIP)
+        {
+                m_ExternalIP = new char[strlen(ExtIP)+1];
+                strcpy(m_ExternalIP, ExtIP);
+        }
+        else m_ExternalIP = NULL;
+
+        m_ExternalPort = ExtPort;
+
+        if (IntIP)
+        {
+                m_InternalClient = new char[strlen(IntIP)+1];
+                strcpy(m_InternalClient, IntIP);
+        }
+        else m_InternalClient = NULL;
+
+        m_InternalPort = IntPort;
+
+        if (Desc)
+        {
+                m_PortMappingDescription = new char[strlen(Desc)+1];
+                strcpy(m_PortMappingDescription, Desc);
+        }
+        else m_PortMappingDescription = NULL;
+
+        m_PortMappingLeaseDuration = LeaseDuration;
 }
-
-
