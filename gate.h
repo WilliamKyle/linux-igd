@@ -58,6 +58,7 @@ class Gate
 		int GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event);
 		int GateDeviceDeletePortMapping(struct Upnp_Action_Request *ca_event);
 	
+		int GateDeviceX(struct Upnp_Action_Request *ca_event);
 		int GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event);
                 int GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event);
                 int GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event);
@@ -69,6 +70,7 @@ class Gate
 		UpnpDevice_Handle device_handle;
 		char *gate_udn;
 		IPCon *m_ipcon;
+		long int startup_time;
 };
 
 #endif

@@ -25,7 +25,7 @@
 // ipchains version of this code. .
 //
 
-
+#include <time.h>
 #include <iostream.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -166,7 +166,9 @@ int main (int argc, char** argv)
 
 		syslog(LOG_DEBUG, "Advertisements Sent\n");
 	}
-
+	
+	gate.startup_time = time(NULL);
+	
 	//Start The Command Loop
 
 	sigemptyset(&sigs_to_catch);

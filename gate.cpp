@@ -201,7 +201,6 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	int result = 0;
 	
 	pthread_mutex_lock(&DevMutex);
-	syslog(LOG_DEBUG,ca_event->ActionName);	
 	if (strcmp(ca_event->DevUDN, gate_udn) == 0)
 	{
 		if (strcmp(ca_event->ServiceID,"urn:upnp-org:serviceId:WANIPConn1") ==0)
@@ -249,7 +248,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 			if (strcmp(ca_event->ActionName,"GetCommonLinkProperties") == 0)
 				result = GateDeviceGetCommonLinkProperties(ca_event);
 			else if (strcmp(ca_event->ActionName, "X") == 0)
-				result = 1;
+				result = GateDeviceX(ca_event);
 			else if (strcmp(ca_event->ActionName,"GetTotalBytesSent") == 0)
 				result = GateDeviceGetTotalBytesSent(ca_event);
 			else if (strcmp(ca_event->ActionName,"GetTotalBytesReceived") == 0)
@@ -267,6 +266,13 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	return(result);
 }
 
+int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
+{
+	ca_event->ErrCode = 401;
+	strcpy(ca_event->ErrStr, "Invalid Action");
+	ca_event->ActionResult = NULL;
+	return (ca_event->ErrCode);
+}
 int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
@@ -390,7 +396,18 @@ int Gate::GateDeviceSetWarnDisconnectDelay(struct Upnp_Action_Request *ca_event)
 
 int Gate::GateDeviceGetStatusInfo(struct Upnp_Action_Request *ca_event)
 {
-	return(UPNP_E_SUCCESS);
+
+	long int uptime;
+	char result_str[500];
+        
+	uptime = (time(NULL) - startup_time);
+	ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewConnectionStatus>%s</NewConnectionStatus><NewLastConnectionError>ERROR_NONE</NewLastConnectionError><NewUptime>%li</NewUptime>\n</u:%sResponse>", ca_event->ActionName,
+	                "urn:schemas-upnp-org:service:WANIPConnection:1",
+	                "Connected",uptime,
+	                ca_event->ActionName);
+        ca_event->ActionResult = UpnpParse_Buffer(result_str);
+        return(ca_event->ErrCode);
 }
 
 int Gate::GateDeviceGetAutoDisconnectTime(struct Upnp_Action_Request *ca_event)
@@ -432,7 +449,6 @@ int Gate::GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 
 	ca_event->ErrCode = UPNP_E_SUCCESS;
 	sprintf(result_parm,"<NewExternalIPAddress>%s</NewExternalIPAddress>", ip_address);
-	syslog(LOG_DEBUG, "GateDeviceGetExternalIPAddress result_parm: %s", result_parm);
 	sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
 		"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
 	ca_event->ActionResult = UpnpParse_Buffer(result_str);
@@ -507,7 +523,7 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 			{
 				if ((((*itr)->external_port == atoi(ext_port)) && ((*itr)->protocol == prt)))
 				{
-					sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort>\n<NewInternalClient>%s</NewInternalClient>\n<NewEnabled>1</NewEnabled>\n<NewPortMappingDescription>%s</NewPortMappingDescription>\n<NewLeaseDuration>%d</NewLeaseDuration>",
+					sprintf(result_parm,"<NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>1</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%d</NewLeaseDuration>",
 							(*itr)->internal_port, 
 							(*itr)->internal_ip,
 							(*itr)->port_mapping_desc,
@@ -562,6 +578,7 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 
 int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 {
+	char *remote_host=NULL;
 	char *ext_port=NULL;
 	char *proto=NULL; 
 	char *int_port=NULL;
@@ -572,7 +589,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	char num[5];
 	char result_str[500];
 	Upnp_Document  PropSet= NULL;	
-	
+
 	address = m_ipcon->IPCon_GetIpAddrStr();
 	if (!((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
 		&& (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
@@ -590,6 +607,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	        if (int_ip) delete [] int_ip;
 	        if (desc) delete [] desc;
 	        if (address) delete [] address;
+		if (remote_host) delete [] remote_host;
 		return (ca_event->ErrCode);
 	}
 	prt = getProtoNum(proto);
@@ -605,7 +623,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	        if (int_ip) delete [] int_ip;
 	        if (desc) delete [] desc;
 	        if (address) delete [] address;
-
+		if (remote_host) delete [] remote_host;
 		return (ca_event->ErrCode);
 
 	}
@@ -621,7 +639,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 		if (int_ip) delete [] int_ip;
 		if (desc) delete [] desc;
 		if (address) delete [] address;
-
+		if (remote_host) delete [] remote_host;
 		return (ca_event->ErrCode);
 	}
 
@@ -633,15 +651,15 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 		PropSet= UpnpCreatePropertySet(1,"PortMappingNumberOfEntries", num);
 		UpnpNotifyExt(device_handle, ca_event->DevUDN,ca_event->ServiceID,PropSet);
 		UpnpDocument_free(PropSet);
-		syslog(LOG_DEBUG, "AddPortMap: Prot: %d Ext: %s.%d Int: %s.%d\n",
-			prt, address, atoi(ext_port), int_ip, atoi(int_port));
+		syslog(LOG_DEBUG, "AddPortMap: RemoteHost: %s Prot: %d Ext: %s.%d Int: %s.%d\n",
+			remote_host,prt, address, atoi(ext_port), int_ip, atoi(int_port));
 	}
 	else
 	{
 		if (result==718)
 		{
-			syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: Prot:%d Ext: %s.%d Int: %s.%d\n",
-				prt, address, atoi(ext_port),int_ip, atoi(int_port));
+			syslog(LOG_DEBUG,"Failure in GateDeviceAddPortMapping: RemoteHost: %s Prot:%d Ext: %s.%d Int: %s.%d\n",
+				remote_host,prt, address, atoi(ext_port),int_ip, atoi(int_port));
 			ca_event->ErrCode = 718;
 			strcpy(ca_event->ErrStr, "ConflictInMappingEntry");
 			ca_event->ActionResult = NULL;
@@ -651,7 +669,7 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	                if (int_ip) delete [] int_ip;
 	                if (desc) delete [] desc;
 	                if (address) delete [] address;
-
+			if (remote_host) delete [] remote_host;
 			return (ca_event->ErrCode);
 		}
 	}
@@ -667,6 +685,8 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	if (int_ip) delete [] int_ip;
 	if (desc) delete [] desc;
 	if (address) delete [] address;
+	if (remote_host) delete [] remote_host;	
+	
 	return(ca_event->ErrCode);
 }
 
