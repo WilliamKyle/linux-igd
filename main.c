@@ -15,7 +15,7 @@ int main (int argc, char** argv)
 	int ret = UPNP_E_SUCCESS;
 	int signal;	
 	char descDocUrl[50];
-	sigset_t sigsToCatch;
+	sigset_t sigsToCatch, oldSet;
 	pid_t pid,sid;
 
 	if (argc != 3)
@@ -115,6 +115,8 @@ int main (int argc, char** argv)
 	sigemptyset(&sigsToCatch);
 	sigaddset(&sigsToCatch, SIGINT);
 	sigaddset(&sigsToCatch, SIGTERM);
+	//sigwait(&sigsToCatch, &signal);
+	pthread_sigmask(SIG_SETMASK, &sigsToCatch, NULL);
 	sigwait(&sigsToCatch, &signal);
 	syslog(LOG_DEBUG, "Shutting down on signal %d...\n", signal);
 
