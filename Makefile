@@ -1,29 +1,20 @@
-CC=g++
+CC=gcc
 INCLUDES= -I/usr/include/upnp 
 LIBS= -lpthread -lupnp -lixml -lthreadutil
 
-
-ifeq ($(DEBUG),1)
-OPT = -g -O2
-else
-OPT = -O2
-endif
-
 CFLAGS += -Wall -g $(OPT)
 
-APPS = upnpd
+all: upnpd
 
-all: $(APPS)
-
-upnpd:  gate.o gateway.o sample_util.o ipcon.o portmap.o pmlist.o
-	$(CC)  $(CFLAGS) gate.o gateway.o sample_util.o ipcon.o portmap.o pmlist.o $(LIBS) -o  $@ 
+upnpd: main.o gatedevice.o sample_util.o pmlist.o util.o
+	$(CC)  $(CFLAGS) main.o gatedevice.o sample_util.o pmlist.o util.o $(LIBS) -o  $@ 
 	@echo "make $@ finished on `date`"
 
 %.o:	%.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
 clean:
-	rm -f *.o $(APPS)
+	rm -f *.o upnpd
 
 install: upnpd
 	@install -d /etc/linuxigd

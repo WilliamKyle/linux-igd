@@ -40,9 +40,9 @@ extern "C" {
 
 #include <string.h>
 
-#include <upnptools.h>
+#include <upnp/upnptools.h>
 
-#include <ixml.h>
+#include <upnp/ixml.h>
 
 //mutex to control displaying of events
 extern ithread_mutex_t display_mutex ;
