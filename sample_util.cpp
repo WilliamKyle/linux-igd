@@ -658,8 +658,8 @@ SampleUtil_FindAndParseService( IN IXML_Document * DescDoc,
             releventURL =
                 SampleUtil_GetFirstElementItem( service, "eventSubURL" );
 
-            *controlURL = (char *)
-                malloc( strlen( base ) + strlen( relcontrolURL ) + 1 );
+            *controlURL =
+                (char *)malloc( strlen( base ) + strlen( relcontrolURL ) + 1 );
             if( *controlURL ) {
                 ret = UpnpResolveURL( base, relcontrolURL, *controlURL );
                 if( ret != UPNP_E_SUCCESS )
@@ -668,8 +668,8 @@ SampleUtil_FindAndParseService( IN IXML_Document * DescDoc,
                           base, relcontrolURL );
             }
 
-            *eventURL = (char *)
-                malloc( strlen( base ) + strlen( releventURL ) + 1 );
+            *eventURL =
+                (char *)malloc( strlen( base ) + strlen( releventURL ) + 1 );
             if( *eventURL ) {
                 ret = UpnpResolveURL( base, releventURL, *eventURL );
                 if( ret != UPNP_E_SUCCESS )

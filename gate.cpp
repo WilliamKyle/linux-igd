@@ -24,16 +24,13 @@
 #include <string.h>
 #include <syslog.h>
 #include <ithread.h>
-#include <upnp/upnp.h>
-#include <upnp/ixml.h>
+
 #include "gateway.h"
 #include "sample_util.h"
 #include "portmap.h"
 #include <arpa/inet.h>
 #include "gate.h"
 #include <unistd.h>
-
-#include "config.h"
 
 ithread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -48,11 +45,6 @@ char *GateServiceType[] = {"urn:schemas-microsoft-com:service:OSInfo:1"
 char *GateServiceId[] = {"urn:microsoft-com:serviceId:OSInfo1"
                         ,"urn:upnp-org:serviceId:WANCommonIFC1"
                         ,"urn:upnp-org:serviceId:WANIPConn1"};
-
-void my_print( const char *string )
-{
-    printf( string );
-}
 
 int getProtoNum(char * proto)
 {
@@ -132,10 +124,10 @@ int Gate::GateDeviceStateTableInit (char* DescDocURL)
 	{
 		syslog(LOG_ERR, "DeviceStateTableInit -- Error Parsing %s\n", DescDocURL);
 		ret =UPNP_E_INVALID_DESC;
-	} else {
-	  gate_udn = SampleUtil_GetFirstDocumentItem(DescDoc, "UDN");
 	}
-	if (DescDoc) ixmlDocument_free(DescDoc);
+
+	gate_udn = SampleUtil_GetFirstDocumentItem(DescDoc, "UDN");
+
 	return (ret);
 }
 
@@ -212,7 +204,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 	ithread_mutex_lock(&DevMutex);
 	if (strcmp(ca_event->DevUDN, gate_udn) == 0)
 	{
-	        syslog(LOG_DEBUG,"ActionName = %s",ca_event->ActionName);
+		syslog(LOG_DEBUG,"ActionName = %s",ca_event->ActionName);
 
 		if (strcmp(ca_event->ServiceID,"urn:upnp-org:serviceId:WANIPConn1") ==0)
 		{
@@ -271,20 +263,7 @@ int Gate::GateDeviceHandleActionRequest(struct Upnp_Action_Request *ca_event)
 			else result = GateDeviceInvalidAction(ca_event);
 		}
 	}
-	if (conf_debug_mode == 1)
-	{
-	  SampleUtil_Initialize(my_print);
-	  SampleUtil_PrintEvent(UPNP_CONTROL_ACTION_REQUEST,ca_event);
-	  // Sometimes SampleUtil_PrintEvent chokes os ActionResult
-	  // that's why it is printed again below
-	  char *xmlbuff = NULL;
-	  xmlbuff = ixmlPrintDocument( ca_event->ActionResult );
-	  if( xmlbuff )
-	    printf( "\nActionResult:\n %s\n\n", xmlbuff );
-	  if( xmlbuff )
-	    ixmlFreeDOMString( xmlbuff );
-	  xmlbuff = NULL;
-	}
+	
 	ithread_mutex_unlock(&DevMutex);
 
 	return(result);
@@ -299,23 +278,23 @@ int Gate::GateDeviceX(struct Upnp_Action_Request *ca_event)
 }
 int Gate::GateDeviceInvalidAction(struct Upnp_Action_Request *ca_event)
 {
-  ca_event->ErrCode = 401;
-  strcpy(ca_event->ErrStr, "Invalid Action");
-  ca_event->ActionResult = NULL;
-  return (ca_event->ErrCode);
+        ca_event->ErrCode = 401;
+        strcpy(ca_event->ErrStr, "Invalid Action");
+        ca_event->ActionResult = NULL;
+        return (ca_event->ErrCode);
 }
 int Gate::GateDeviceGetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
-  char result_str[500];
+	char result_str[500];
 
-  ca_event->ErrCode = UPNP_E_SUCCESS;
-  sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
-	  "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
-	  "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
-	  ca_event->ActionName);
-  ca_event->ActionResult = ixmlParseBuffer(result_str);
+        ca_event->ErrCode = UPNP_E_SUCCESS;
+        sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "<NewWANAccessType>Cable</NewWANAccessType><NewLayer1UpstreamMaxBitRate>131072</NewLayer1UpstreamMaxBitRate><NewLayer1DownstreamMaxBitRate>614400</NewLayer1DownstreamMaxBitRate><NewPhysicalLinkStatus>Up</NewPhysicalLinkStatus>",
+                ca_event->ActionName);
+        ca_event->ActionResult = ixmlParseBuffer(result_str);
 
-  return(ca_event->ErrCode);
+        return(ca_event->ErrCode);
 
 
 }
@@ -348,7 +327,7 @@ int Gate::GateDeviceGetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 	{
 		total=1;
 	}
-
+	//total = 1;
         ca_event->ErrCode = UPNP_E_SUCCESS;
         sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalBytesSent>%lu</NewTotalBytesSent>\n</u:%sResponse>",
 		ca_event->ActionName,
@@ -363,7 +342,7 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-        char *iface=NULL;
+        char *iface;
         FILE *stream;
         unsigned long bytes=0,total=0;
 
@@ -388,14 +367,14 @@ int Gate::GateDeviceGetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 	{
                 total=1;
         }
-
+	//total = 1;
         ca_event->ErrCode = UPNP_E_SUCCESS;
         sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalBytesReceived>%lu</NewTotalBytesReceived>\n</u:%sResponse>",
 		ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 total, ca_event->ActionName );
         ca_event->ActionResult = ixmlParseBuffer(result_str);
-	
+
         return(ca_event->ErrCode);
 
 }
@@ -403,7 +382,7 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 {
 	char result_str[500];
 	char dev[15];
-        char *iface=NULL;
+        char *iface;
         FILE *stream;
         unsigned long pkt=0, total=0;
 
@@ -427,7 +406,7 @@ int Gate::GateDeviceGetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
         {
                 total=1;
         }
-
+	//total = 1;
         ca_event->ErrCode = UPNP_E_SUCCESS;
         sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalPacketsSent>%lu</NewTotalPacketsSent>\n</u:%sResponse>", ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
@@ -441,7 +420,7 @@ int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event
 {
 	char result_str[500];
 	char dev[15];
-        char *iface=NULL;
+        char *iface;
         FILE *stream;
         unsigned long pkt=0, total=0;
 
@@ -465,7 +444,7 @@ int Gate::GateDeviceGetTotalPacketsReceived(struct Upnp_Action_Request *ca_event
 	{
                 total=1;
         }
-
+	//total = 1;
         ca_event->ErrCode = UPNP_E_SUCCESS;
         sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n<NewTotalPacketsReceived>%lu</NewTotalPacketsReceived>\n</u:%sResponse>", ca_event->ActionName,
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
@@ -538,7 +517,6 @@ int Gate::GateDeviceGetStatusInfo(struct Upnp_Action_Request *ca_event)
 	                "Connected",uptime,
 	                ca_event->ActionName);
         ca_event->ActionResult = ixmlParseBuffer(result_str);
-
         return(ca_event->ErrCode);
 }
 
@@ -584,7 +562,8 @@ int Gate::GateDeviceGetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 	sprintf(result_str, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
 		"urn:schemas-upnp-org:service:WANIPConnection:1",result_parm, ca_event->ActionName);
 	ca_event->ActionResult = ixmlParseBuffer(result_str);
-
+	
+	
 	if (ip_address) delete [] ip_address;
 
 	return(ca_event->ErrCode);
@@ -697,9 +676,6 @@ int Gate::GateDeviceGetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_e
 		strcpy(ca_event->ErrStr, "Invalid Args");
 		ca_event->ActionResult = NULL;
 	}
-
-	if (proto) delete [] proto;
-	if (ext_port) delete [] ext_port;
 	
 	return (ca_event->ErrCode);
 }
@@ -716,15 +692,15 @@ int Gate::GateDeviceAddPortMapping(struct Upnp_Action_Request *ca_event)
 	char num[5];
 	char result_str[500];
 	char *address = NULL;
-	IXML_Document  *PropSet = NULL;	
+	IXML_Document *PropSet = NULL;	
 	int action_succeeded = 0;
 	
 	address = m_ipcon->IPCon_GetIpAddrStr();
 	
 	if (((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
-	        && (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
+		&& (proto    = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol"))
 		&& (int_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort"))
-	        && (int_ip   = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient"))
+		&& (int_ip   = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient"))
 		&& (desc     = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription"))))
 	{
 		prt = getProtoNum(proto);

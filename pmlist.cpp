@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
-#include "config.h"
 
 PortMapList::PortMapList()
 {
@@ -125,7 +124,7 @@ int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtP
 
 	m_pmap.push_back(temp);
 	
-	//	addPacketFilter(Proto, RemoteHost, ExtIP, ExtPort, Enabled, Desc);
+	addPacketFilter(Proto, RemoteHost, ExtIP, ExtPort, Enabled, Desc);
 	addPortForward(Proto, ExtIP, ExtPort, IntIP, IntPort, Enabled, Desc);
 	
 	return (1);
@@ -139,8 +138,8 @@ int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 	{
 		if (( strcmp((*itr)->m_PortMappingProtocol,Proto) == 0 ) && ((*itr)->m_ExternalPort == ExtPort))
 		{
-		  //			delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
-		  //			(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
+			delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
+					(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
 			delPortForward((*itr)->m_PortMappingProtocol, (*itr)->m_ExternalIP,
 					(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
 					(*itr)->m_InternalPort);
@@ -183,13 +182,7 @@ int PortMapList::addPortForward(char *Proto, char *ExtIP, int ExtPort,
 {
 	char command[255];
 
-	sprintf(command,"%s -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d",
-		conf_iptables_command,Proto, ExtIP, ExtPort, IntIP, IntPort);
-	system(command);
-
-	if(conf_flag_forward==1)
-	  sprintf(command, "%s -I %s -p %s -d %s --dport %d -j ACCEPT",
-		  conf_iptables_command,conf_forward_chain, Proto, IntIP, IntPort);
+	sprintf(command,"/usr/sbin/iptables -t nat -A PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);
 
 	return (1);
@@ -224,16 +217,10 @@ int PortMapList::delPortForward(char *Proto, char *ExtIP, int ExtPort,
 	char* IntIP, int IntPort)
 {
 	char command[255];
+	
 
-	sprintf(command, "%s -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d",
-		conf_iptables_command, Proto, ExtIP, ExtPort, IntIP, IntPort);
-	system(command);
-
-	if(conf_flag_forward==1)
-	  sprintf(command, "%s -D %s -p %s -d %s --dport %d -j ACCEPT",
-		  conf_iptables_command, conf_forward_chain, Proto, IntIP, IntPort);
+	sprintf(command, "/usr/sbin/iptables -t nat -D PREROUTING -p %s -d %s --dport %d -j DNAT --to %s:%d", Proto, ExtIP, ExtPort, IntIP, IntPort);
 	system(command);	
-
 	return (1);
 }
 
