@@ -29,7 +29,7 @@
 int conf_flag_forward      =1;  // If 1 rules will be inserted first in the forward chain
                                 // If 0 no rules are inserted (FORWARD policy must be accept)
 char conf_forward_chain[] = "upnp";  // name of forward chain
-int conf_debug_mode=1;          // If 1 upnpd will not fork and all Upnp_Action events
+int conf_debug_mode=0;          // If 1 upnpd will not fork and all Upnp_Action events
                                 // will be printed to stdout.
 char conf_iptables_command[] = "/sbin/iptables"; // Full path and name of iptables command
 
