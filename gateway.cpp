@@ -121,7 +121,7 @@ int main (int argc, char** argv)
         syslog(LOG_DEBUG, "ipaddress=%s", lan_ip_address);
 	syslog(LOG_DEBUG, "conf_dir_path=%s\n", conf_dir_path);
 
-	if ((ret = UpnpInit(lan_ip_address, 49512)) != UPNP_E_SUCCESS)
+	if ((ret = UpnpInit(lan_ip_address, 0)) != UPNP_E_SUCCESS)
 	{
 		syslog(LOG_ERR, "Error with UpnpInit -- %d\n", ret);
 		UpnpFinish();
@@ -129,8 +129,6 @@ int main (int argc, char** argv)
 	}
 	syslog(LOG_DEBUG, "UPnP Initialization Completed");
 
-	sprintf(desc_doc_url, "http://%s:%d", UpnpGetServerIpAddress(), 49512);//UpnpGetServerPort());
-        substr(conf_dir_path, "gatedesc.skl", "gatedesc.xml", "!ADDR!",desc_doc_url);
         sprintf(desc_doc_url, "http://%s:%d/gatedesc.xml", UpnpGetServerIpAddress(), UpnpGetServerPort());
 
 	syslog(LOG_DEBUG, "Setting webserver root directory -- %s\n",conf_dir_path);
