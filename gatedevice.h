@@ -24,6 +24,9 @@ char ExternalIPAddress[20];
 int PortMappingNumberOfEntries;
 int PortMappingEnabled;
 
+// Helper routines
+char* GetFirstDocumentItem( IN IXML_Document * doc, const char *item );
+
 // Linked list for portmapping entries
 struct portMap *pmlist_Head;
 struct portMap *pmlist_Current;

@@ -6,8 +6,8 @@ CFLAGS += -Wall -g $(OPT)
 
 all: upnpd
 
-upnpd: main.o gatedevice.o sample_util.o pmlist.o util.o config.o
-	$(CC)  $(CFLAGS) main.o gatedevice.o sample_util.o pmlist.o util.o config.o $(LIBS) -o  $@ 
+upnpd: main.o gatedevice.o pmlist.o util.o config.o
+	$(CC)  $(CFLAGS) main.o gatedevice.o pmlist.o util.o config.o $(LIBS) -o  $@ 
 	@echo "make $@ finished on `date`"
 
 %.o:	%.cpp

@@ -3,10 +3,9 @@
 #include <stdlib.h>
 #include <upnp/ixml.h>
 #include <string.h>
-
+#include <upnp/upnptools.h>
 #include "config.h"
 #include "gatedevice.h"
-#include "sample_util.h"
 #include "pmlist.h"
 #include "util.h"
 #include "globals.h"
@@ -52,7 +51,7 @@ int StateTableInit(char *descDocUrl)
 	}
 
 	// Get the UDN from the description document, then free the DescDoc's memory
-	gateUDN = SampleUtil_GetFirstDocumentItem(ixmlDescDoc, "UDN");
+	gateUDN = GetFirstDocumentItem(ixmlDescDoc, "UDN");
 	ixmlDocument_free(ixmlDescDoc);
 		
 	// Initialize our linked list of port mappings.
@@ -553,11 +552,11 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	int action_succeeded = 0;
 	char resultStr[500];
 
-	if ( (ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort") )
-		&& (proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol") )
-		&& (int_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort") )
-		&& (int_ip = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient") )
-		&& (desc = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription") ))
+	if ( (ext_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort") )
+		&& (proto = GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol") )
+		&& (int_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalPort") )
+		&& (int_ip = GetFirstDocumentItem(ca_event->ActionRequest, "NewInternalClient") )
+		&& (desc = GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingDescription") ))
 	{
 		// If port map with the same External Port, Protocol, and Internal Client exists
 		// then, as per spec, we overwrite it (for simplicity, we delete and re-add at end of list)
@@ -565,13 +564,13 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 		// to be in the same place.
 		if ((ret = pmlist_Find(ext_port, proto, int_ip)) != NULL)
 		{
-				if (g_debug) syslog(LOG_DEBUG, "Found port map meeting criteria.  Replacing");
+				if (g_debug) syslog(LOG_DEBUG, "Found port map to already exist.  Replacing");
 				pmlist_Delete(ret);
 		}
 			
 		new = pmlist_NewNode(1, 0, "", ext_port, int_port, proto, int_ip, desc); 
 		result = pmlist_PushBack(new);
-		if (result)
+		if (result==1)
 		{
 			sprintf(num, "%d", pmlist_Size());
 			if (g_debug) syslog(LOG_DEBUG, "PortMappingNumberOfEntries: %d", pmlist_Size());
@@ -628,7 +627,7 @@ int GetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
 	char resultStr[500];
 	int action_succeeded = 0;
 
-	if ((mapindex = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingIndex")))
+	if ((mapindex = GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingIndex")))
 	{
 		temp = pmlist_FindByIndex(atoi(mapindex));
 		if (temp)
@@ -671,8 +670,8 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
    int action_succeeded = 0;
 	struct portMap *temp;
 
-   if ((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
-      && (proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol")))
+   if ((ext_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort"))
+      && (proto = GetFirstDocumentItem(ca_event->ActionRequest,"NewProtocol")))
    {
       if ((strcmp(proto, "TCP") == 0) || (strcmp(proto, "UDP") == 0))
       {
@@ -760,8 +759,8 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
    int action_succeeded = 0;
 	struct portMap *temp;
 
-   if (((ext_port = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort")) &&
-      (proto = SampleUtil_GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol"))))
+   if (((ext_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort")) &&
+      (proto = GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol"))))
    {
 
      if ((strcmp(proto, "TCP") == 0) || (strcmp(proto, "UDP") == 0))
@@ -815,3 +814,31 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
 
    return(ca_event->ErrCode);
 }
+
+// From sampleutil.c included with libupnp 
+char* GetFirstDocumentItem( IN IXML_Document * doc,
+                                 IN const char *item )
+{
+    IXML_NodeList *nodeList = NULL;
+    IXML_Node *textNode = NULL;
+    IXML_Node *tmpNode = NULL;
+
+    char *ret = NULL;
+
+    nodeList = ixmlDocument_getElementsByTagName( doc, ( char * )item );
+
+    if( nodeList ) {
+        if( ( tmpNode = ixmlNodeList_item( nodeList, 0 ) ) ) {
+            textNode = ixmlNode_getFirstChild( tmpNode );
+       if (textNode != NULL)
+       {
+      ret = strdup( ixmlNode_getNodeValue( textNode ) );
+       }
+        }
+    }
+
+    if( nodeList )
+        ixmlNodeList_free( nodeList );
+    return ret;
+}
+
