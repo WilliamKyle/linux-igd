@@ -4,6 +4,7 @@
 #include <syslog.h>
 #include <signal.h>
 #include <sys/stat.h>
+#include <sys/resource.h>
 #include <time.h>
 #include "config.h"
 #include "gatedevice.h"
@@ -14,7 +15,7 @@
 int main (int argc, char** argv)
 {
 	int ret = UPNP_E_SUCCESS;
-	int signal;	
+	int signum;	
 	char descDocUrl[50];
 	char descDocName[20];
 	char xmlPath[50];
@@ -22,7 +23,10 @@ int main (int argc, char** argv)
 	sigset_t sigsToCatch;
 
 	pid_t pid,sid;
-
+	struct rlimit resourceLimit = { 0 };
+	int i;
+	int status;
+	
 	if (argc != 3)
    {
       printf("Usage: upnpd <external ifname> <internal ifname>\n");
@@ -51,11 +55,40 @@ int main (int argc, char** argv)
 	}
 	if (pid > 0)
 		exit(EXIT_SUCCESS);
+
+	// become session leader
 	if ((sid = setsid()) < 0)
 	{
 		perror("Error running setsid");
 		exit(EXIT_FAILURE);
 	}
+
+	// close all file handles
+	resourceLimit.rlim_max = 0;
+	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
+	if (-1 == status) /* shouldn't happen */
+	{
+	    perror("error in getrlimit()");
+	    exit(1);
+	}
+	if (0 == resourceLimit.rlim_max)
+	{
+	    fprintf(stderr, "Max number of open file descriptors is 0!!\n");
+	    exit(1);
+	}	
+	for (i = 0; i < resourceLimit.rlim_max; i++)
+	    close(i);
+	
+	// fork again so child can never acquire a controlling terminal
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("Error forking a new process.");
+		exit(EXIT_FAILURE);
+	}
+	if (pid > 0)
+		exit(EXIT_SUCCESS);
+	
 	if ((chdir("/")) < 0)
 	{
 		perror("Error setting root directory");
@@ -63,10 +96,6 @@ int main (int argc, char** argv)
 	}
 	
 	umask(0);
-	close(STDERR_FILENO);
-	close (STDIN_FILENO);
-	close (STDOUT_FILENO);	
-
 
 // End Daemon initialization
 
@@ -129,10 +158,10 @@ int main (int argc, char** argv)
 	sigemptyset(&sigsToCatch);
 	sigaddset(&sigsToCatch, SIGINT);
 	sigaddset(&sigsToCatch, SIGTERM);
-	//sigwait(&sigsToCatch, &signal);
+	//sigwait(&sigsToCatch, &signum);
 	pthread_sigmask(SIG_SETMASK, &sigsToCatch, NULL);
-	sigwait(&sigsToCatch, &signal);
-	syslog(LOG_DEBUG, "Shutting down on signal %d...\n", signal);
+	sigwait(&sigsToCatch, &signum);
+	syslog(LOG_DEBUG, "Shutting down on signal %d...\n", signum);
 
 	// Cleanup UPnP SDK and free memory
 	pmlist_FreeList(); 
