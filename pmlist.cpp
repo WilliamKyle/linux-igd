@@ -125,7 +125,7 @@ int PortMapList::PortMapAdd(char *RemoteHost, char *Proto, char *ExtIP, int ExtP
 
 	m_pmap.push_back(temp);
 	
-	addPacketFilter(Proto, RemoteHost, ExtIP, ExtPort, Enabled, Desc);
+	addPacketFilter(Proto, RemoteHost, IntIP, IntPort, Enabled, Desc);
 	addPortForward(Proto, ExtIP, ExtPort, IntIP, IntPort, Enabled, Desc);
 	
 	return (1);
@@ -140,7 +140,7 @@ int PortMapList::PortMapDelete(char *Proto, int ExtPort)
 		if (( strcmp((*itr)->m_PortMappingProtocol,Proto) == 0 ) && ((*itr)->m_ExternalPort == ExtPort))
 		{
 			delPacketFilter((*itr)->m_PortMappingProtocol, (*itr)->m_RemoteHost,
-					(*itr)->m_ExternalIP, (*itr)->m_ExternalPort);
+					(*itr)->m_InternalClient, (*itr)->m_InternalPort);
 			delPortForward((*itr)->m_PortMappingProtocol, (*itr)->m_ExternalIP,
 					(*itr)->m_ExternalPort, (*itr)->m_InternalClient,
 					(*itr)->m_InternalPort);
