@@ -1,9 +1,14 @@
 #include <stdlib.h>
 #include <syslog.h>
+#include <sys/wait.h>
 #include "globals.h"
 #include "config.h"
 #include "pmlist.h"
 #include "gatedevice.h"
+
+#if HAVE_LIBIPTC
+#include "iptc.h"
+#endif
 
 struct portMap* pmlist_NewNode(int enabled, int duration, char *remoteHost,
          char *externalPort, char *internalPort,
@@ -164,6 +169,8 @@ int pmlist_PushBack(struct portMap* item)
 		item->prev = NULL;
 		item->next = NULL;
  		action_succeeded = 1;
+		if (g_debug) syslog(LOG_DEBUG, "appended %d %s %s %s %s", item->m_PortMappingEnabled, 
+			item->m_PortMappingProtocol, item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort);
 	}
 	if (action_succeeded == 1)
 	{
@@ -233,18 +240,41 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 {
     if (enabled)
     {
+#if HAVE_LIBIPTC
+	char *buffer = malloc(strlen(internalClient) + strlen(internalPort) + 2);
+	strcpy(buffer, internalClient);
+	strcat(buffer, ":");
+	strcat(buffer, internalPort);
+
+	if (g_forwardRules)
+		iptc_add_rule("filter", g_forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
+
+	iptc_add_rule("nat", g_preroutingChainName, protocol, g_extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
+	free(buffer);
+#else
 	char command[500];
+	int status;
 	
 	sprintf(command, "%s -t nat -A %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
 	if (g_debug) syslog(LOG_DEBUG, command);
-	system (command);
+
+	if (!fork()) {
+		system (command);
+	} else {
+		wait(&status);		
+	}
+
 	if (g_forwardRules)
 	{
 	    sprintf(command,"%s -I %s -p %s -d %s --dport %s -j ACCEPT", g_iptables,g_forwardChainName, protocol, internalClient, internalPort);
 	    if (g_debug) syslog(LOG_DEBUG, command);
-	    system(command);
+			if (!fork()) {
+				system (command);
+			} else {
+				wait(&status);		
+			}
 	}
-
+#endif
     }
     return 1;
 }
@@ -253,19 +283,42 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 {
     if (enabled)
     {
-	char command[500];
+#if HAVE_LIBIPTC
+	char *buffer = malloc(strlen(internalClient) + strlen(internalPort) + 2);
+	strcpy(buffer, internalClient);
+	strcat(buffer, ":");
+	strcat(buffer, internalPort);
 
+	if (g_forwardRules)
+	    iptc_delete_rule("filter", g_forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
+
+	iptc_delete_rule("nat", g_preroutingChainName, protocol, g_extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
+	free(buffer);
+#else
+	char command[500];
+	int status;
+	
 	sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
 			g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
 	if (g_debug) syslog(LOG_DEBUG, command);
-	system(command);
+
+	if (!fork()) {
+		system (command);
+	} else {
+		wait(&status);		
+	}
+
 	if (g_forwardRules)
 	{
 	    sprintf(command,"%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_iptables, g_forwardChainName, protocol, internalClient, internalPort);
 	    if (g_debug) syslog(LOG_DEBUG, command);
-	    system(command);
+			if (!fork()) {
+				system (command);
+			} else {
+				wait(&status);		
+			}
 	}
+#endif
     }
     return 1;
 }
-

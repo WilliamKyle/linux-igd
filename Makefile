@@ -1,16 +1,23 @@
 CC=gcc
-INCLUDES= -I/usr/include/upnp 
-LIBS= -lpthread -lupnp -lixml -lthreadutil
+INCLUDES= -I/usr/include/upnp  -I../include
+LIBS= -lpthread -lupnp -lixml -lthreadutil -L../libs
+FILES= main.o gatedevice.o pmlist.o util.o config.o
 
-CFLAGS += -Wall -g $(OPT)
+CFLAGS += -Wall -g
+
+ifdef HAVE_LIBIPTC
+LIBS += -liptc
+INCLUDES += -DHAVE_LIBIPTC
+FILES += iptc.o
+endif
 
 all: upnpd
 
-upnpd: main.o gatedevice.o pmlist.o util.o config.o
-	$(CC)  $(CFLAGS) main.o gatedevice.o pmlist.o util.o config.o $(LIBS) -o  $@ 
+upnpd: $(FILES)
+	$(CC) $(CFLAGS) $(FILES) $(LIBS) -o  $@ 
 	@echo "make $@ finished on `date`"
 
-%.o:	%.cpp
+%.o:	%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
 clean:
