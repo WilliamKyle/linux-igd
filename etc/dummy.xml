@@ -4,9 +4,7 @@
     <major>1</major>
     <minor>0</minor>
   </specVersion>
-  <actionList>
-  </actionList>
-  <serviceStateTable>
-  </serviceStateTable>
+  <actionList />
+  <serviceStateTable />
 </scpd>
 
