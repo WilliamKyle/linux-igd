@@ -303,7 +303,7 @@
         <allowedValue>ERROR_NONE</allowedValue>
     	<allowedValue>ERROR_ISP_TIME_OUT</allowedValue>
         <allowedValue>ERROR_COMMAND_ABORTED</allowedValue>
-        <allowedValue>ERROR_ NOT_ENABLED_FOR_INTERNET</allowedValue>
+        <allowedValue>ERROR_NOT_ENABLED_FOR_INTERNET</allowedValue>
         <allowedValue>ERROR_BAD_PHONE_NUMBER</allowedValue>
         <allowedValue>ERROR_USER_DISCONNECT</allowedValue>
         <allowedValue>ERROR_ISP_DISCONNECT</allowedValue>

@@ -147,7 +147,7 @@ int Gate::GateDeviceHandleSubscriptionRequest (struct Upnp_Subscription_Request 
 			UpnpAddToPropertySet(&PropSet, "OSMajorVersion","5");
 			UpnpAddToPropertySet(&PropSet, "OSMinorVersion","1");
 			UpnpAddToPropertySet(&PropSet, "OSBuildNumber","2600");
-			UpnpAddToPropertySet(&PropSet, "OSMachineName","GATE");
+			UpnpAddToPropertySet(&PropSet, "OSMachineName","Linux IGD");
 			UpnpAcceptSubscriptionExt(device_handle, sr_event->UDN,
 					sr_event->ServiceId, PropSet, sr_event->Sid);
 			UpnpDocument_free(PropSet);
