@@ -9,13 +9,19 @@
 #include "gatedevice.h"
 #include "util.h"
 #include "pmlist.h"
+#include "globals.h"
 
 int main (int argc, char** argv)
 {
 	int ret = UPNP_E_SUCCESS;
 	int signal;	
 	char descDocUrl[50];
+	char descDocName[20];
+	char xmlPath[50];
+
 	sigset_t sigsToCatch, oldSet;
+	sigset_t sigsToCatch, oldSet;
+
 	pid_t pid,sid;
 
 	if (argc != 3)
@@ -25,13 +31,19 @@ int main (int argc, char** argv)
       printf("Example: upnpd eth1 eth0\n");
       exit(0);
    }
-	
+	int dummy;  // Just a dummy sent to parseConfigFile to
+	            // catch the debug var
+
+	parseConfigFile(&g_forwardRules,&dummy,g_iptables,
+		        g_forwardChainName,g_preroutingChainName,
+			g_upstreamBitrate,g_downstreamBitrate,
+			descDocName,xmlPath);
 	// Save the interface names for later uses
-	strcpy(extInterfaceName, argv[1]);
-	strcpy(intInterfaceName, argv[2]);
+	strcpy(g_extInterfaceName, argv[1]);
+	strcpy(g_intInterfaceName, argv[2]);
 		
 	// Get the internal ip address to start the daemon on
-	GetIpAddressStr(intIpAddress, intInterfaceName);	
+	GetIpAddressStr(g_intIpAddress, g_intInterfaceName);	
 
 	// Put igd in the background as a daemon process.
 	pid = fork();
@@ -59,9 +71,9 @@ int main (int argc, char** argv)
 
 	// Initialize UPnP SDK on the internal Interface
 	syslog(LOG_DEBUG, "Initializing UPnP SDK ... ");
-	if ( (ret = UpnpInit(intIpAddress,0) ) != UPNP_E_SUCCESS)
+	if ( (ret = UpnpInit(g_intIpAddress,0) ) != UPNP_E_SUCCESS)
 	{
-		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",intIpAddress);
+		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",g_intIpAddress);
 		syslog (LOG_ERR, "  UpnpInit returned %d", ret);
 		UpnpFinish();
 		exit(1);
@@ -69,10 +81,10 @@ int main (int argc, char** argv)
 	syslog(LOG_DEBUG, "UPnP SDK Successfully Initialized.");
 
 	// Set the Device Web Server Base Directory
-	syslog(LOG_DEBUG, "Setting the Web Server Root Directory ... ");
-	if ( (ret = UpnpSetWebServerRootDir(configDir)) != UPNP_E_SUCCESS )
+	syslog(LOG_DEBUG, "Setting the Web Server Root Directory to %s",xmlPath);
+	if ( (ret = UpnpSetWebServerRootDir(xmlPath)) != UPNP_E_SUCCESS )
 	{
-		syslog (LOG_ERR, "Error Setting Web Server Root Directory to: %s", configDir);
+		syslog (LOG_ERR, "Error Setting Web Server Root Directory to: %s", xmlPath);
 		syslog (LOG_ERR, "  UpnpSetWebServerRootDir returned %d", ret); 
 		UpnpFinish();
 		exit(1);
@@ -82,7 +94,7 @@ int main (int argc, char** argv)
 
 	// Form the Description Doc URL to pass to RegisterRootDevice
 	sprintf(descDocUrl, "http://%s:%d/%s", UpnpGetServerIpAddress(),
-				UpnpGetServerPort(), descDoc);
+				UpnpGetServerPort(), descDocName);
 
 	// Register our IGD as a valid UPnP Root device
 	syslog(LOG_DEBUG, "Registering the root device with descDocUrl %s", descDocUrl);
@@ -94,6 +106,7 @@ int main (int argc, char** argv)
 		UpnpFinish();
 		exit(1);
 	}
+
 	syslog (LOG_DEBUG, "IGD root device successfully registered.");
 	
 	// Initialize the state variable table.
