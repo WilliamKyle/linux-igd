@@ -28,7 +28,7 @@ extern pthread_mutex_t DevMutex;
 
 #define INIT_PORT          52869
 #define INIT_DESC_DOC      "gatedesc"
-#define INIT_CONF_DIR      "/etc/linux-igd/"
+#define INIT_CONF_DIR      "/etc/linuxigd/"
 
 #define GATE_SERVICE_SERVCOUNT  3
 #define GATE_SERVICE_OSINFO             0

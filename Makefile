@@ -28,7 +28,7 @@ clean:
 	rm -f *.o $(APPS)
 
 install: upnpd
-	@install -d /etc/linux-igd
-	@install etc/* /etc/linux-igd
+	@install -d /etc/linuxigd
+	@install etc/* /etc/linuxigd
 	@install upnpd /usr/sbin
 
