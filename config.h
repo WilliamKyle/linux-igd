@@ -29,7 +29,10 @@
 #define MAX_CONFIG_LINE 256
 #define null NULL
 
-extern int flag_forward;
+extern int conf_flag_forward;
+extern int conf_debug_mode;
+extern char conf_iptables_command[50];
+extern char conf_forward_chain[50];
 
 typedef struct config_node {
   char key[MAX_CONFIG_LINE];

@@ -26,102 +26,17 @@
 #include <string.h>
 #include <iostream>
 
-int flag_forward=0;
+int conf_flag_forward      =1;  // If 1 rules will be inserted first in the forward chain
+                                // If 0 no rules are inserted (FORWARD policy must be accept)
+char conf_forward_chain[] = "upnp";  // name of forward chain
+int conf_debug_mode=1;          // If 1 upnpd will not fork and all Upnp_Action events
+                                // will be printed to stdout.
+char conf_iptables_command[] = "/sbin/iptables"; // Full path and name of iptables command
 
-// ---------- CODE ----------
 
-config_node *start=null;
-config_node *current=null;
-
-
-int move_first()
-{
-  current=start;
-  if(current!=null)
-    return 1;
-  else
-    return 0;
-}
-
-int move_last()
-{
-  if(current!=null)
-    while(current->next!=null)
-      current=current->next;
-  else
-    return 0;
-  return 1;
-}
-
-int move_next()
-{
-  if(current!=null)
-    if(current->next!=null)
-    {
-      current=current->next;
-      return 1;
-    }
-  return 0;
-}
-
-int move_prev()
-{
-  if(current!=null)
-    if(current->prev!=null)
-    {
-      current=current->prev;
-      return 1;
-    }
-  return 0;
-}
-
-void add_node()
-{
-  config_node *tmp;
-  
-  move_last();
-
-  tmp=(config_node*)malloc(sizeof(config_node));
-
-  tmp->next=null;
-  
-  if(current==null)
-  {
-    tmp->prev=null;
-    current=tmp;
-    start=current;
-  }
-  else
-  {
-    current->next=tmp;
-    tmp->prev=current;
-    current=tmp;
-  }
-}
-
-void del_node()
-{
-  if(current!=null)
-  {
-    if(current->prev==null)
-    {
-      start=current->next;
-      if(start!=null)
-	start->prev=null;
-    }
-    else
-    {
-      current->prev->next=current->next;
-      if(current->next!=null)
-	current->next->prev=current->prev;
-    }
-    free(current);
-    current=start;
-  }
-}
 
 // ------------ SECOND PART -------------
-
+#ifdef NOT_DEFINED_AT_ALL
 char delim[]={' ','\t'};
 
 /* removes the caracters in delim from the left side of the string */
@@ -210,7 +125,7 @@ void config_process(char *line)
   // Some rules
   if(!strcasecmp(current->key,"port_forward"))
     if(!strcasecmp(current->info,"yes"))
-      flag_forward=1;
+      conf_flag_forward=1;
 
   // just for debugging
   //cout << "key: " << current->key << endl << "info: " << current->info << endl;
@@ -239,3 +154,4 @@ char *config_info(char *key)
 
   return null;
 }
+#endif
