@@ -765,8 +765,8 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
 
      if ((strcmp(proto, "TCP") == 0) || (strcmp(proto, "UDP") == 0))
      {
-			temp = pmlist_FindSpecific(ext_port, proto);
-			result = pmlist_Delete(temp);
+         if ((temp = pmlist_FindSpecific(ext_port, proto)))
+            result = pmlist_Delete(temp);
 
          if (result==1)
          {
