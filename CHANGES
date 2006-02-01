@@ -1,0 +1,37 @@
+2006-02-01 mhyllander
+  * Fixed problem with multiple children being forked when using
+    iptables to modify the netfilter tables. upnpd was doing a
+    fork+system without a following exit, so children continued living
+    on. Now a fork+exec+exit is done.
+    
+  * Included a patch from Juho Vähä-Herttua to fix inserting of
+    forward rules when using libiptc.
+    
+    http://sourceforge.net/forum/forum.php?thread_id=1270012&forum_id=174960
+    http://users.tkk.fi/~jvahaher/linux-igd/linux-igd_insert.diff
+    
+  * Added handling of port mapping duration. Port mappings will be
+    automatically removed when they expire. If the client doesn't set
+    a duration, a default duration can be used. The default duration
+    can either be set as a relative time (e.g. two hours), or as an
+    absolute time of day (e.g. 04:00 every day).
+    
+  * You can force upnpd to delete all port mappings by sending it the
+    SIGUSR1 signal. The SIGINT and SIGTERM signals terminate upnpd.
+    
+  * Made parsing of the configuration file more secure by guarding
+    against buffer overflow.
+    
+  * In the configuration file, the path to the iptables command is now
+    specified between quotes, to allow all characters to be used in
+    the path.
+    
+  * syslog messages are now sent to local6. Trace output is sent to
+    LOG_DEBUG. You can specify the log level in the configuration file
+    by setting debug_mode between 0 (no output)  and 3 (all output).
+    
+  * added an example init.d script: etc/upnpd.rc.
+    
+  * Some code cleanups, like only defining globals in one place
+    (i.e. not in an include file), and some improvements to the
+    Makefile.
