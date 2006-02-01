@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <errno.h>
 #include <netdb.h>
-#include <syslog.h>
 #include <string.h>
 #include <iptables.h>
 #include <libiptc/libiptc.h>
 #include <linux/netfilter_ipv4/ip_nat.h>
 #include <arpa/inet.h> /* inet_addr */
 #include "globals.h"
+#include "util.h"
 #include "iptc.h"
 
 struct ipt_natinfo
@@ -41,7 +41,8 @@ void iptc_add_rule(const char *table,
                    const char *srcports,
                    const char *destports,
                    const char *target,
-                   const char *dnat_to)
+                   const char *dnat_to,
+                   const int append)
 {
 	iptc_handle_t handle;
 	struct ipt_entry *chain_entry;
@@ -74,7 +75,7 @@ void iptc_add_rule(const char *table,
 		entry_match = get_udp_match(srcports, destports, &chain_entry->nfcache);
 	}
 	else {
-		if (g_debug) syslog(LOG_DEBUG, "Unsupported protocol: %s", protocol);
+		trace(1, "Unsupported protocol: %s", protocol);
 		return;
 	}
 
@@ -109,28 +110,32 @@ void iptc_add_rule(const char *table,
 
 	handle = iptc_init(table);
 	if (!handle) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Can't initialize table %s, %s", table, iptc_strerror(errno));
+		trace(1, "libiptc error: Can't initialize table %s, %s", table, iptc_strerror(errno));
 		return;
 	}
 
 	strncpy(labelit, chain, sizeof(ipt_chainlabel));
 	result = iptc_is_chain(chain, handle);
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Chain %s does not exist!", chain);
+		trace(1, "libiptc error: Chain %s does not exist!", chain);
 		return;
 	}
-	result = iptc_append_entry(labelit, chain_entry, &handle);
+	if (append)
+		result = iptc_append_entry(labelit, chain_entry, &handle);
+	else
+		result = iptc_insert_entry(labelit, chain_entry, 0, &handle);
+
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Can't append, %s", iptc_strerror(errno));
+		trace(1, "libiptc error: Can't add, %s", iptc_strerror(errno));
 		return;
 	}
 	result = iptc_commit(&handle);
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Commit error, %s", iptc_strerror(errno));
+	  trace(1, "libiptc error: Commit error, %s", iptc_strerror(errno));
 		return;
 	}
 	else 
-		if (g_debug) syslog(LOG_DEBUG, "appended new rule to block successfully");
+	  trace(3, "added new rule to block successfully");
 
 	if (entry_match) free(entry_match);
 	free(entry_target);
@@ -160,14 +165,14 @@ void iptc_delete_rule(const char *table,
 
 	handle = iptc_init(table);
 	if (!handle) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Can't initialize table %s, %s", table, iptc_strerror(errno));
+	  trace(1, "libiptc error: Can't initialize table %s, %s", table, iptc_strerror(errno));
 		return;
 	}
 
 	strncpy(labelit, chain, sizeof(ipt_chainlabel));
 	result = iptc_is_chain(chain, handle);
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Chain %s does not exist!", chain);
+	  trace(1, "libiptc error: Chain %s does not exist!", chain);
 		return;
 	}
 	for (e = iptc_first_rule(chain, &handle), i=0; e; e = iptc_next_rule(e, &handle), i++)  {
@@ -203,16 +208,16 @@ void iptc_delete_rule(const char *table,
 	if (!e) return;
 	result = iptc_delete_num_entry(chain, i, &handle);
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Delete error, %s", iptc_strerror(errno));
+	  trace(1, "libiptc error: Delete error, %s", iptc_strerror(errno));
 		return;
 	}
 	result = iptc_commit(&handle);
 	if (!result) {
-		if (g_debug) syslog(LOG_DEBUG, "libiptc error: Commit error, %s", iptc_strerror(errno));
+	  trace(1, "libiptc error: Commit error, %s", iptc_strerror(errno));
 		return;
 	}
 	else 
-		if (g_debug) syslog(LOG_DEBUG, "deleted rule from block successfully");
+	  trace(3, "deleted rule from block successfully");
 }
 
 int matchcmp(const struct ipt_entry_match *match, const char *srcports, const char *destports) {

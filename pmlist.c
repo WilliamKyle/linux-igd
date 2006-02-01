@@ -1,25 +1,26 @@
 #include <stdlib.h>
-#include <syslog.h>
 #include <sys/wait.h>
+#include <unistd.h>
+#include <upnp/upnp.h>
 #include "globals.h"
 #include "config.h"
 #include "pmlist.h"
 #include "gatedevice.h"
+#include "util.h"
 
 #if HAVE_LIBIPTC
 #include "iptc.h"
 #endif
 
-struct portMap* pmlist_NewNode(int enabled, int duration, char *remoteHost,
-         char *externalPort, char *internalPort,
-         char *protocol, char *internalClient, char *desc)
+struct portMap* pmlist_NewNode(int enabled, long int duration, char *remoteHost,
+			       char *externalPort, char *internalPort,
+			       char *protocol, char *internalClient, char *desc)
 {
-	struct portMap* temp;
-	temp = (struct portMap*) malloc(sizeof(struct portMap));
+	struct portMap* temp = (struct portMap*) malloc(sizeof(struct portMap));
+
 	temp->m_PortMappingEnabled = enabled;
-	temp->m_PortMappingLeaseDuration = duration;
 	
-	if (strlen(remoteHost) < sizeof(temp->m_RemoteHost)) strcpy(temp->m_RemoteHost, remoteHost);
+	if (remoteHost && strlen(remoteHost) < sizeof(temp->m_RemoteHost)) strcpy(temp->m_RemoteHost, remoteHost);
 		else strcpy(temp->m_RemoteHost, "");
 	if (strlen(externalPort) < sizeof(temp->m_ExternalPort)) strcpy(temp->m_ExternalPort, externalPort);
 		else strcpy(temp->m_ExternalPort, "");
@@ -31,6 +32,7 @@ struct portMap* pmlist_NewNode(int enabled, int duration, char *remoteHost,
 		else strcpy(temp->m_InternalClient, "");
 	if (strlen(desc) < sizeof(temp->m_PortMappingDescription)) strcpy(temp->m_PortMappingDescription, desc);
 		else strcpy(temp->m_PortMappingDescription, "");
+	temp->m_PortMappingLeaseDuration = duration;
 
 	temp->next = NULL;
 	temp->prev = NULL;
@@ -130,25 +132,19 @@ int pmlist_Size(void)
 
 int pmlist_FreeList(void)
 {
-	struct portMap* temp;
-	
-	temp = pmlist_Head;
-	if (temp) // We have a list
-	{
-		while(temp->next) // While there's another node left in the list
-		{
-	      pmlist_DeletePortMapping(temp->m_PortMappingEnabled, temp->m_PortMappingProtocol, temp->m_ExternalPort,
-            temp->m_InternalClient, temp->m_InternalPort);
-			temp = temp->next; // Move to the next element.
- 			free(temp->prev);
-			temp->prev = NULL; // Probably unecessary, but i do it anyway. May remove.
-		}
-      pmlist_DeletePortMapping(temp->m_PortMappingEnabled, temp->m_PortMappingProtocol, temp->m_ExternalPort,
-            temp->m_InternalClient, temp->m_InternalPort);
-		free(temp); // We're at the last element now, so delete ourselves.
-		pmlist_Head = pmlist_Tail = NULL;
-	}
-	return 1;
+  struct portMap *temp, *next;
+
+  temp = pmlist_Head;
+  while(temp) {
+    CancelMappingExpiration(temp->expirationEventId);
+    pmlist_DeletePortMapping(temp->m_PortMappingEnabled, temp->m_PortMappingProtocol, temp->m_ExternalPort,
+			     temp->m_InternalClient, temp->m_InternalPort);
+    next = temp->next;
+    free(temp);
+    temp = next;
+  }
+  pmlist_Head = pmlist_Tail = NULL;
+  return 1;
 }
 		
 int pmlist_PushBack(struct portMap* item)
@@ -169,13 +165,14 @@ int pmlist_PushBack(struct portMap* item)
 		item->prev = NULL;
 		item->next = NULL;
  		action_succeeded = 1;
-		if (g_debug) syslog(LOG_DEBUG, "appended %d %s %s %s %s", item->m_PortMappingEnabled, 
-			item->m_PortMappingProtocol, item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort);
+		trace(3, "appended %d %s %s %s %s %ld", item->m_PortMappingEnabled, 
+				    item->m_PortMappingProtocol, item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort,
+				    item->m_PortMappingLeaseDuration);
 	}
 	if (action_succeeded == 1)
 	{
-		 pmlist_AddPortMapping(item->m_PortMappingEnabled, item->m_PortMappingProtocol,
-         item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort);	
+		pmlist_AddPortMapping(item->m_PortMappingEnabled, item->m_PortMappingProtocol,
+				      item->m_ExternalPort, item->m_InternalClient, item->m_InternalPort);
 		return 1;
 	}
 	else
@@ -191,6 +188,7 @@ int pmlist_Delete(struct portMap* item)
 	temp = pmlist_Find(item->m_ExternalPort, item->m_PortMappingProtocol, item->m_InternalClient);
 	if (temp) // We found the item to delete
 	{
+	  CancelMappingExpiration(temp->expirationEventId);
 		pmlist_DeletePortMapping(item->m_PortMappingEnabled, item->m_PortMappingProtocol, item->m_ExternalPort, 
 				item->m_InternalClient, item->m_InternalPort);
 		if (temp == pmlist_Head) // We are the head of the list
@@ -228,12 +226,7 @@ int pmlist_Delete(struct portMap* item)
 	else  // We're deleting something that's not there, so return 0
 		action_succeeded = 0;
 
-	if (action_succeeded == 1)
-	{
-		return 1;
-	}
-	else 
-		return 0;
+	return action_succeeded;
 }
 
 int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char *internalClient, char *internalPort)
@@ -246,33 +239,44 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 	strcat(buffer, ":");
 	strcat(buffer, internalPort);
 
-	if (g_forwardRules)
-		iptc_add_rule("filter", g_forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
+	if (g_vars.forwardRules)
+		iptc_add_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL, FALSE);
 
-	iptc_add_rule("nat", g_preroutingChainName, protocol, g_extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
+	iptc_add_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer, TRUE);
 	free(buffer);
 #else
 	char command[500];
 	int status;
 	
-	sprintf(command, "%s -t nat -A %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	if (g_debug) syslog(LOG_DEBUG, command);
-
-	if (!fork()) {
-		system (command);
-	} else {
-		wait(&status);		
+	{
+	  char dest[100];
+	  sprintf(dest,"%s:%s", internalClient, internalPort);
+	  char *args[] = {"iptables", "-t", "nat", "-I", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
+	  
+	  sprintf(command, "%s -t nat -I %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
+	  trace(3, "%s", command);
+	  if (!fork()) {
+	    //system (command);
+	    int rc = execv(g_vars.iptables, args);
+	    exit(rc);
+	  } else {
+	    wait(&status);		
+	  }
 	}
 
-	if (g_forwardRules)
+	if (g_vars.forwardRules)
 	{
-	    sprintf(command,"%s -I %s -p %s -d %s --dport %s -j ACCEPT", g_iptables,g_forwardChainName, protocol, internalClient, internalPort);
-	    if (g_debug) syslog(LOG_DEBUG, command);
-			if (!fork()) {
-				system (command);
-			} else {
-				wait(&status);		
-			}
+	  char *args[] = {"iptables", "-A", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
+	  
+	  sprintf(command,"%s -A %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables,g_vars.forwardChainName, protocol, internalClient, internalPort);
+	  trace(3, "%s", command);
+	  if (!fork()) {
+	    //system (command);
+	    int rc = execv(g_vars.iptables, args);
+	    exit(rc);
+	  } else {
+	    wait(&status);		
+	  }
 	}
 #endif
     }
@@ -289,34 +293,46 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 	strcat(buffer, ":");
 	strcat(buffer, internalPort);
 
-	if (g_forwardRules)
-	    iptc_delete_rule("filter", g_forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
+	if (g_vars.forwardRules)
+	    iptc_delete_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
 
-	iptc_delete_rule("nat", g_preroutingChainName, protocol, g_extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
+	iptc_delete_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
 	free(buffer);
 #else
 	char command[500];
 	int status;
 	
-	sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
-			g_iptables, g_preroutingChainName, g_extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	if (g_debug) syslog(LOG_DEBUG, command);
+	{
+	  char dest[100];
+	  sprintf(dest,"%s:%s", internalClient, internalPort);
+	  char *args[] = {"iptables", "-t", "nat", "-D", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
 
-	if (!fork()) {
-		system (command);
-	} else {
-		wait(&status);		
+	  sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
+		  g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
+	  trace(3, "%s", command);
+	  
+	  if (!fork()) {
+	    //system (command);
+	    int rc = execv(g_vars.iptables, args);
+	    exit(rc);
+	  } else {
+	    wait(&status);		
+	  }
 	}
 
-	if (g_forwardRules)
+	if (g_vars.forwardRules)
 	{
-	    sprintf(command,"%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_iptables, g_forwardChainName, protocol, internalClient, internalPort);
-	    if (g_debug) syslog(LOG_DEBUG, command);
-			if (!fork()) {
-				system (command);
-			} else {
-				wait(&status);		
-			}
+	  char *args[] = {"iptables", "-D", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
+	  
+	  sprintf(command,"%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables, g_vars.forwardChainName, protocol, internalClient, internalPort);
+	  trace(3, "%s", command);
+	  if (!fork()) {
+	    //system (command);
+	    int rc = execv(g_vars.iptables, args);
+	    exit(rc);
+	  } else {
+	    wait(&status);		
+	  }
 	}
 #endif
     }

@@ -55,4 +55,16 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event);
 int GetExternalIPAddress(struct Upnp_Action_Request *ca_event);
 int DeletePortMapping(struct Upnp_Action_Request *ca_event);
 
+//Definitions for mapping expiration timer thread
+#define THREAD_IDLE_TIME 5000
+#define JOBS_PER_THREAD 10
+#define MIN_THREADS 2 
+#define MAX_THREADS 12 
+
+int ExpirationTimerThreadInit();
+int ExpirationTimerThreadShutdown();
+int ScheduleMappingExpiration(struct portMap *mapping, char *DevUDN, char *ServiceID);
+int CancelMappingExpiration(int eventId);
+void DeleteAllPortMappings();
+
 #endif //_GATEDEVICE_H

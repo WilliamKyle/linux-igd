@@ -11,7 +11,8 @@ void iptc_add_rule(const char *table,
                    const char *srcports,
                    const char *destports,
                    const char *target,
-                   const char *dnat_to);
+                   const char *dnat_to,
+                   const int append);
 
 void iptc_delete_rule(const char *table,
                       const char *chain,

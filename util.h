@@ -3,5 +3,6 @@
 
 int get_sockfd();
 int GetIpAddressStr(char *address, char *ifname);
+void trace(int debuglevel, const char *format, ...);
 
 #endif //_UTIL_H_

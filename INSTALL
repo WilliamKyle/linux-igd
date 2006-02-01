@@ -35,11 +35,26 @@ this outside the package you should have already gotten,
 http://linux-igd.sourceforge.net)
 
 1. tar -xvzf linuxigd-1.0.tgz    (or whatever the version you have is, or CVS)
-2. make 
-3. make install						(if CVS, remove etc/CVS directory, then do)
+2. To compile using iptables to manipulate netfilter tables, just say:
 
-This should be all that is needed to install linuxigd in /usr/sbin/ 
-(as upnpd - the executable daemon name).
+   make 
+
+To compile with libiptc (part of iptables-devel) to manipulte netfilter tables, say:
+
+   make HAVE_LIBIPTC=1
+
+If libiptc is installed in a different directory than /usr/lib, e.g. /usr/local/lib,
+set LIBIPTC_PREFIX:
+
+   make HAVE_LIBIPTC=1 LIBIPTC_PREFIX=/usr/local
+
+3. make install				(if CVS, remove etc/CVS directory, then do)
+
+This will install linux-igd as /usr/sbin/upnpd. To install somewhere else,
+set PREFIX:
+
+   make PREFIX=/usr/local install
+
 
 System Preparation before starting 
 ---------------------------------------
@@ -48,16 +63,20 @@ System Preparation before starting
 multicast route to the internal interface like so:
 
 route add -net 239.0.0.0 netmask 255.0.0.0 eth0      (or whatever your internal
-																		interface name is - here
-																		eth0)
+							interface name is - here
+							eth0)
 
 -- Also, if you'd like to see debug information, and please do, as it helps us 
 resolve your conflicts, perform the following steps:
 
-A. Add the following line to bottom of your /etc/syslog.conf file
-		*.=debug                         /var/log/debug
+A. Add the following lines to bottom of your /etc/syslog.conf file
 
-   ... or where ever you would like to log messages to.
+# UPnP IGD messages
+local6.!=debug						/var/log/messages
+local6.*						/var/log/upnpd
+
+This will send all non-debug output to /var/log/messages, and all output including
+debug output to /var/log/upnpd. Modify as you like.
 
 B.  service syslog restart  
 		 (or on your system, maybe:
@@ -79,7 +98,7 @@ Start the daemon with the following:
 upnpd <ext_ifname> <int_ifname>
 
 Example: upnpd eth1 eth0          -- Where eth1 is my external interface name
-												 and eth0 is my internal interface name.
+					 and eth0 is my internal interface name.
 
 
 To check and see if everything starts up ok, in /var/log/debug you should see 

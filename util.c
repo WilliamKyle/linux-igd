@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <syslog.h>
 #include <arpa/inet.h>
 #include <linux/sockios.h>
@@ -7,6 +8,7 @@
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include "globals.h"
 
 
 int get_sockfd()
@@ -49,4 +51,14 @@ int GetIpAddressStr(char *address, char *ifname)
       }
    }
    return succeeded;
+}
+
+void trace(int debuglevel, const char *format, ...)
+{
+  va_list ap;
+  va_start(ap,format);
+  if (g_vars.debug>=debuglevel) {
+    vsyslog(LOG_DEBUG,format,ap);
+  }
+  va_end(ap);
 }
