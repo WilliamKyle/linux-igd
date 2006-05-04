@@ -50,7 +50,7 @@ int StateTableInit(char *descDocUrl)
 
 	if ((ret = UpnpDownloadXmlDoc(descDocUrl, &ixmlDescDoc)) != UPNP_E_SUCCESS)
 	{
-		syslog(LOG_ERR, "Could not parse descritipion document. Exiting ...");
+		syslog(LOG_ERR, "Could not parse description document. Exiting ...");
 		UpnpFinish();
 		exit(0);
 	}

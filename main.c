@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <syslog.h>
 #include <signal.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <sys/stat.h>
 #include <sys/resource.h>
 #include <time.h>

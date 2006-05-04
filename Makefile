@@ -1,16 +1,22 @@
 PREFIX=/usr
-LIBIPTC_PREFIX=/usr
+LIBUPNP_PREFIX=/usr
+#LIBIPTC_PREFIX=/usr
 
 CC=gcc
-INCLUDES= -I/usr/local/include/upnp  -I../include
-LIBS= -lpthread -lupnp -lixml -lthreadutil -L/usr/local/lib -L../libs
+INCLUDES= -I$(LIBUPNP_PREFIX)/include  -I../include
+LIBS= -lpthread -lupnp -lixml -lthreadutil -L$(LIBUPNP_PREFIX)/lib -L../libs
 FILES= main.o gatedevice.o pmlist.o util.o config.o
 
 CFLAGS += -Wall -g
 
 ifdef HAVE_LIBIPTC
-LIBS += -L$(LIBIPTC_PREFIX)/lib -liptc
-INCLUDES += -DHAVE_LIBIPTC -I$(LIBIPTC_PREFIX)/include
+ifdef LIBIPTC_PREFIX
+LIBS += -L$(LIBIPTC_PREFIX)/lib
+INCLUDES += -I$(LIBIPTC_PREFIX)/include
+endif
+
+LIBS += -liptc
+INCLUDES += -DHAVE_LIBIPTC
 FILES += iptc.o
 endif
 
