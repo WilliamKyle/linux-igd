@@ -46,8 +46,8 @@ void iptc_add_rule(const char *table,
 {
 	iptc_handle_t handle;
 	struct ipt_entry *chain_entry;
-	struct ipt_entry_match *entry_match=NULL;
-	struct ipt_entry_target *entry_target;
+	struct ipt_entry_match *entry_match = NULL;
+	struct ipt_entry_target *entry_target = NULL;
 	ipt_chainlabel labelit;
 	long match_size;
 	int result = 0;
@@ -158,7 +158,7 @@ void iptc_delete_rule(const char *table,
 	const struct ipt_entry *e;
 	ipt_chainlabel labelit;
 	int i, result;
-	unsigned long int s_src, s_dest;
+	unsigned long int s_src = INADDR_NONE, s_dest = INADDR_NONE;
 
 	if (src) s_src = inet_addr(src);
 	if (dest) s_dest = inet_addr(dest);
@@ -175,16 +175,18 @@ void iptc_delete_rule(const char *table,
 	  trace(1, "libiptc error: Chain %s does not exist!", chain);
 		return;
 	}
+	
+	/* check through rules to find match */
 	for (e = iptc_first_rule(chain, &handle), i=0; e; e = iptc_next_rule(e, &handle), i++)  {
-		if (src && e->ip.src.s_addr != s_src) continue;
-		else if (dest && e->ip.dst.s_addr != s_dest) continue;
-		else if (iniface && strcmp(e->ip.iniface, iniface) != 0) continue;
-		else if (outiface && strcmp(e->ip.outiface, outiface) != 0) continue;
-		else if (protocol && strcmp(protocol, "TCP") == 0 && e->ip.proto != IPPROTO_TCP) continue;
-		else if (protocol && strcmp(protocol, "UDP") == 0 && e->ip.proto != IPPROTO_UDP) continue;
-		else if ((srcports || destports) && IPT_MATCH_ITERATE(e, matchcmp, srcports, destports) == 0) continue;
-		else if (target && strcmp(target, iptc_get_target(e, &handle)) != 0) continue;
-		else if (dnat_to && strcmp(target, "DNAT") == 0) {
+		if (s_src != INADDR_NONE && e->ip.src.s_addr != s_src) continue;
+		if (s_dest != INADDR_NONE && e->ip.dst.s_addr != s_dest) continue;
+		if (iniface && strcmp(e->ip.iniface, iniface) != 0) continue;
+		if (outiface && strcmp(e->ip.outiface, outiface) != 0) continue;
+		if (protocol && strcmp(protocol, "TCP") == 0 && e->ip.proto != IPPROTO_TCP) continue;
+		if (protocol && strcmp(protocol, "UDP") == 0 && e->ip.proto != IPPROTO_UDP) continue;
+		if ((srcports || destports) && IPT_MATCH_ITERATE(e, matchcmp, srcports, destports) == 0) continue;
+		if (target && strcmp(target, iptc_get_target(e, &handle)) != 0) continue;
+		if (dnat_to && strcmp(target, "DNAT") == 0) {
 			struct ipt_entry_target *t;
 			struct ip_nat_multi_range *mr;
 			struct ip_nat_range *r, range;
@@ -192,7 +194,7 @@ void iptc_delete_rule(const char *table,
 			t = (void *) e+e->target_offset;
 			mr = (void *) &t->data;
 
-			if (mr->rangesize != 1) continue; // we have only single dnat_to target now
+			if (mr->rangesize != 1) continue; /* we have only single dnat_to target now */
 			r = mr->range;
 			parse_range(dnat_to, &range);
 			if (r->flags == range.flags
@@ -203,7 +205,8 @@ void iptc_delete_rule(const char *table,
 				break;
 			}
 		}
-		else break;
+		
+		break;
 	}
 	if (!e) return;
 	result = iptc_delete_num_entry(chain, i, &handle);

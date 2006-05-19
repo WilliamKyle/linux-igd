@@ -3,11 +3,11 @@ LIBUPNP_PREFIX=/usr
 #LIBIPTC_PREFIX=/usr
 
 CC=gcc
-INCLUDES= -I$(LIBUPNP_PREFIX)/include  -I../include
+INCLUDES= -I$(LIBUPNP_PREFIX)/include -I../include
 LIBS= -lpthread -lupnp -lixml -lthreadutil -L$(LIBUPNP_PREFIX)/lib -L../libs
 FILES= main.o gatedevice.o pmlist.o util.o config.o
 
-CFLAGS += -Wall -g
+CFLAGS += -Wall -g -O2
 
 ifdef HAVE_LIBIPTC
 ifdef LIBIPTC_PREFIX
@@ -23,7 +23,7 @@ endif
 all: upnpd
 
 upnpd: $(FILES)
-	$(CC) $(CFLAGS) $(FILES) $(LIBS) -o  $@ 
+	$(CC) $(CFLAGS) $(FILES) $(LIBS) -o $@
 	@echo "make $@ finished on `date`"
 
 %.o:	%.c
