@@ -1,3 +1,6 @@
+2006-05-23 Daniel J Blueman <daniel.blueman@gmail.com>
+  * Added manpage contributed by José Fonseca <j_r_fonseca@yahoo.co.uk>
+
 2006-05-19 Daniel J Blueman <daniel.blueman@gmail.com>
   * Protect against bad addresses being passed to inet_addr()
 

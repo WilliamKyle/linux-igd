@@ -39,4 +39,5 @@ install: upnpd
 	install etc/gateicfgSCPD.xml /etc/linuxigd
 	install etc/dummy.xml /etc/linuxigd
 	install upnpd $(PREFIX)/sbin
+	install upnpd.8 $(PREFIX)/share/man/man8
 	if [ ! -f /etc/upnpd.conf ]; then install etc/upnpd.conf /etc; fi
