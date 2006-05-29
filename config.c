@@ -25,7 +25,7 @@ int getConfigOptionDuration(long int *duration,char line[], regmatch_t *submatch
   int absolute_time = submatch[1].rm_eo-submatch[1].rm_so; // >0 if @ was present
   char num[20];
   char *p;
-  int len = submatch[2].rm_eo-submatch[2].rm_so;
+  unsigned int len = submatch[2].rm_eo-submatch[2].rm_so;
   if (len>=sizeof(num))
     len = sizeof(num)-1;
   strncpy(num,&line[submatch[2].rm_so],len);
@@ -46,7 +46,7 @@ int getConfigOptionDuration(long int *duration,char line[], regmatch_t *submatch
 int parseConfigFile(globals_p vars)
 {
     FILE *conf_file;
-    regmatch_t submatch[NMATCH]; // Stores the regex submatch start end end index
+    regmatch_t submatch[NMATCH]; // Stores the regex submatch start and end index
     
     regex_t re_comment;
     regex_t re_empty_row;
@@ -156,6 +156,7 @@ int parseConfigFile(globals_p vars)
     }
     regfree(&re_comment);
     regfree(&re_empty_row);
+    regfree(&re_iptables_location);
     regfree(&re_debug_mode);	
     regfree(&re_insert_forward_rules_yes);	
     regfree(&re_forward_chain_name);
