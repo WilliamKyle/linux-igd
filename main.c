@@ -27,8 +27,8 @@ int main (int argc, char** argv)
 	sigset_t sigsToCatch;
 
 	pid_t pid,sid;
-	struct rlimit resourceLimit = { 0 };
-	int i;
+	struct rlimit resourceLimit = { 0, 0 };
+	unsigned int i;
 	int status;
 	
 	if (argc != 3) {
