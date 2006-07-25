@@ -11,7 +11,10 @@
 # Source function library.
 . /etc/init.d/functions
 
-# Source 
+# defaults
+ALLOW_MULTICAST=no
+
+# Source configuration
 . /etc/sysconfig/upnpd
 
 UPNPD=/usr/sbin/upnpd
@@ -30,7 +33,8 @@ start() {
 	# Check if upnpd is already running
 	if [ ! -f /var/lock/subsys/upnpd ]; then
 	    echo -n $"Starting $prog: "
-	    #route add -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
+
+	    [ "$ALLOW_MULTICAST" != "no" ] && route add -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
 	    daemon "$UPNPD" $EXTIFACE $INTIFACE
 	    RETVAL=$?
 	    [ $RETVAL -eq 0 ] && touch /var/lock/subsys/upnpd
@@ -42,7 +46,8 @@ start() {
 stop() {
 	echo -n $"Stopping $prog: "
 	killproc "$UPNPD"
-	#route del -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
+
+	[ "$ALLOW_MULTICAST" != "no" ] && route del -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/upnpd
 	echo
@@ -88,4 +93,3 @@ status)
 esac
 
 exit $?
-exit $RETVAL

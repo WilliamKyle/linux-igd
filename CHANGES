@@ -1,3 +1,8 @@
+2006-06-08 Daniel J Blueman <daniel.blueman@gmail.com>
+  * Added option ALLOW_MULTICAST to init script, which when not
+    set to 'no', enables multicast packets to be received by
+    internal interface
+
 2006-05-23 Daniel J Blueman <daniel.blueman@gmail.com>
   * Added manpage contributed by José Fonseca <j_r_fonseca@yahoo.co.uk>
 
