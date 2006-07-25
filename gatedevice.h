@@ -1,8 +1,7 @@
 #ifndef _GATEDEVICE_H_
-	#define _GATEDEVICE_H_ 1
+#define _GATEDEVICE_H_ 1
 
 #include <upnp/upnp.h>
-
 
 // IGD Device Globals
 UpnpDevice_Handle deviceHandle;
@@ -55,16 +54,16 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event);
 int GetExternalIPAddress(struct Upnp_Action_Request *ca_event);
 int DeletePortMapping(struct Upnp_Action_Request *ca_event);
 
-//Definitions for mapping expiration timer thread
+// Definitions for mapping expiration timer thread
 #define THREAD_IDLE_TIME 5000
 #define JOBS_PER_THREAD 10
 #define MIN_THREADS 2 
 #define MAX_THREADS 12 
 
-int ExpirationTimerThreadInit();
-int ExpirationTimerThreadShutdown();
+int ExpirationTimerThreadInit(void);
+int ExpirationTimerThreadShutdown(void);
 int ScheduleMappingExpiration(struct portMap *mapping, char *DevUDN, char *ServiceID);
 int CancelMappingExpiration(int eventId);
-void DeleteAllPortMappings();
+void DeleteAllPortMappings(void);
 
 #endif //_GATEDEVICE_H
