@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <sys/resource.h>
 #include <time.h>
+#include <net/if.h>
 #include <upnp/upnp.h>
 #include "globals.h"
 #include "config.h"
@@ -20,87 +21,96 @@ struct GLOBALS g_vars;
 
 int main (int argc, char** argv)
 {
-	int ret = UPNP_E_SUCCESS;
-	int signum;	
 	char descDocUrl[7+15+1+5+1+sizeof(g_vars.descDocName)+1]; // http://ipaddr:port/docName<null>
 	char intIpAddress[16];     // Server internal ip address
 	sigset_t sigsToCatch;
+	int ret, signum, arg = 1, foreground = 0;
 
-	pid_t pid,sid;
-	struct rlimit resourceLimit = { 0, 0 };
-	unsigned int i;
-	int status;
-	
-	if (argc != 3) {
-	  printf("Usage: upnpd <external ifname> <internal ifname>\n");
+	if (argc < 3 || argc > 4) {
+	  printf("Usage: upnpd [-f] <external ifname> <internal ifname>\n");
+	  printf("  -f\tdon't daemonize\n");
 	  printf("Example: upnpd ppp0 eth0\n");
-	  printf("Example: upnpd eth1 eth0\n");
 	  exit(0);
 	}
 
 	parseConfigFile(&g_vars);
 
-	// Save the interface names for later uses
-	strcpy(g_vars.extInterfaceName, argv[1]);
-	strcpy(g_vars.intInterfaceName, argv[2]);
+	// check for '-f' option
+	if (strcmp(argv[arg], "-f") == 0) {
+		foreground = 1;
+		arg++;
+	}
+
+	// Save interface names for later use
+	strncpy(g_vars.extInterfaceName, argv[arg++], IFNAMSIZ);
+	strncpy(g_vars.intInterfaceName, argv[arg++], IFNAMSIZ);
 
 	// Get the internal ip address to start the daemon on
-	GetIpAddressStr(intIpAddress, g_vars.intInterfaceName);	
-
-	// Put igd in the background as a daemon process.
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("Error forking a new process.");
-		exit(EXIT_FAILURE);
-	}
-	if (pid > 0)
-		exit(EXIT_SUCCESS);
-
-	// become session leader
-	if ((sid = setsid()) < 0)
-	{
-		perror("Error running setsid");
+	if (GetIpAddressStr(intIpAddress, g_vars.intInterfaceName) == 0) {
+		fprintf(stderr, "Invalid internal interface name '%s'\n", g_vars.intInterfaceName);
 		exit(EXIT_FAILURE);
 	}
 
-	// close all file handles
-	resourceLimit.rlim_max = 0;
-	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
-	if (-1 == status) /* shouldn't happen */
-	{
-	    perror("error in getrlimit()");
-	    exit(1);
-	}
-	if (0 == resourceLimit.rlim_max)
-	{
-	    fprintf(stderr, "Max number of open file descriptors is 0!!\n");
-	    exit(1);
-	}	
-	for (i = 0; i < resourceLimit.rlim_max; i++)
-	    close(i);
+	if (!foreground) {
+		struct rlimit resourceLimit = { 0, 0 };
+		pid_t pid, sid;
+		unsigned int i;
+
+		// Put igd in the background as a daemon process.
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("Error forking a new process.");
+			exit(EXIT_FAILURE);
+		}
+		if (pid > 0)
+			exit(EXIT_SUCCESS);
+
+		// become session leader
+		if ((sid = setsid()) < 0)
+		{
+			perror("Error running setsid");
+			exit(EXIT_FAILURE);
+		}
+
+		// close all file handles
+		resourceLimit.rlim_max = 0;
+		ret = getrlimit(RLIMIT_NOFILE, &resourceLimit);
+		if (ret == -1) /* shouldn't happen */
+		{
+		    perror("error in getrlimit()");
+		    exit(EXIT_FAILURE);
+		}
+		if (0 == resourceLimit.rlim_max)
+		{
+		    fprintf(stderr, "Max number of open file descriptors is 0!!\n");
+		    exit(EXIT_FAILURE);
+		}	
+		for (i = 0; i < resourceLimit.rlim_max; i++)
+		    close(i);
 	
-	// fork again so child can never acquire a controlling terminal
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("Error forking a new process.");
-		exit(EXIT_FAILURE);
-	}
-	if (pid > 0)
-		exit(EXIT_SUCCESS);
+		// fork again so child can never acquire a controlling terminal
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("Error forking a new process.");
+			exit(EXIT_FAILURE);
+		}
+		if (pid > 0)
+			exit(EXIT_SUCCESS);
 	
-	if ((chdir("/")) < 0)
-	{
-		perror("Error setting root directory");
-		exit(EXIT_FAILURE);
+		if ((chdir("/")) < 0)
+		{
+			perror("Error setting root directory");
+			exit(EXIT_FAILURE);
+		}
 	}
-	
+
 	umask(0);
 
 // End Daemon initialization
 
-	openlog("upnpd", LOG_CONS|LOG_NDELAY|LOG_PID, LOG_LOCAL6);
+	openlog("upnpd", LOG_CONS | LOG_NDELAY | LOG_PID | (foreground ? LOG_PERROR : 0), LOG_LOCAL6);
 
 	// Initialize UPnP SDK on the internal Interface
 	trace(3, "Initializing UPnP SDK ... ");
@@ -163,7 +173,7 @@ int main (int argc, char** argv)
 	}
 	trace(2, "Advertisements Sent.  Listening for requests ... ");
 	
-	// Loop until program exit signals recieved
+	// Loop until program exit signals received
 	do {
 	  sigemptyset(&sigsToCatch);
 	  sigaddset(&sigsToCatch, SIGINT);
@@ -191,5 +201,5 @@ int main (int argc, char** argv)
 	UpnpFinish();
 
 	// Exit normally
-	return (1);
+	return (0);
 }
