@@ -11,13 +11,13 @@
 #include "globals.h"
 
 
-int get_sockfd()
+static int get_sockfd(void)
 {
    static int sockfd = -1;
 
    if (sockfd == -1)
    {
-      if ((sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_RAW)) == -1)
+      if ((sockfd = socket(PF_INET, SOCK_RAW, IPPROTO_RAW)) == -1)
       {
          perror("user: socket creating failed");
          return (-1);
@@ -36,7 +36,7 @@ int GetIpAddressStr(char *address, char *ifname)
    fd = get_sockfd();
    if (fd >= 0 )
    {
-      strcpy(ifr.ifr_name, ifname);
+      strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
       ifr.ifr_addr.sa_family = AF_INET;
       if (ioctl(fd, SIOCGIFADDR, &ifr) == 0)
       {
