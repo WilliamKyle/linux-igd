@@ -3,11 +3,11 @@ Simple Quick Install Guide
 This install guide is simply a quick helper to let people start testing the new
 version.  It will be replaced soon with more thourough documentation.
 
-Install
----------------
+Installation
+------------
 
 This version of the linux-igd is written in C as opposed to previous version 
-that were written in C++.  This was done at the requests of many embedded 
+that was written in C++.  This was done at the requests of many embedded 
 developers, as well as some of our developers.  The upnp sdk we now use
 from Intel is libupnp-1.3.1, and is written in C as well.  Everything is a 
 little more uniform now, and should create a smaller, leaner, faster device.
@@ -63,7 +63,7 @@ set PREFIX:
 
 
 System Preparation before starting 
----------------------------------------
+----------------------------------
 
 1. In order for device discovery to function properly, you must add a 
 multicast route to the internal interface like so:
@@ -92,7 +92,7 @@ B.  service syslog restart
 
 
 Daemon Startup
----------------------
+--------------
 
 Now you should be ready to run the daemon.  At this time, your FORWARD rule in 
 iptables should be set to ACCEPT.  We'll add the forwarding rules back right 
@@ -106,6 +106,11 @@ upnpd <ext_ifname> <int_ifname>
 Example: upnpd eth1 eth0          -- Where eth1 is my external interface name
 					 and eth0 is my internal interface name.
 
+Where the deamon isn't starting correctly, or exiting soon after with an
+error, you can start it with 'upnpd -f <ext_ifname> <int_ifname>',
+preventing it daemonizing into the background; error messages will be sent
+to stderr also - this is good for testing, but don't forget to have the
+multicast route setup for it to accept multicast requests.
 
 To check and see if everything starts up ok, in /var/log/debug you should see 
 a few debug messages followed by Advertisements Sent, and possibly some 
@@ -118,11 +123,11 @@ this doesn't work post a message to the forums and we'll try to help you.
 
 
 REMINDERS and THANK YOUS
--------------------------
+------------------------
 Truth is I can't remember everyone to thank, but I especially want to thank 
 both Henri Manson and Anders Betner for their development and testing work.  
 Also Eric Wirt, for helping us test, and providing the winning comments for 
-switching to C.
+switching to C, alongside many others contributing patches and help.
 
 This is a work in progress.  This code is simply released now for others to 
 help us debug some problems we are having.  Please, help us out by checking 
