@@ -1,3 +1,6 @@
+2006-08-13 Daniel J Blueman <daniel.blueman@gmail.com>
+  * linux-igd 0.95 released
+
 2006-07-25 Daniel J Blueman <daniel.blueman@gmail.com>
   * Added option ALLOW_MULTICAST to init script, which when not
     set to 'no', enables multicast packets to be received by
