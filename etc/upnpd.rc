@@ -33,7 +33,6 @@ start() {
 	# Check if upnpd is already running
 	if [ ! -f /var/lock/subsys/upnpd ]; then
 	    echo -n $"Starting $prog: "
-
 	    [ "$ALLOW_MULTICAST" != "no" ] && route add -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
 	    daemon "$UPNPD" $EXTIFACE $INTIFACE
 	    RETVAL=$?
@@ -46,10 +45,9 @@ start() {
 stop() {
 	echo -n $"Stopping $prog: "
 	killproc "$UPNPD"
-
-	[ "$ALLOW_MULTICAST" != "no" ] && route del -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/upnpd
+	[ "$ALLOW_MULTICAST" != "no" ] && route del -net 239.0.0.0 netmask 255.0.0.0 $INTIFACE
 	echo
         return $RETVAL
 }
