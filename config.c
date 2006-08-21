@@ -205,26 +205,3 @@ int parseConfigFile(globals_p vars)
 	return 0;
     }
 }
-/*
-int main (int argc, char** argv)
-{
-    struct GLOBALS vars;
-    if (-1 == parseConfigFile() )
-    {
-	printf("Error: can't find iptables executable");
-    }
-    printf("\nForward = %d\n",vars->forwardRules);
-    printf("Forward chain = %s\n",vars->forwardChainName);
-    printf("Debug-mode = %d\n",vars->debug);
-    printf("iptables= %s\n",vars->iptables);
-    printf("prerouting chain=%s\n",vars->preroutingChainName);
-    printf("upstream bitrate=%s\n",vars->upstreamBitrate);
-    printf("downstream bitrate=%s\n",vars->downstreamBitrate);
-    printf("duration=%ld\n",vars->duration);
-    printf("desc_doc=%s\n",vars->descDocName);
-    printf("xml_path=%s\n",vars->xmlPath);
-    printf("\n");
-    return 0;
-}
-
-*/
