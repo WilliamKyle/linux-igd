@@ -29,7 +29,7 @@ static int service_to_port(const char *name);
 static void parse_range(const char *input, struct ip_nat_range *range);
 static struct ipt_natinfo *append_range(struct ipt_natinfo *info, const struct ip_nat_range *range);
 
-int matchcmp(const struct ipt_entry_match *match, const char *srcports, const char *destports);
+static int matchcmp(const struct ipt_entry_match *match, const char *srcports, const char *destports);
 
 void iptc_add_rule(const char *table,
                    const char *chain,
@@ -223,7 +223,7 @@ void iptc_delete_rule(const char *table,
 	  trace(3, "deleted rule from block successfully");
 }
 
-int matchcmp(const struct ipt_entry_match *match, const char *srcports, const char *destports) {
+static int matchcmp(const struct ipt_entry_match *match, const char *srcports, const char *destports) {
 	u_int16_t temp[2];
 
 	if (strcmp(match->u.user.name, "tcp") == 0) {

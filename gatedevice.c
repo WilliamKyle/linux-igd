@@ -16,13 +16,13 @@ static TimerThread gExpirationTimerThread;
 static ThreadPool gExpirationThreadPool;
 
 // MUTEX for locking shared state variables whenver they are changed
-ithread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
+static ithread_mutex_t DevMutex = PTHREAD_MUTEX_INITIALIZER;
 
 // Main event handler for callbacks from the SDK.  Determine type of event
 // and dispatch to the appropriate handler (Note: Get Var Request deprecated
 int EventHandler(Upnp_EventType EventType, void *Event, void *Cookie)
 {
-	switch ( EventType )
+	switch (EventType)
 	{
 		case UPNP_EVENT_SUBSCRIPTION_REQUEST:
 			HandleSubscriptionRequest((struct Upnp_Subscription_Request *) Event);
@@ -776,7 +776,7 @@ int GetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 
 int DeletePortMapping(struct Upnp_Action_Request *ca_event)
 {
-	char *ext_port=NULL;
+   char *ext_port=NULL;
    char *proto=NULL;
    int result=0;
    char num[5];
@@ -868,7 +868,7 @@ char* GetFirstDocumentItem( IN IXML_Document * doc,
     return ret;
 }
 
-int ExpirationTimerThreadInit()
+int ExpirationTimerThreadInit(void)
 {
   int retVal;
   ThreadPoolAttr attr;
@@ -891,7 +891,7 @@ int ExpirationTimerThreadInit()
   return 0;
 }
 
-int ExpirationTimerThreadShutdown()
+int ExpirationTimerThreadShutdown(void)
 {
   return TimerThreadShutdown(&gExpirationTimerThread);
 }
@@ -904,7 +904,7 @@ void free_expiration_event(expiration_event *event)
   free(event);
 }
 
-void ExpireMapping( void *input )
+void ExpireMapping(void *input)
 {
   char num[5]; // Maximum number of port mapping entries 9999
   IXML_Document *propSet = NULL;
@@ -1006,7 +1006,7 @@ int CancelMappingExpiration(int expirationEventId)
   return 1;
 }
 
-void DeleteAllPortMappings()
+void DeleteAllPortMappings(void)
 {
   IXML_Document *propSet = NULL;
 
