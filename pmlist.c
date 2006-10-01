@@ -235,6 +235,11 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
     {
 #if HAVE_LIBIPTC
 	char *buffer = malloc(strlen(internalClient) + strlen(internalPort) + 2);
+	if (buffer == NULL) {
+		fprintf(stderr, "failed to malloc memory\n");
+		return 0;
+	}
+
 	strcpy(buffer, internalClient);
 	strcat(buffer, ":");
 	strcat(buffer, internalPort);
@@ -245,18 +250,17 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 	iptc_add_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer, TRUE);
 	free(buffer);
 #else
-	char command[500];
+	char command[COMMAND_LEN];
 	int status;
 	
 	{
-	  char dest[100];
-	  sprintf(dest,"%s:%s", internalClient, internalPort);
+	  char dest[DEST_LEN];
 	  char *args[] = {"iptables", "-t", "nat", "-I", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
-	  
-	  sprintf(command, "%s -t nat -I %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
+
+	  snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
+	  snprintf(command, COMMAND_LEN, "%s -t nat -I %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
 	  trace(3, "%s", command);
 	  if (!fork()) {
-	    //system (command);
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
 	  } else {
@@ -268,10 +272,9 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 	{
 	  char *args[] = {"iptables", "-A", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
 	  
-	  sprintf(command,"%s -A %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables,g_vars.forwardChainName, protocol, internalClient, internalPort);
+	  snprintf(command, COMMAND_LEN, "%s -A %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables,g_vars.forwardChainName, protocol, internalClient, internalPort);
 	  trace(3, "%s", command);
 	  if (!fork()) {
-	    //system (command);
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
 	  } else {
@@ -299,20 +302,19 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 	iptc_delete_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
 	free(buffer);
 #else
-	char command[500];
+	char command[COMMAND_LEN];
 	int status;
 	
 	{
-	  char dest[100];
-	  sprintf(dest,"%s:%s", internalClient, internalPort);
+	  char dest[DEST_LEN];
 	  char *args[] = {"iptables", "-t", "nat", "-D", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
 
-	  sprintf(command, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
+	  snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
+	  snprintf(command, COMMAND_LEN, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
 		  g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
 	  trace(3, "%s", command);
 	  
 	  if (!fork()) {
-	    //system (command);
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
 	  } else {
@@ -324,10 +326,9 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 	{
 	  char *args[] = {"iptables", "-D", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
 	  
-	  sprintf(command,"%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables, g_vars.forwardChainName, protocol, internalClient, internalPort);
+	  snprintf(command, COMMAND_LEN, "%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables, g_vars.forwardChainName, protocol, internalClient, internalPort);
 	  trace(3, "%s", command);
 	  if (!fork()) {
-	    //system (command);
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
 	  } else {

@@ -1,6 +1,9 @@
 #ifndef _PMLIST_H_
 	#define _PMLIST_H_
 
+#define COMMAND_LEN 500
+#define DEST_LEN 100
+
 typedef struct ExpirationEvent {
   int eventId;
   char DevUDN[NAME_SIZE];
