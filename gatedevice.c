@@ -202,10 +202,10 @@ int InvalidAction(struct Upnp_Action_Request *ca_event)
 // we respond with IP_Routed as both current type and only type
 int GetConnectionTypeInfo (struct Upnp_Action_Request *ca_event)
 {
-	char resultStr[500];
+	char resultStr[RESULT_LEN];
 	IXML_Document *result;
 
-	sprintf(resultStr,
+	snprintf(resultStr, RESULT_LEN,
 		"<u:GetConnectionTypeInfoResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
 		"<NewConnectionType>IP_Routed</NewConnectionType>\n"
 		"<NewPossibleConnectionTypes>IP_Routed</NewPossibleConnectionTypes>"
@@ -231,10 +231,10 @@ int GetConnectionTypeInfo (struct Upnp_Action_Request *ca_event)
 // so respond with NewNATEnabled = 1
 int GetNATRSIPStatus(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
 	IXML_Document *result;
 
-   sprintf(resultStr, "<u:GetNATRSIPStatusResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
+   snprintf(resultStr, RESULT_LEN, "<u:GetNATRSIPStatusResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
       							"<NewRSIPAvailable>0</NewRSIPAvailable>\n"
 									"<NewNATEnabled>1</NewNATEnabled>\n"
 								"</u:GetNATRSIPStatusResponse>");
@@ -295,11 +295,11 @@ int RequestConnection(struct Upnp_Action_Request *ca_event)
 
 int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
 	IXML_Document *result;
         
 	ca_event->ErrCode = UPNP_E_SUCCESS;
-	sprintf(resultStr,
+	snprintf(resultStr, RESULT_LEN,
 		"<u:GetCommonLinkPropertiesResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
 		"<NewWANAccessType>Cable</NewWANAccessType>\n"
 		"<NewLayer1UpstreamMaxBitRate>%s</NewLayer1UpstreamMaxBitRate>\n"
@@ -325,7 +325,7 @@ int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 
 int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
    char dev[15];
    FILE *stream;
    unsigned long bytes=0, total=0;
@@ -341,7 +341,7 @@ int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strcmp ( dev, g_vars.extInterfaceName )==0 )
+			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
 				total += bytes;
 		}
 		fclose ( stream );
@@ -349,7 +349,7 @@ int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 	else
 		total=1;
 
-	sprintf(resultStr,
+	snprintf(resultStr, RESULT_LEN,
 		"<u:GetTotalBytesSentResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
 		"<NewTotalBytesSent>%lu</NewTotalBytesSent>\n"
 		"</u:GetTotalBytesSentResponse>", 
@@ -374,7 +374,7 @@ int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
 // Get Total Bytes Receieved 
 int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
    IXML_Document *result = NULL;
 	char dev[15];
    FILE *stream;
@@ -390,7 +390,7 @@ int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strcmp ( dev, g_vars.extInterfaceName )==0 )
+			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
 				total += bytes;
 		}
 		fclose ( stream );
@@ -400,7 +400,7 @@ int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 
 	ca_event->ErrCode = UPNP_E_SUCCESS;
 
-	sprintf(resultStr,
+	snprintf(resultStr, RESULT_LEN,
 		"<u:GetTotalBytesReceivedResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
 		"<NewTotalBytesReceived>%lu</NewTotalBytesReceived>\n"
 		"</u:GetTotalBytesReceivedResponse>",
@@ -425,8 +425,8 @@ int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
 // Get Total Packets Sent
 int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
-   char dev[15];
+   char resultStr[RESULT_LEN];
+   char dev[IFNAMSIZ];
    FILE *stream;
    unsigned long pkt=0, total=0;
 	IXML_Document *result = NULL;
@@ -441,7 +441,7 @@ int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strcmp ( dev, g_vars.extInterfaceName )==0 )
+			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
 				total += pkt;
 		}
 		fclose ( stream );
@@ -449,7 +449,7 @@ int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 	else
 		total=1;
 
-   sprintf(resultStr,
+   snprintf(resultStr, RESULT_LEN,
 	   "<u:GetTotalPacketsSentResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
 	   "<NewTotalPacketsSent>%lu</NewTotalPacketsSent>\n"
 	   "</u:GetTotalPacketsSentResponse>",
@@ -474,8 +474,8 @@ int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
 // Get Total Packets Received
 int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
-   char dev[15];
+   char resultStr[RESULT_LEN];
+   char dev[IFNAMSIZ];
    FILE *stream;
    unsigned long pkt=0, total=0;
 	IXML_Document *result = NULL;
@@ -490,7 +490,7 @@ int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 		while ( !feof( stream ) )
 		{
 			fscanf ( stream, "%[^:]:%*u %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strcmp ( dev, g_vars.extInterfaceName )==0 )
+			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
 				total += pkt;
 		}
 		fclose ( stream );
@@ -498,7 +498,7 @@ int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 	else
 		total=1;
 
-   sprintf(resultStr,
+   snprintf(resultStr, RESULT_LEN,
 	   "<u:GetTotalPacketsReceivedResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
 	   "<NewTotalPacketsReceived>%lu</NewTotalPacketsReceived>\n"
 	   "</u:GetTotalPacketsReceivedResponse>", 
@@ -524,12 +524,12 @@ int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
 int GetStatusInfo(struct Upnp_Action_Request *ca_event)
 {
    long int uptime;
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
 	IXML_Document *result = NULL;
 
    uptime = (time(NULL) - startup_time);
    
-	sprintf(resultStr,
+	snprintf(resultStr, RESULT_LEN,
 		"<u:GetStatusInfoResponse xmlns:u=\"urn:schemas-upnp-org:service:GetStatusInfo:1\">\n"
 		"<NewConnectionStatus>Connected</NewConnectionStatus>\n"
 		"<NewLastConnectionError>ERROR_NONE</NewLastConnectionError>\n"
@@ -569,7 +569,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	char num[5]; // Maximum number of port mapping entries 9999
 	IXML_Document *propSet = NULL;
 	int action_succeeded = 0;
-	char resultStr[500];
+	char resultStr[RESULT_LEN];
 
 	if ( (ext_port = GetFirstDocumentItem(ca_event->ActionRequest, "NewExternalPort") )
 	     && (proto = GetFirstDocumentItem(ca_event->ActionRequest, "NewProtocol") )
@@ -629,7 +629,7 @@ int AddPortMapping(struct Upnp_Action_Request *ca_event)
 	if (action_succeeded)
 	{
 		ca_event->ErrCode = UPNP_E_SUCCESS;
-		sprintf(resultStr, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
+		snprintf(resultStr, RESULT_LEN, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
 			ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
 		ca_event->ActionResult = ixmlParseBuffer(resultStr);
 	}
@@ -649,8 +649,8 @@ int GetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
 {
 	char *mapindex = NULL;
 	struct portMap *temp;
-	char result_param[500];
-	char resultStr[500];
+	char result_param[RESULT_LEN];
+	char resultStr[RESULT_LEN];
 	int action_succeeded = 0;
 
 	if ((mapindex = GetFirstDocumentItem(ca_event->ActionRequest, "NewPortMappingIndex")))
@@ -658,13 +658,13 @@ int GetGenericPortMappingEntry(struct Upnp_Action_Request *ca_event)
 		temp = pmlist_FindByIndex(atoi(mapindex));
 		if (temp)
 		{
-			sprintf(result_param, "<NewRemoteHost>%s</NewRemoteHost><NewExternalPort>%s</NewExternalPort><NewProtocol>%s</NewProtocol><NewInternalPort>%s</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>", temp->m_RemoteHost, temp->m_ExternalPort, temp->m_PortMappingProtocol, temp->m_InternalPort, temp->m_InternalClient, temp->m_PortMappingEnabled, temp->m_PortMappingDescription, temp->m_PortMappingLeaseDuration);
+			snprintf(result_param, RESULT_LEN, "<NewRemoteHost>%s</NewRemoteHost><NewExternalPort>%s</NewExternalPort><NewProtocol>%s</NewProtocol><NewInternalPort>%s</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>", temp->m_RemoteHost, temp->m_ExternalPort, temp->m_PortMappingProtocol, temp->m_InternalPort, temp->m_InternalClient, temp->m_PortMappingEnabled, temp->m_PortMappingDescription, temp->m_PortMappingLeaseDuration);
 			action_succeeded = 1;
 		}
       if (action_succeeded)
       {
          ca_event->ErrCode = UPNP_E_SUCCESS;
-                   sprintf(resultStr, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+                   snprintf(resultStr, RESULT_LEN, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
                            "urn:schemas-upnp-org:service:WANIPConnection:1",result_param, ca_event->ActionName);
                    ca_event->ActionResult = ixmlParseBuffer(resultStr);
       }
@@ -691,8 +691,8 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
 {
    char *ext_port=NULL;
    char *proto=NULL;
-   char result_param[500];
-   char resultStr[500];
+   char result_param[RESULT_LEN];
+   char resultStr[RESULT_LEN];
    int action_succeeded = 0;
 	struct portMap *temp;
 
@@ -704,7 +704,7 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
 			temp = pmlist_FindSpecific (ext_port, proto);
 			if (temp)
 			{
-				sprintf(result_param,"<NewInternalPort>%s</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>",
+				snprintf(result_param, RESULT_LEN, "<NewInternalPort>%s</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>%d</NewEnabled><NewPortMappingDescription>%s</NewPortMappingDescription><NewLeaseDuration>%li</NewLeaseDuration>",
             temp->m_InternalPort,
             temp->m_InternalClient,
             temp->m_PortMappingEnabled,
@@ -715,7 +715,7 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
          if (action_succeeded)
          {
             ca_event->ErrCode = UPNP_E_SUCCESS;
-	    sprintf(resultStr, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
+	    snprintf(resultStr, RESULT_LEN, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>", ca_event->ActionName,
 		    "urn:schemas-upnp-org:service:WANIPConnection:1",result_param, ca_event->ActionName);
 	    ca_event->ActionResult = ixmlParseBuffer(resultStr);
          }
@@ -749,12 +749,12 @@ int GetSpecificPortMappingEntry(struct Upnp_Action_Request *ca_event)
 }
 int GetExternalIPAddress(struct Upnp_Action_Request *ca_event)
 {
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
 	IXML_Document *result = NULL;
 
    ca_event->ErrCode = UPNP_E_SUCCESS;
    GetIpAddressStr(ExternalIPAddress, g_vars.extInterfaceName);
-   sprintf(resultStr, "<u:GetExternalIPAddressResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
+   snprintf(resultStr, RESULT_LEN, "<u:GetExternalIPAddressResponse xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">\n"
 										"<NewExternalIPAddress>%s</NewExternalIPAddress>\n"
 								"</u:GetExternalIPAddressResponse>", ExternalIPAddress);
 
@@ -780,7 +780,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
    char *proto=NULL;
    int result=0;
    char num[5];
-   char resultStr[500];
+   char resultStr[RESULT_LEN];
    IXML_Document *propSet= NULL;
    int action_succeeded = 0;
 	struct portMap *temp;
@@ -830,7 +830,7 @@ int DeletePortMapping(struct Upnp_Action_Request *ca_event)
    if (action_succeeded)
    {
       ca_event->ErrCode = UPNP_E_SUCCESS;
-      sprintf(resultStr, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
+      snprintf(resultStr, RESULT_LEN, "<u:%sResponse xmlns:u=\"%s\">\n%s\n</u:%sResponse>",
          ca_event->ActionName, "urn:schemas-upnp-org:service:WANIPConnection:1", "", ca_event->ActionName);
       ca_event->ActionResult = ixmlParseBuffer(resultStr);
    }
