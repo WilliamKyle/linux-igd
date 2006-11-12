@@ -9,7 +9,9 @@
 #define RESULT_LEN 512
 #define NUM_LEN 32
 
+#ifndef min
 #define min(a,b) ((a) < (b) ? (a) : (b))
+#endif
 
 struct GLOBALS {
   char extInterfaceName[IFNAMSIZ]; // The name of the external interface, picked up from the
