@@ -100,48 +100,48 @@ int parseConfigFile(globals_p vars)
 		 (0 != regexec(&re_empty_row,line,0,NULL,0))  )
 	    {
 		// Chec if iptables_location
-		if (0 == regexec(&re_iptables_location,line,NMATCH,submatch,0))
+		if (regexec(&re_iptables_location,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->iptables, PATH_LEN, line, submatch);
 		}
 		
 		// Check is insert_forward_rules
-		else if (0 == regexec(&re_insert_forward_rules_yes,line,0,NULL,0))
+		else if (regexec(&re_insert_forward_rules_yes,line,0,NULL,0) == 0)
 		{
 		    vars->forwardRules = 1;
 		}
 		// Check forward_chain_name
-		else if (0 == regexec(&re_forward_chain_name,line,NMATCH,submatch,0))
+		else if (regexec(&re_forward_chain_name,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->forwardChainName, CHAIN_NAME_LEN, line, submatch);
 		}
-		else if (0 == regexec(&re_debug_mode,line,NMATCH,submatch,0) )
+		else if (regexec(&re_debug_mode,line,NMATCH,submatch,0) == 0)
 		{
 		  char tmp[2];
 		  getConfigOptionArgument(tmp,sizeof(tmp),line,submatch);
 		  vars->debug = atoi(tmp);
 		}
-		else if (0 == regexec(&re_prerouting_chain_name,line,NMATCH,submatch,0))
+		else if (regexec(&re_prerouting_chain_name,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->preroutingChainName, CHAIN_NAME_LEN, line, submatch);
 		}
-		else if (0 == regexec(&re_upstream_bitrate,line,NMATCH,submatch,0))
+		else if (regexec(&re_upstream_bitrate,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->upstreamBitrate, BITRATE_LEN, line, submatch);
 		}
-		else if (0 == regexec(&re_downstream_bitrate,line,NMATCH,submatch,0))
+		else if (regexec(&re_downstream_bitrate,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->downstreamBitrate, BITRATE_LEN, line, submatch);
 		}
-		else if (0 == regexec(&re_duration,line,NMATCH,submatch,0))
+		else if (regexec(&re_duration,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionDuration(&vars->duration,line,submatch);
 		}
-		else if (0 == regexec(&re_desc_doc,line,NMATCH,submatch,0))
+		else if (regexec(&re_desc_doc,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->descDocName, PATH_LEN, line, submatch);
 		}
-		else if (0 == regexec(&re_xml_path,line,NMATCH,submatch,0))
+		else if (regexec(&re_xml_path,line,NMATCH,submatch,0) == 0)
 		{
 		  getConfigOptionArgument(vars->xmlPath, PATH_LEN, line, submatch);
 		}
@@ -167,35 +167,35 @@ int parseConfigFile(globals_p vars)
     regfree(&re_desc_doc);
     regfree(&re_xml_path);
     // Set default values for options not found in config file
-    if (0 == strnlen(vars->forwardChainName, CHAIN_NAME_LEN))
+    if (strnlen(vars->forwardChainName, CHAIN_NAME_LEN) == 0)
     {
 	// No forward chain name was set in conf file, set it to default
 	snprintf(vars->forwardChainName, CHAIN_NAME_LEN, IPTABLES_DEFAULT_FORWARD_CHAIN);
     }
-    if (0 == strnlen(vars->preroutingChainName, CHAIN_NAME_LEN))
+    if (strnlen(vars->preroutingChainName, CHAIN_NAME_LEN) == 0)
     {
 	// No prerouting chain name was set in conf file, set it to default
 	snprintf(vars->preroutingChainName, CHAIN_NAME_LEN, IPTABLES_DEFAULT_PREROUTING_CHAIN);
     }
-    if (0 == strnlen(vars->upstreamBitrate, BITRATE_LEN))
+    if (strnlen(vars->upstreamBitrate, BITRATE_LEN) == 0)
     {
 	// No upstream_bitrate was found in the conf file, set it to default
 	snprintf(vars->upstreamBitrate, BITRATE_LEN, DEFAULT_UPSTREAM_BITRATE);
     }
-    if (0 == strnlen(vars->downstreamBitrate, BITRATE_LEN))
+    if (strnlen(vars->downstreamBitrate, BITRATE_LEN) == 0)
     {
 	// No downstream bitrate was found in the conf file, set it to default
 	snprintf(vars->downstreamBitrate, BITRATE_LEN, DEFAULT_DOWNSTREAM_BITRATE);
     }
-    if (0 == strnlen(vars->descDocName, PATH_LEN))
+    if (strnlen(vars->descDocName, PATH_LEN) == 0)
     {
 	snprintf(vars->descDocName, PATH_LEN, DESC_DOC_DEFAULT);
     }
-    if (0 == strnlen(vars->xmlPath, PATH_LEN))
+    if (strnlen(vars->xmlPath, PATH_LEN) == 0)
     {
 	snprintf(vars->xmlPath, PATH_LEN, XML_PATH_DEFAULT);
     }
-    if (0 == strnlen(vars->iptables, PATH_LEN)) {
+    if (strnlen(vars->iptables, PATH_LEN) == 0) {
 	// Can't find the iptables executable, return -1 to 
 	// indicate en error
 	return -1;
