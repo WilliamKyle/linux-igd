@@ -167,18 +167,18 @@ int HandleActionRequest(struct Upnp_Action_Request *ca_event)
 		else if (strcmp(ca_event->ServiceID,"urn:upnp-org:serviceId:WANCommonIFC1") == 0)
 		{
 			if (strcmp(ca_event->ActionName,"GetTotalBytesSent") == 0)
-				result = GetTotalBytesSent(ca_event);
+				result = GetTotal(ca_event, STATS_TX_BYTES);
 			else if (strcmp(ca_event->ActionName,"GetTotalBytesReceived") == 0)
-				result = GetTotalBytesReceived(ca_event);
+				result = GetTotal(ca_event, STATS_RX_BYTES);
 			else if (strcmp(ca_event->ActionName,"GetTotalPacketsSent") == 0)
-				result = GetTotalPacketsSent(ca_event);
+				result = GetTotal(ca_event, STATS_TX_PACKETS);
 			else if (strcmp(ca_event->ActionName,"GetTotalPacketsReceived") == 0)
-				result = GetTotalPacketsReceived(ca_event);
+				result = GetTotal(ca_event, STATS_RX_PACKETS);
 			else if (strcmp(ca_event->ActionName,"GetCommonLinkProperties") == 0)
 				result = GetCommonLinkProperties(ca_event);
 			else 
 			{
-			        trace(1, "Invalid Action Request : %s",ca_event->ActionName);
+				trace(1, "Invalid Action Request : %s",ca_event->ActionName);
 				result = InvalidAction(ca_event);
 			}
 		} 
@@ -323,201 +323,54 @@ int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event)
 	return(ca_event->ErrCode);
 }
 
-int GetTotalBytesSent(struct Upnp_Action_Request *ca_event)
+/* get specified statistic from /proc/net/dev */
+int GetTotal(struct Upnp_Action_Request *ca_event, stats_t stat)
 {
-   char resultStr[RESULT_LEN];
-   char dev[15];
-   FILE *stream;
-   unsigned long bytes=0, total=0;
-	IXML_Document *result = NULL;
-
-   /* Read sent from /proc */
-	stream = fopen ( "/proc/net/dev", "r" );
-	if ( stream != NULL )
+	char dev[IFNAMSIZ], resultStr[RESULT_LEN];
+	const char *methods[STATS_LIMIT] =
+		{ "BytesSent", "BytesReceived", "PacketsSent", "PacketsReceived" };
+	unsigned long stats[STATS_LIMIT];
+	FILE *proc;
+	IXML_Document *result;
+	int read;
+	
+	proc = fopen("/proc/net/dev", "r");
+	if (!proc)
 	{
-		while ( getc ( stream ) != '\n' );
-		while ( getc ( stream ) != '\n' );
-
-		while ( !feof( stream ) )
-		{
-			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
-				total += bytes;
-		}
-		fclose ( stream );
+		fprintf(stderr, "failed to open\n");
+		return 0;
 	}
-	else
-		total=1;
+
+	/* skip first two lines */
+	fscanf(proc, "%*[^\n]\n%*[^\n]\n");
+
+	/* parse stats */
+	do
+		read = fscanf(proc, "%[^:]:%lu %lu %*u %*u %*u %*u %*u %*u %lu %lu %*u %*u %*u %*u %*u %*u\n", dev, &stats[STATS_RX_BYTES], &stats[STATS_RX_PACKETS], &stats[STATS_TX_BYTES], &stats[STATS_TX_PACKETS]);
+	while (read != EOF && (read == 5 && strncmp(dev, g_vars.extInterfaceName, IFNAMSIZ) != 0));
+
+	fclose(proc);
 
 	snprintf(resultStr, RESULT_LEN,
-		"<u:GetTotalBytesSentResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
-		"<NewTotalBytesSent>%lu</NewTotalBytesSent>\n"
-		"</u:GetTotalBytesSentResponse>", 
-		total);
+		"<u:GetTotal%sResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
+		"<NewTotal%s>%lu</NewTotal%s>\n"
+		"</u:GetTotal%sResponse>", 
+		methods[stat], methods[stat], stats[stat], methods[stat], methods[stat]);
 
-   // Create a IXML_Document from resultStr and return with ca_event
-   if ((result = ixmlParseBuffer(resultStr)) != NULL)
-   {
-      ca_event->ActionResult = result;
-      ca_event->ErrCode = UPNP_E_SUCCESS;
-   }
-   else
-   {
-      trace(1, "Error parsing Response to GetTotalBytesSent: %s", resultStr);
-      ca_event->ActionResult = NULL;
-      ca_event->ErrCode = 402;
-   }
-
-   return(ca_event->ErrCode);
-}
-
-// Get Total Bytes Receieved 
-int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event)
-{
-   char resultStr[RESULT_LEN];
-   IXML_Document *result = NULL;
-	char dev[15];
-   FILE *stream;
-	unsigned long bytes=0,total=0;
-
-   // Read received bytes from /proc 
-	stream = fopen ( "/proc/net/dev", "r" );
-	if ( stream != NULL )
-	{
-		while ( getc ( stream ) != '\n' );
-		while ( getc ( stream ) != '\n' );
-
-		while ( !feof( stream ) )
-		{
-			fscanf ( stream, "%[^:]:%lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &bytes );
-			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
-				total += bytes;
-		}
-		fclose ( stream );
-	}
-	else
-		total=1;
-
-	ca_event->ErrCode = UPNP_E_SUCCESS;
-
-	snprintf(resultStr, RESULT_LEN,
-		"<u:GetTotalBytesReceivedResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
-		"<NewTotalBytesReceived>%lu</NewTotalBytesReceived>\n"
-		"</u:GetTotalBytesReceivedResponse>",
-		total);
-   
 	// Create a IXML_Document from resultStr and return with ca_event
-   if ((result = ixmlParseBuffer(resultStr)) != NULL)
-   {
-      ca_event->ActionResult = result;
-      ca_event->ErrCode = UPNP_E_SUCCESS;
-   }
-   else
-   {
-      trace(1, "Error parsing Response to GetTotalBytesReceived: %s", resultStr);
-      ca_event->ActionResult = NULL;
-      ca_event->ErrCode = 402;
-   }
-
-   return(ca_event->ErrCode);
-}
-
-// Get Total Packets Sent
-int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event)
-{
-   char resultStr[RESULT_LEN];
-   char dev[IFNAMSIZ];
-   FILE *stream;
-   unsigned long pkt=0, total=0;
-	IXML_Document *result = NULL;
-
-	/* Read sent from /proc */
-	stream = fopen ( "/proc/net/dev", "r" );
-	if ( stream != NULL )
+	if ((result = ixmlParseBuffer(resultStr)) != NULL)
 	{
-		while ( getc ( stream ) != '\n' );
-		while ( getc ( stream ) != '\n' );
-
-		while ( !feof( stream ) )
-		{
-			fscanf ( stream, "%[^:]:%*u %*u %*u %*u %*u %*u %*u %*u %*u %lu %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
-				total += pkt;
-		}
-		fclose ( stream );
+		ca_event->ActionResult = result;
+		ca_event->ErrCode = UPNP_E_SUCCESS;
 	}
 	else
-		total=1;
-
-   snprintf(resultStr, RESULT_LEN,
-	   "<u:GetTotalPacketsSentResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
-	   "<NewTotalPacketsSent>%lu</NewTotalPacketsSent>\n"
-	   "</u:GetTotalPacketsSentResponse>",
-	   total);
-
-   // Create a IXML_Document from resultStr and return with ca_event
-   if ((result = ixmlParseBuffer(resultStr)) != NULL)
-   {
-      ca_event->ActionResult = result;
-      ca_event->ErrCode = UPNP_E_SUCCESS;
-   }
-   else
-   {
-      trace(1, "Error parsing Response to GetPacketsSent: %s", resultStr);
-      ca_event->ActionResult = NULL;
-      ca_event->ErrCode = 402;
-   }
-
-   return(ca_event->ErrCode);
-}
-
-// Get Total Packets Received
-int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event)
-{
-   char resultStr[RESULT_LEN];
-   char dev[IFNAMSIZ];
-   FILE *stream;
-   unsigned long pkt=0, total=0;
-	IXML_Document *result = NULL;
-
-	/* Read sent from /proc */
-	stream = fopen ( "/proc/net/dev", "r" );
-	if ( stream != NULL )
 	{
-		while ( getc ( stream ) != '\n' );
-		while ( getc ( stream ) != '\n' );
-
-		while ( !feof( stream ) )
-		{
-			fscanf ( stream, "%[^:]:%*u %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u %*u\n", dev, &pkt );
-			if ( strncmp ( dev, g_vars.extInterfaceName, IFNAMSIZ )==0 )
-				total += pkt;
-		}
-		fclose ( stream );
+		trace(1, "Error parsing response to GetTotal: %s", resultStr);
+		ca_event->ActionResult = NULL;
+		ca_event->ErrCode = 402;
 	}
-	else
-		total=1;
 
-   snprintf(resultStr, RESULT_LEN,
-	   "<u:GetTotalPacketsReceivedResponse xmlns:u=\"urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1\">\n"
-	   "<NewTotalPacketsReceived>%lu</NewTotalPacketsReceived>\n"
-	   "</u:GetTotalPacketsReceivedResponse>", 
-	   total);
-
-   // Create a IXML_Document from resultStr and return with ca_event
-   if ((result = ixmlParseBuffer(resultStr)) != NULL)
-   {
-      ca_event->ActionResult = result;
-      ca_event->ErrCode = UPNP_E_SUCCESS;
-   }
-   else
-   {
-      trace(1, "Error parsing Response to GetPacketsReceived: %s", resultStr);
-      ca_event->ActionResult = NULL;
-      ca_event->ErrCode = 402;
-   }
-
-   return(ca_event->ErrCode);
+	return (ca_event->ErrCode);
 }
 
 // Returns connection status related information to the control points

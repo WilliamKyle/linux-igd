@@ -3,6 +3,15 @@
 
 #include <upnp/upnp.h>
 
+/* interface statistics */
+typedef enum {
+        STATS_TX_BYTES,
+        STATS_RX_BYTES,
+        STATS_TX_PACKETS,
+        STATS_RX_PACKETS,
+        STATS_LIMIT
+} stats_t;
+
 // IGD Device Globals
 UpnpDevice_Handle deviceHandle;
 char *gateUDN;
@@ -41,10 +50,7 @@ int GetConnectionTypeInfo(struct Upnp_Action_Request *ca_event);
 int GetNATRSIPStatus(struct Upnp_Action_Request *ca_event);
 int SetConnectionType(struct Upnp_Action_Request *ca_event);
 int RequestConnection(struct Upnp_Action_Request *ca_event);
-int GetTotalBytesSent(struct Upnp_Action_Request *ca_event);
-int GetTotalBytesReceived(struct Upnp_Action_Request *ca_event);
-int GetTotalPacketsSent(struct Upnp_Action_Request *ca_event);
-int GetTotalPacketsReceived(struct Upnp_Action_Request *ca_event);
+int GetTotal(struct Upnp_Action_Request *ca_event, stats_t stat);
 int GetCommonLinkProperties(struct Upnp_Action_Request *ca_event);
 int InvalidAction(struct Upnp_Action_Request *ca_event);
 int GetStatusInfo(struct Upnp_Action_Request *ca_event);
