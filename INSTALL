@@ -68,9 +68,14 @@ System Preparation before starting
 1. In order for device discovery to function properly, you must add a 
 multicast route to the internal interface like so:
 
-route add -net 239.0.0.0 netmask 255.0.0.0 eth0      (or whatever your internal
+# route add -net 239.0.0.0 netmask 255.0.0.0 eth0      (or whatever your internal
 							interface name is - here
 							eth0)
+
+2. If your internal interface is firewalled, then allow multicast packets, eg:
+
+# iptables -t filter -I INPUT 1 -s 224.0.0.0/4 -j ACCEPT
+# iptables -t filter -I INPUT 1 -d 224.0.0.0/4 -j ACCEPT
 
 -- Also, if you'd like to see debug information, and please do, as it helps us 
 resolve your conflicts, perform the following steps:
@@ -146,7 +151,7 @@ Dime
 -----------------------------------------------------------------------
 Notes: Installing on Fedora Core 5
 
-For Fedora Core 5 there are rpm's available for libupnp 1.3.1 and
+For Fedora Core 5 there are RPMs available for libupnp 1.3.1 and
 iptables 1.3.5:
 
 # yum install iptables-devel libupnp libupnp-devel
