@@ -2,6 +2,8 @@
   * Fixed interface statistics gathering and streamlined
     into a single function.
 
+  * linux-igd 1.0 released
+
 2006-10-01 Daniel J Blueman <daniel.blueman@gmail.com>
   * Fixed compilation on GCC-2.9x, noticed by Vyacheslav Garashchenko.
 
