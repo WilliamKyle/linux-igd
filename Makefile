@@ -27,7 +27,7 @@ upnpd: $(FILES)
 	@echo "make $@ finished on `date`"
 
 %.o:	%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) -D_GNU_SOURCE -c $<
 
 clean:
 	rm -f *.o upnpd
