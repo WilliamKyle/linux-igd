@@ -1,3 +1,25 @@
+2007-04-23 Rosfran Borges <rosfran@gmail.com>
+  * Removed unused files on the linux-igd_autotools version.
+
+2007-03-26 Rosfran Borges <rosfran@gmail.com>
+  * Created the CVS tag 'linux-igd_autotools', to add all the automake/autotools
+    related issues.
+
+  * Fixed some installation issues, regarding lib-installing to the
+    correct directory, and copying the header files to the destination
+    dir (make install).
+ 
+  * Put 'pkg-config' resource to the Linux IGD library. The name of the
+    PKG-CONFIG resource is 'linux-igd', plus the minor and major version.
+    Actually, the version is '0.1', so the library config file is:
+    'linux-igd-0.1.pc'. You can type: 'pkg-config --cflags --libs
+    linux-igd-0.1'.
+
+  * Many adjustments in the automake/autoconf configuration files
+    (configure.ac, Makefile.am) - some autotools misusage fixed.
+
+  * Fixed some library dependencies.
+
 2007-02-07 Daniel J Blueman <daniel.blueman@gmail.com>
   * Fixed interface statistics gathering and streamlined
     into a single function.
