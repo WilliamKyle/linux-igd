@@ -17,7 +17,7 @@
 #include "pmlist.h"
 
 // Global variables
-struct GLOBALS g_vars;
+globals g_vars;
 
 int main (int argc, char** argv)
 {
@@ -114,9 +114,9 @@ int main (int argc, char** argv)
 
 	// Initialize UPnP SDK on the internal Interface
 	trace(3, "Initializing UPnP SDK ... ");
-	if ( (ret = UpnpInit(intIpAddress,0) ) != UPNP_E_SUCCESS)
+	if ( (ret = UpnpInit(intIpAddress,g_vars.listenport) ) != UPNP_E_SUCCESS)
 	{
-		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s ",intIpAddress);
+		syslog (LOG_ERR, "Error Initializing UPnP SDK on IP %s port %d",intIpAddress,g_vars.listenport);
 		syslog (LOG_ERR, "  UpnpInit returned %d", ret);
 		UpnpFinish();
 		exit(1);

@@ -233,6 +233,9 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 {
     if (enabled)
     {
+      char dest[DEST_LEN];
+      snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
+
 #if HAVE_LIBIPTC
 	char *buffer = malloc(strlen(internalClient) + strlen(internalPort) + 2);
 	if (buffer == NULL) {
@@ -240,26 +243,25 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 		return 0;
 	}
 
-	strcpy(buffer, internalClient);
-	strcat(buffer, ":");
-	strcat(buffer, internalPort);
-
-	if (g_vars.forwardRules)
-		iptc_add_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL, FALSE);
-
-	iptc_add_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer, TRUE);
-	free(buffer);
+	if (g_vars.createForwardRules)
+	{
+	  trace(3, "iptc_add_rule %s %s %s %s %s %s %s",
+		"filter", g_vars.forwardChainName, protocol, internalClient, internalPort, "ACCEPT",
+		g_vars.forwardRulesAppend ? "APPEND" : "INSERT");
+	  iptc_add_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL, g_vars.forwardRulesAppend ? TRUE : FALSE);
+	}
+	trace(3, "iptc_add_rule %s %s %s %s %s %s %s %s",
+	      "nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, externalPort, "DNAT", dest, "APPEND");
+	iptc_add_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", dest, TRUE);
 #else
-	char command[COMMAND_LEN];
 	int status;
 	
+	if (g_vars.createForwardRules)
 	{
-	  char dest[DEST_LEN];
-	  char *args[] = {"iptables", "-t", "nat", "-I", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
-
-	  snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
-	  snprintf(command, COMMAND_LEN, "%s -t nat -I %s -i %s -p %s --dport %s -j DNAT --to %s:%s", g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	  trace(3, "%s", command);
+	  char *args[] = {g_vars.iptables, g_vars.forwardRulesAppend ? "-A" : "-I", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
+	  
+	  trace(3, "%s %s %s -p %s -d %s --dport %s -j ACCEPT", 
+		g_vars.iptables,g_vars.forwardRulesAppend ? "-A" : "-I",g_vars.forwardChainName, protocol, internalClient, internalPort);
 	  if (!fork()) {
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
@@ -268,12 +270,11 @@ int pmlist_AddPortMapping (int enabled, char *protocol, char *externalPort, char
 	  }
 	}
 
-	if (g_vars.forwardRules)
 	{
-	  char *args[] = {"iptables", "-A", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
-	  
-	  snprintf(command, COMMAND_LEN, "%s -A %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables,g_vars.forwardChainName, protocol, internalClient, internalPort);
-	  trace(3, "%s", command);
+	  char *args[] = {g_vars.iptables, "-t", "nat", "-A", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
+
+	  trace(3, "%s -t nat -A %s -i %s -p %s --dport %s -j DNAT --to %s", 
+		g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, dest);
 	  if (!fork()) {
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);
@@ -290,29 +291,27 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 {
     if (enabled)
     {
+      char dest[DEST_LEN];
+      snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
+
 #if HAVE_LIBIPTC
-	char *buffer = malloc(strlen(internalClient) + strlen(internalPort) + 2);
-	strcpy(buffer, internalClient);
-	strcat(buffer, ":");
-	strcat(buffer, internalPort);
-
-	if (g_vars.forwardRules)
-	    iptc_delete_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
-
-	iptc_delete_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", buffer);
-	free(buffer);
+	trace(3, "iptc_delete_rule %s %s %s %s %s %s %s",
+	      "nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, externalPort, "DNAT", dest);
+	iptc_delete_rule("nat", g_vars.preroutingChainName, protocol, g_vars.extInterfaceName, NULL, NULL, NULL, NULL, externalPort, "DNAT", dest);
+	if (g_vars.createForwardRules)
+	{
+	  trace(3, "iptc_delete_rule %s %s %s %s %s %s",
+		"filter", g_vars.forwardChainName, protocol, internalClient, internalPort, "ACCEPT");
+	  iptc_delete_rule("filter", g_vars.forwardChainName, protocol, NULL, NULL, NULL, internalClient, NULL, internalPort, "ACCEPT", NULL);
+	}
 #else
-	char command[COMMAND_LEN];
 	int status;
 	
 	{
-	  char dest[DEST_LEN];
-	  char *args[] = {"iptables", "-t", "nat", "-D", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
+	  char *args[] = {g_vars.iptables, "-t", "nat", "-D", g_vars.preroutingChainName, "-i", g_vars.extInterfaceName, "-p", protocol, "--dport", externalPort, "-j", "DNAT", "--to", dest, NULL};
 
-	  snprintf(dest, DEST_LEN, "%s:%s", internalClient, internalPort);
-	  snprintf(command, COMMAND_LEN, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s:%s",
-		  g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, internalClient, internalPort);
-	  trace(3, "%s", command);
+	  trace(3, "%s -t nat -D %s -i %s -p %s --dport %s -j DNAT --to %s",
+		g_vars.iptables, g_vars.preroutingChainName, g_vars.extInterfaceName, protocol, externalPort, dest);
 	  
 	  if (!fork()) {
 	    int rc = execv(g_vars.iptables, args);
@@ -322,12 +321,12 @@ int pmlist_DeletePortMapping(int enabled, char *protocol, char *externalPort, ch
 	  }
 	}
 
-	if (g_vars.forwardRules)
+	if (g_vars.createForwardRules)
 	{
-	  char *args[] = {"iptables", "-D", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
+	  char *args[] = {g_vars.iptables, "-D", g_vars.forwardChainName, "-p", protocol, "-d", internalClient, "--dport", internalPort, "-j", "ACCEPT", NULL};
 	  
-	  snprintf(command, COMMAND_LEN, "%s -D %s -p %s -d %s --dport %s -j ACCEPT", g_vars.iptables, g_vars.forwardChainName, protocol, internalClient, internalPort);
-	  trace(3, "%s", command);
+	  trace(3, "%s -D %s -p %s -d %s --dport %s -j ACCEPT",
+		g_vars.iptables, g_vars.forwardChainName, protocol, internalClient, internalPort);
 	  if (!fork()) {
 	    int rc = execv(g_vars.iptables, args);
 	    exit(rc);

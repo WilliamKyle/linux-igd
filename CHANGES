@@ -1,3 +1,34 @@
+2007-06-30 Magnus Hyllander <mhyllander@users.sourceforge.net>
+  * Added the listenport option, which lets you select which UPnP port
+    to listen to. The port number is passed to UpnpInit when
+    initializing the UPnP library. This is useful if you are running
+    several UPnP services on your firewall, and only specific ports
+    have been opened. Gmediaserver has this option also, for example.
+
+  * Renamed the insert_forward_rules option to create_forward_rules to
+    better reflect what it actually does. Fixed the erroneous
+    description of the option.
+
+  * Added the forward_rules_append to do what people thought
+    insert_forward_rules did, i.e. control whether to append or insert
+    rules in the forward chain. The option description also includes a
+    tip about what to do if neither insert or append isn't what you
+    need.
+
+  * Fixed pmlist_AddPortMapping. It was doing different things when
+    using iptables or iptc to create rules. The iptc method was
+    inserting in the forward chain and appending to the preouting
+    chain, while the iptables method was doing the opposite. Now both
+    methods append to the prerouting chain, and forward_rules_append
+    controls whether to insert or append to the forward chain.
+    
+  * Added trace output when using iptc to add and delete rules
+    (for debug_mode=3).
+
+  * Fixed the parsing of the create_forward_rules and
+    forward_rules_append options. The regular expression just wouldn't
+    take "no" for an answer :-)
+
 2007-04-23 Rosfran Borges <rosfran@gmail.com>
   * Removed unused files on the linux-igd_autotools version.
 

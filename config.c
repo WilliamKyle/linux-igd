@@ -9,7 +9,7 @@
 
 int getConfigOptionArgument(char var[],int varlen, char line[], regmatch_t *submatch) 
 {
-    /* bound buffer operations to varlen - 1 */
+    /* limit buffer operations to varlen - 1 */
     int match_length = min(submatch[1].rm_eo-submatch[1].rm_so, varlen - 1);
 
     strncpy(var,&line[submatch[1].rm_so],match_length);
@@ -25,7 +25,7 @@ int getConfigOptionDuration(long int *duration,char line[], regmatch_t *submatch
   char num[NUM_LEN];
   char *p;
 
-  /* bound buffer operations to NUM_LEN - 1 */
+  /* limit buffer operations to NUM_LEN - 1 */
   unsigned int len = min(submatch[2].rm_eo-submatch[2].rm_so, NUM_LEN - 1);
 
   strncpy(num, &line[submatch[2].rm_so], len);
@@ -52,7 +52,8 @@ int parseConfigFile(globals_p vars)
     regex_t re_empty_row;
     regex_t re_iptables_location;
     regex_t re_debug_mode;
-    regex_t re_insert_forward_rules_yes;
+    regex_t re_create_forward_rules;
+    regex_t re_forward_rules_append;
     regex_t re_forward_chain_name;
     regex_t re_prerouting_chain_name;
     regex_t re_upstream_bitrate;
@@ -60,10 +61,12 @@ int parseConfigFile(globals_p vars)
     regex_t re_duration;
     regex_t re_desc_doc;
     regex_t re_xml_path;
+    regex_t re_listenport;
 
     // Make sure all vars are 0 or \0 terminated
     vars->debug = 0;
-    vars->forwardRules = 0;
+    vars->createForwardRules = 0;
+    vars->forwardRulesAppend = 0;
     strcpy(vars->iptables,"");
     strcpy(vars->forwardChainName,"");
     strcpy(vars->preroutingChainName,"");
@@ -72,6 +75,7 @@ int parseConfigFile(globals_p vars)
     vars->duration = DEFAULT_DURATION;
     strcpy(vars->descDocName,"");
     strcpy(vars->xmlPath,"");
+    vars->listenport = 0;
 
     // Regexp to match a comment line
     regcomp(&re_comment,"^[[:blank:]]*#",0);
@@ -80,14 +84,16 @@ int parseConfigFile(globals_p vars)
     // Regexps to match configuration file settings
     regcomp(&re_iptables_location,"iptables_location[[:blank:]]*=[[:blank:]]*\"([^\"]+)\"",REG_EXTENDED);
     regcomp(&re_debug_mode,"debug_mode[[:blank:]]*=[[:blank:]]*([[:digit:]])",REG_EXTENDED);
-    regcomp(&re_insert_forward_rules_yes,"insert_forward_rules[[:blank:]]*=[[:blank:]]*yes",REG_ICASE);
     regcomp(&re_forward_chain_name,"forward_chain_name[[:blank:]]*=[[:blank:]]*([[:alpha:]_-]+)",REG_EXTENDED);
     regcomp(&re_prerouting_chain_name,"prerouting_chain_name[[:blank:]]*=[[:blank:]]([[:alpha:]_-]+)",REG_EXTENDED);
+    regcomp(&re_create_forward_rules,"create_forward_rules[[:blank:]]*=[[:blank:]]*(yes|no)",REG_EXTENDED);
+    regcomp(&re_forward_rules_append,"forward_rules_append[[:blank:]]*=[[:blank:]]*(yes|no)",REG_EXTENDED);
     regcomp(&re_upstream_bitrate,"upstream_bitrate[[:blank:]]*=[[:blank:]]*([[:digit:]]+)",REG_EXTENDED);
     regcomp(&re_downstream_bitrate,"downstream_bitrate[[:blank:]]*=[[:blank:]]*([[:digit:]]+)",REG_EXTENDED);
-    regcomp(&re_duration,"duration[[:blank:]]*=[[:blank:]]*(@?)([[:digit:]]+|[[:digit:]]+{2}:[[:digit:]]+{2})",REG_EXTENDED);
+    regcomp(&re_duration,"duration[[:blank:]]*=[[:blank:]]*(@?)([[:digit:]]+|[[:digit:]]{2,}:[[:digit:]]{2})",REG_EXTENDED);
     regcomp(&re_desc_doc,"description_document_name[[:blank:]]*=[[:blank:]]*([[:alpha:].]{1,20})",REG_EXTENDED);
     regcomp(&re_xml_path,"xml_document_path[[:blank:]]*=[[:blank:]]*([[:alpha:]_/.]{1,50})",REG_EXTENDED);
+    regcomp(&re_listenport,"listenport[[:blank:]]*=[[:blank:]]*([[:digit:]]+)",REG_EXTENDED);
 
     if ((conf_file=fopen(CONF_FILE,"r")) != NULL)
     {
@@ -104,11 +110,19 @@ int parseConfigFile(globals_p vars)
 		{
 		  getConfigOptionArgument(vars->iptables, PATH_LEN, line, submatch);
 		}
-		
-		// Check is insert_forward_rules
-		else if (regexec(&re_insert_forward_rules_yes,line,0,NULL,0) == 0)
+		// Check if create_forward_rules
+		else if (regexec(&re_create_forward_rules,line,NMATCH,submatch,0) == 0)
 		{
-		    vars->forwardRules = 1;
+		  char tmp[4];
+		  getConfigOptionArgument(tmp,sizeof(tmp),line,submatch);
+		  vars->createForwardRules = strcmp(tmp,"yes")==0 ? 1 : 0;
+		}
+		// Check if forward_rules_append
+		else if (regexec(&re_forward_rules_append,line,NMATCH,submatch,0) == 0)
+		{
+		  char tmp[4];
+		  getConfigOptionArgument(tmp,sizeof(tmp),line,submatch);
+		  vars->forwardRulesAppend = strcmp(tmp,"yes")==0 ? 1 : 0;
 		}
 		// Check forward_chain_name
 		else if (regexec(&re_forward_chain_name,line,NMATCH,submatch,0) == 0)
@@ -145,10 +159,16 @@ int parseConfigFile(globals_p vars)
 		{
 		  getConfigOptionArgument(vars->xmlPath, PATH_LEN, line, submatch);
 		}
+		else if (regexec(&re_listenport,line,NMATCH,submatch,0) == 0)
+		{
+		  char tmp[6];
+		  getConfigOptionArgument(tmp,sizeof(tmp),line,submatch);
+		  vars->listenport = atoi(tmp);
+		}
 		else
 		{
 		    // We end up here if ther is an unknown config directive
-		    printf("Unknown config line:%s",line);
+		    printf("Unknown config line: %s",line);
 		}
 	    }
 	}
@@ -158,7 +178,8 @@ int parseConfigFile(globals_p vars)
     regfree(&re_empty_row);
     regfree(&re_iptables_location);
     regfree(&re_debug_mode);	
-    regfree(&re_insert_forward_rules_yes);	
+    regfree(&re_create_forward_rules);	
+    regfree(&re_forward_rules_append);	
     regfree(&re_forward_chain_name);
     regfree(&re_prerouting_chain_name);
     regfree(&re_upstream_bitrate);
@@ -166,6 +187,7 @@ int parseConfigFile(globals_p vars)
     regfree(&re_duration);
     regfree(&re_desc_doc);
     regfree(&re_xml_path);
+    regfree(&re_listenport);
     // Set default values for options not found in config file
     if (strnlen(vars->forwardChainName, CHAIN_NAME_LEN) == 0)
     {

@@ -26,17 +26,21 @@ struct GLOBALS {
   char downstreamBitrate[BITRATE_LEN]; // The downstream bitrate reported by the daemon
   char forwardChainName[CHAIN_NAME_LEN];  // The name of the iptables chain to put FORWARD rules in
   char preroutingChainName[CHAIN_NAME_LEN]; // The name of the chain to put PREROUTING rules in
-  int forwardRules;     // 1 - forward rules are inserted
-                          // 0 - no forward rules inserted
+  int createForwardRules;     // 1 - create rules in forward chain
+                              // 0 - do not create rules in forward chain
+  int forwardRulesAppend; // 1 - add rules to end of forward chain
+  			  // 0 - add rules to start of forward chain
   long int duration;    // 0 - no duration
                           // >0 - duration in seconds
                           // <0 - expiration time 
   char descDocName[PATH_LEN];
   char xmlPath[PATH_LEN];
+  int listenport;	//The port to listen on
 };
 
 typedef struct GLOBALS* globals_p;
-extern struct GLOBALS g_vars;
+typedef struct GLOBALS globals;
+extern globals g_vars;
 
 #define CONF_FILE "/etc/upnpd.conf"
 #define MAX_CONFIG_LINE 256
