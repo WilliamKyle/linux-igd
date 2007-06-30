@@ -12,12 +12,12 @@
   * Added the forward_rules_append to do what people thought
     insert_forward_rules did, i.e. control whether to append or insert
     rules in the forward chain. The option description also includes a
-    tip about what to do if neither insert or append isn't what you
+    tip about what to do if neither insert or append is what you
     need.
 
   * Fixed pmlist_AddPortMapping. It was doing different things when
     using iptables or iptc to create rules. The iptc method was
-    inserting in the forward chain and appending to the preouting
+    inserting in the forward chain and appending to the prerouting
     chain, while the iptables method was doing the opposite. Now both
     methods append to the prerouting chain, and forward_rules_append
     controls whether to insert or append to the forward chain.
