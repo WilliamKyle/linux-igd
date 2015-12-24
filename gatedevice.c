@@ -1,4 +1,5 @@
 #include <syslog.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <upnp/ixml.h>
 #include <string.h>
